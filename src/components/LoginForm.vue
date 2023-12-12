@@ -24,6 +24,7 @@ import axios from 'axios';
 
 import { useRouter } from 'vue-router';
 import { useToken, useAlert, useLoading } from '../stores/store';
+import showAlert from './scripts/showAlerts';
 
 const username = ref('');
 const password = ref('');
@@ -40,13 +41,7 @@ const login = async () => {
   if (username.value === '' || password.value === '') {
     // Reset loading on validation failure
     useLoading.toggleVisibility(false);
-    useAlert.toggleVisibility(true);
-    useAlert.changeType('alert-warning');
-    useAlert.changeTitle('WARNING');
-    useAlert.changeMessage('Username and password are required!');
-    setTimeout(() => {
-      useAlert.toggleVisibility(false);
-    }, 5000);
+    showAlert("alert-warning", "WARNING", "Username and password are required!");
     return; // Return early if validation fails
   }
 
@@ -68,15 +63,8 @@ const login = async () => {
   } catch (error) {
     // Set the error message for alerts
     const errorMessage = error.response.data.payload.message || "Wrong username or password!";
-    console.log(error.response.data);
     useLoading.toggleVisibility(false);
-    useAlert.toggleVisibility(true);
-    useAlert.changeType("alert-error");
-    useAlert.changeTitle("ERROR");
-    useAlert.changeMessage(errorMessage);
-    setTimeout(() => {
-      useAlert.toggleVisibility(false);
-    }, 5000);
+    showAlert("alert-error", "ERROR", errorMessage);
   } finally {
     // Reset loading on completion (success or failure)
     useLoading.toggleVisibility(false);
