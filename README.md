@@ -10,7 +10,7 @@
 
 4. Build the project using `npm run build`
 
-5. Create a folde rin /var/www/html called ucs-liftup-uploader-frontend by using `mkdir -p /var/www/html/ucs-liftup-uploader-frontend`.
+5. Create a folder in /var/www/html called ucs-liftup-uploader-frontend by using `mkdir -p /var/www/html/ucs-liftup-uploader-frontend`.
 
 6. Symlink the generated dist folder to the new folder by using `ln -s /var/www/html/ucs-uploader-frontend ./dist`.
 
