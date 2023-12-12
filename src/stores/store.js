@@ -20,15 +20,13 @@ export const useAlert = reactive({
   },
 });
 
-// export const useToken = reactive({
-//   token: null,
-//   setToken(token) {
-//     this.token = token;
-//   },
-//   removeToken() {
-//     this.token = null;
-//   },
-// });
+export const useLoading = reactive({
+  visible: false,
+
+  toggleVisibility(visibility) {
+    this.visible = visibility;
+  },
+});
 
 export const useToken = reactive({
   // Retrieve the token from localStorage on initialization

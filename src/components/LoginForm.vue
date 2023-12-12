@@ -23,16 +23,23 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 import { useRouter } from 'vue-router';
-import { useToken } from '../stores/store';
-import { useAlert } from '../stores/store';
+import { useToken, useAlert, useLoading } from '../stores/store';
 
 const username = ref('');
 const password = ref('');
 const router = useRouter();
 
 const login = async () => {
+  // Check if already loading
+  if (useLoading.visible) return;
+
+  // Set loading to true
+  useLoading.toggleVisibility(true);
+
   // Check if username or password is empty
   if (username.value === '' || password.value === '') {
+    // Reset loading on validation failure
+    useLoading.toggleVisibility(false);
     useAlert.toggleVisibility(true);
     useAlert.changeType('alert-warning');
     useAlert.changeTitle('WARNING');
@@ -42,6 +49,7 @@ const login = async () => {
     }, 5000);
     return; // Return early if validation fails
   }
+
   try {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const backendPort = import.meta.env.VITE_BACKEND_PORT;
@@ -61,6 +69,7 @@ const login = async () => {
     // Set the error message for alerts
     const errorMessage = error.response.data.payload.message || "Wrong username or password!";
     console.log(error.response.data);
+    useLoading.toggleVisibility(false);
     useAlert.toggleVisibility(true);
     useAlert.changeType("alert-error");
     useAlert.changeTitle("ERROR");
@@ -68,6 +77,9 @@ const login = async () => {
     setTimeout(() => {
       useAlert.toggleVisibility(false);
     }, 5000);
+  } finally {
+    // Reset loading on completion (success or failure)
+    useLoading.toggleVisibility(false);
   }
 };
 </script>

@@ -66,7 +66,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 3;
+  z-index: 4;
   padding: 0 10px 0 10px;
 }
 
@@ -88,4 +88,35 @@ body {
 .alert-success {
   background-color: rgba(39, 136, 49, 0.7);
   color: rgb(252, 253, 253);
+}
+
+.loading {
+  visibility: visible;
+  transition: 300ms;
+}
+
+.loading-cover {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-box {
+  position: absolute;
+  width: fit-content;
+  color: white;
+  font-size: 3em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  padding: 0 10px 0 10px;
 }

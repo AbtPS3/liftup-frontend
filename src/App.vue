@@ -1,16 +1,20 @@
 <script setup>
 import { computed } from "vue";
-import { RouterLink, RouterView } from "vue-router"
+import { RouterView } from "vue-router"
 import { useAlert } from "@/stores/store";
 import NavTitle from "./components/NavTitle.vue";
 import Alert from "./components/Alert.vue";
 import { useToken } from '@/stores/store';
+import { useLoading } from '@/stores/store';
 
 const token = computed(() => useToken.token);
 </script>
 
 <template>
   <Alert :title="useAlert.title" :message="useAlert.message" :type="useAlert.type" v-if="useAlert.visible" />
+  <div v-if="useLoading.visible" class="loading loading-cover">
+    <div class="loading-box">Loading...</div>
+  </div>
   <div class="container">
     <div class="container-left">
       <img class="logo" src="@/assets/tanzania-coat.png" alt="Tanzania Coat of Arms" width="100" height="100">

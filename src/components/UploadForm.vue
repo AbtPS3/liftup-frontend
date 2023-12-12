@@ -33,7 +33,7 @@ import axios from "axios";
 
 import { useToken } from '../stores/store';
 import { jwtDecode } from "jwt-decode";
-import { useAlert } from "@/stores/store"
+import { useAlert } from "@/stores/store";
 
 const token = useToken.token;
 const decodedJwt = jwtDecode(token);
@@ -55,8 +55,8 @@ const handleDrop = (event) => {
     isFileUploaded.value = true;
     for (const file of files) {
       isFileUploaded.value = true;
-      uploadMessage.value = "Click the button below to upload."
-      uploadTitle.value = file.name
+      uploadMessage.value = "Click the button below to upload.";
+      uploadTitle.value = file.name;
       if (files.length > 0) {
         if (files[0].type != "text/csv") {
           isFileUploaded.value = false;
