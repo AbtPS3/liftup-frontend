@@ -1,8 +1,8 @@
 <template>
   <div class="form-group">
     <div class="input-group input-mid">
-      <label for="team_name">Team Name</label>
-      <input v-model="teamName" class="input-text" type="text" name="team_name" id="team_name" disabled>
+      <label for="facility_name">Facility Name</label>
+      <input v-model="facilityName" class="input-text" type="text" name="facility_name" id="facility_name" disabled>
     </div>
     <div class="input-group input-mid">
       <label for="provider_id">Provider ID</label>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="input-group input-mid">
-      <input type="button" class="input-btn" value="Upload CSV File" @click="uploadButtonClick">
+      <input type="button" class="input-btn large-text" value="Upload CSV File" @click="uploadButtonClick">
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@ import { useAlert } from "@/stores/store"
 
 const token = useToken.token;
 const decodedJwt = jwtDecode(token);
-const teamName = decodedJwt.data.team;
+const facilityName = decodedJwt.data.facility;
 const userName = decodedJwt.data.providerId;
 
 const isDragging = ref(false);
@@ -195,8 +195,12 @@ const uploadButtonClick = () => {
   height: 40px;
   border-radius: 5px;
   border: 1px solid #c3c3c3;
-  font-size: 1.2em;
+  font-size: 0.9em;
   padding: 0 10px 0 10px;
+}
+
+.input-group .large-text {
+  font-size: 1.2em;
 }
 
 .input-group input:focus {

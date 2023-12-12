@@ -3,15 +3,16 @@
   <div class="form-group">
     <form @submit.prevent="login">
       <div class="input-group input-mid">
-        <label for="username">Email</label>
-        <input v-model="username" type="text" class="input-text" id="username" name="username" autocomplete="username">
+        <label for="username">UCS Username</label>
+        <input v-model="username" type="text" class="input-text large-text" id="username" name="username"
+          autocomplete="username">
       </div>
       <div class="input-group input-mid">
         <label for="password">Password</label>
-        <input v-model="password" type="password" class="input-text" id="password" name="password">
+        <input v-model="password" type="password" class="input-text large-text" id="password" name="password">
       </div>
       <div class="input-group input-mid">
-        <input type="submit" value="Login" class="input-btn">
+        <input type="submit" value="Login" class="input-btn large-text">
       </div>
     </form>
   </div>
@@ -57,10 +58,13 @@ const login = async () => {
     // Redirect the user to /uploads route
     await router.push('/upload');
   } catch (error) {
+    // Set the error message for alerts
+    const errorMessage = error.response.data.payload.message || "Wrong username or password!";
+    console.log(error.response.data);
     useAlert.toggleVisibility(true);
     useAlert.changeType("alert-error");
-    useAlert.changeTitle("FAILED");
-    useAlert.changeMessage("Wrong username or password!");
+    useAlert.changeTitle("ERROR");
+    useAlert.changeMessage(errorMessage);
     setTimeout(() => {
       useAlert.toggleVisibility(false);
     }, 5000);
@@ -106,6 +110,10 @@ const login = async () => {
   height: 50px;
   border-radius: 5px;
   border: 1px solid #c3c3c3;
+  font-size: 0.9em;
+}
+
+.input-group .large-text {
   font-size: 1.2em;
 }
 
@@ -113,7 +121,6 @@ const login = async () => {
   border: 1px solid #989898;
   outline: none !important;
   color: #333;
-  font-size: 1.2em;
 }
 
 .input-btn {

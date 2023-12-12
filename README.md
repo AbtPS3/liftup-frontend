@@ -12,11 +12,11 @@
 
 5. Create a folder in /var/www/html called ucs-liftup-uploader-frontend by using `mkdir -p /var/www/html/ucs-liftup-uploader-frontend`.
 
-6. Symlink the generated dist folder to the new folder by using `ln -s /var/www/html/ucs-uploader-frontend ./dist`.
+6. Create a symbolic link to the dist folder by using the command `ln -s ./dist /var/www/html/ucs-liftup-uploader-frontend/`.
 
 ## Configure Nginx
 
-Configure your Nginx conf to point requests to localhost port 8082 to this folder in /var/ and create relevant proxe pass to the backend server port if hosted on the same server.
+Configure your Nginx conf to point requests to localhost port 8082 to this folder in /var/ and create relevant proxy-pass to the backend server port if hosted on the same server.
 
 ## License
 
