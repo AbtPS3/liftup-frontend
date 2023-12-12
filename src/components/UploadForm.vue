@@ -33,7 +33,7 @@ import axios from "axios";
 
 import { useToken } from '../stores/store';
 import { jwtDecode } from "jwt-decode";
-import { useAlert } from "@/stores/store";
+import showAlert from "./scripts/showAlerts";
 
 const token = useToken.token;
 const decodedJwt = jwtDecode(token);
@@ -61,23 +61,11 @@ const handleDrop = (event) => {
         if (files[0].type != "text/csv") {
           isFileUploaded.value = false;
           fileInput.value = null;
-          useAlert.toggleVisibility(true);
-          useAlert.changeType("alert-error");
-          useAlert.changeTitle("ERROR");
-          useAlert.changeMessage("Only CSV files allowed!");
-          setTimeout(() => {
-            useAlert.toggleVisibility(false);
-          }, 5000);
+          showAlert("alert-error", "ERROR", "Only CSV files allowed!");
         } else if (files[0].size > import.meta.env.VITE_MAX_FILE_SIZE) {
           isFileUploaded.value = false;
           fileInput.value = null;
-          useAlert.toggleVisibility(true);
-          useAlert.changeType("alert-error");
-          useAlert.changeTitle("ERROR");
-          useAlert.changeMessage("CSV file-size limit reached!");
-          setTimeout(() => {
-            useAlert.toggleVisibility(false);
-          }, 5000);
+          showAlert("alert-error", "ERROR", "CSV file-size limit reached!");
         }
       }
 
@@ -100,23 +88,11 @@ const handleFileChange = (event) => {
       if (files[0].type != "text/csv") {
         isFileUploaded.value = false;
         fileInput.value = null;
-        useAlert.toggleVisibility(true);
-        useAlert.changeType("alert-error");
-        useAlert.changeTitle("ERROR");
-        useAlert.changeMessage("Only CSV files allowed!");
-        setTimeout(() => {
-          useAlert.toggleVisibility(false);
-        }, 5000);
+        showAlert("alert-error", "ERROR", "Only CSV files allowed!");
       } else if (files[0].size > import.meta.env.VITE_MAX_FILE_SIZE) {
         isFileUploaded.value = false;
         fileInput.value = null;
-        useAlert.toggleVisibility(true);
-        useAlert.changeType("alert-error");
-        useAlert.changeTitle("ERROR");
-        useAlert.changeMessage("CSV file-size limit reached!");
-        setTimeout(() => {
-          useAlert.toggleVisibility(false);
-        }, 5000);
+        showAlert("alert-error", "ERROR", "CSV file-size limit reached!");
       }
     }
   }
@@ -131,17 +107,17 @@ const uploadFile = async (file) => {
     const backendPort = import.meta.env.VITE_BACKEND_PORT;
     const backendAddress = `${backendUrl}:${backendPort}/api/v1/uploads`;
 
-    console.log('Token:', useToken.token); // Log the token for debugging
-
     const response = await axios.post(backendAddress, formData, {
       headers: { Authorization: `Bearer ${useToken.token}` },
     });
 
-    console.log('Response:', response.data);
+    // console.log('Response:', response.data);
     isFileUploaded.value = false;
+    showAlert("alert-success", "SUCCESS", response.data.payload.message);
     return true;
   } catch (error) {
     console.error('Error during file upload:', error);
+    showAlert("alert-error", "ERROR", error.message);
     return false;
   }
 };
@@ -151,8 +127,6 @@ const uploadButtonClick = () => {
   // Upload the file when the button is clicked
   if (fileInput.value.files.length > 0) {
     isFileUploaded.value = false;
-    // uploadMessage.value = "Click the button below to upload."
-    // uploadTitle.value = file.name
     uploadFile(fileInput.value.files[0]);
   }
 };
