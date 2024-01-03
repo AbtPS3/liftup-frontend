@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { RouterLink, RouterView } from "vue-router"
+import { RouterView } from "vue-router"
 import { useAlert } from "@/stores/store";
 import NavTitle from "./components/NavTitle.vue";
 import Alert from "./components/Alert.vue";
