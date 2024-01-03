@@ -62,7 +62,7 @@ const login = async () => {
     await router.push('/upload');
   } catch (error) {
     // Set the error message for alerts
-    const errorMessage = error.response.data.payload.message || "Wrong username or password!";
+    const errorMessage = error.message || "Wrong username or password!";
     useLoading.toggleVisibility(false);
     showAlert("alert-error", "ERROR", errorMessage);
   } finally {
