@@ -5,9 +5,7 @@ import { useAlert } from "@/stores/store";
 import NavTitle from "./components/NavTitle.vue";
 import Alert from "./components/Alert.vue";
 import Preview from "./components/Preview.vue";
-import { useToken } from "@/stores/store";
-import { useLoading } from "@/stores/store";
-import { usePreview } from "@/stores/store";
+import { useToken, useLoading, usePreview } from "@/stores/store";
 
 const token = computed(() => useToken.token);
 </script>
