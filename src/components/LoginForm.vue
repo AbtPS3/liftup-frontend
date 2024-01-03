@@ -18,12 +18,12 @@
   </div>
 </template>
 
-<script setup>
+<script lang="js" setup>
 import { ref } from 'vue';
 import axios from 'axios';
 
 import { useRouter } from 'vue-router';
-import { useToken, useAlert, useLoading } from '../stores/store';
+import { useToken, useLoading } from '../stores/store';
 import showAlert from './scripts/showAlerts';
 
 const username = ref('');
@@ -51,7 +51,7 @@ const login = async () => {
     const backendAddress = backendUrl + ":" + backendPort + "/api/v1/uploads/login";
     const response = await axios.post(backendAddress, {
       username: username.value,
-      password: password.value
+      password: password.value,
     });
 
     // Store the token in Vue store

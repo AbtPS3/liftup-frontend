@@ -11,29 +11,26 @@
     <div class="input-group input-group-tall">
       <div class="upload-area" tabindex="0" @dragover.prevent @drop="handleDrop" @dragleave="handleDragLeave">
         <img class="small-icon" src="@/assets/upload-icon.png" alt="Upload Icon">
-        <p class="upload-title">
-          {{ isFileUploaded ? uploadTitle : 'Upload a File!' }}
-        </p>
-        <p class="upload-details" v-if="isDragging">Release to upload!</p>
-        <p class="upload-details" v-else>
-          {{ isFileUploaded ? uploadMessage : 'Drop your file here!' }}
-        </p>
+        <p class="upload-title">{{ fileTitle }}</p>
+        <p class="upload-details">{{ fileMessage }}</p>
         <input type="file" class="csv-file" tabindex="-1" ref="fileInput" @change="handleFileChange" accept="csv" />
       </div>
     </div>
     <div class="input-group input-mid">
-      <input type="button" class="input-btn large-text" value="Upload CSV File" @click="uploadButtonClick">
+      <Button v-if="fileStatus == true" :class="'input-btn large-text'" :value="'Preview File'"
+        @click="usePreview.toggleVisibility(true)" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from "axios";
-
-import { useToken } from '../stores/store';
+import { ref, computed } from "vue";
 import { jwtDecode } from "jwt-decode";
+import Papa from "papaparse";
+import { useToken, usePreview, useFileStatus } from "../stores/store";
 import showAlert from "./scripts/showAlerts";
+import arraysEqual from "./scripts/arrayEquals";
+import Button from "./ui/Button.vue";
 
 const token = useToken.token;
 const decodedJwt = jwtDecode(token);
@@ -41,36 +38,20 @@ const facilityName = decodedJwt.data.facility;
 const userName = decodedJwt.data.providerId;
 
 const isDragging = ref(false);
-const isFileUploaded = ref(false);
 const fileInput = ref(null);
-const uploadMessage = ref(null);
-const uploadTitle = ref(null);
+const fileStatus = computed(() => useFileStatus.value);
+const fileTitle = computed(() => useFileStatus.title);
+const fileMessage = computed(() => useFileStatus.message);
+const csvData = ref(null);
 
 const handleDrop = (event) => {
   event.preventDefault();
   isDragging.value = false;
-
   const files = event.dataTransfer.files;
-  if (files.length > 0) {
-    isFileUploaded.value = true;
-    for (const file of files) {
-      isFileUploaded.value = true;
-      uploadMessage.value = "Click the button below to upload.";
-      uploadTitle.value = file.name;
-      if (files.length > 0) {
-        if (files[0].type != "text/csv") {
-          isFileUploaded.value = false;
-          fileInput.value = null;
-          showAlert("alert-error", "ERROR", "Only CSV files allowed!");
-        } else if (files[0].size > import.meta.env.VITE_MAX_FILE_SIZE) {
-          isFileUploaded.value = false;
-          fileInput.value = null;
-          showAlert("alert-error", "ERROR", "CSV file-size limit reached!");
-        }
-      }
+  processCsv(files)
 
-    }
-
+  if (isDragging.value) {
+    fileMessage.value = "Release to upload!";
   }
 };
 
@@ -78,60 +59,48 @@ const handleDragLeave = () => {
   isDragging.value = false;
 };
 
-const handleFileChange = (event) => {
+const handleFileChange = async (event) => {
   const files = event.target.files;
+  processCsv(files)
+};
+
+function processCsv(files) {
   for (const file of files) {
     if (files.length > 0) {
-      isFileUploaded.value = true;
-      uploadMessage.value = "Click the button below to upload."
-      uploadTitle.value = file.name
+      useFileStatus.toggleValue(true, file.name, "Click 'Preview File' to preview!");
       if (files[0].type != "text/csv") {
-        isFileUploaded.value = false;
+        useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
         fileInput.value = null;
         showAlert("alert-error", "ERROR", "Only CSV files allowed!");
       } else if (files[0].size > import.meta.env.VITE_MAX_FILE_SIZE) {
-        isFileUploaded.value = false;
+        useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
         fileInput.value = null;
         showAlert("alert-error", "ERROR", "CSV file-size limit reached!");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          Papa.parse(reader.result, {
+            complete: (result) => {
+              csvData.value = result.data;
+              const rawCsvData = csvData._rawValue;
+              const expectedHeaders = import.meta.env.VITE_CSV_HEADERS.split(",");
+              if (!arraysEqual(rawCsvData[0], expectedHeaders)) {
+                useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
+                fileInput.value = null;
+                showAlert("alert-error", "ERROR", "File headings are not valid!");
+              } else {
+                usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
+              }
+            },
+          });
+        };
+        reader.readAsText(file);
       }
     }
   }
-};
-
-const uploadFile = async (file) => {
-  const formData = new FormData();
-  formData.append('file', file);
-
-  try {
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
-    const backendPort = import.meta.env.VITE_BACKEND_PORT;
-    const backendAddress = `${backendUrl}:${backendPort}/api/v1/uploads`;
-
-    const response = await axios.post(backendAddress, formData, {
-      headers: { Authorization: `Bearer ${useToken.token}` },
-    });
-
-    // console.log('Response:', response.data);
-    isFileUploaded.value = false;
-    showAlert("alert-success", "SUCCESS", response.data.payload.message);
-    return true;
-  } catch (error) {
-    console.error('Error during file upload:', error);
-    showAlert("alert-error", "ERROR", error.message);
-    return false;
-  }
-};
-
-// Function to handle the button click and trigger the file upload
-const uploadButtonClick = () => {
-  // Upload the file when the button is clicked
-  if (fileInput.value.files.length > 0) {
-    isFileUploaded.value = false;
-    uploadFile(fileInput.value.files[0]);
-  }
-};
-
+}
 </script>
+
 <style scoped>
 .form-group {
   position: relative;
@@ -182,20 +151,6 @@ const uploadButtonClick = () => {
   outline: none !important;
   color: #333;
   font-size: 1.2em;
-}
-
-.input-btn {
-  position: relative;
-  margin-top: 10%;
-  cursor: pointer;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid #c3c3c3;
-  color: #666;
-}
-
-.input-btn:hover {
-  background-color: #fff;
 }
 
 .upload-area {

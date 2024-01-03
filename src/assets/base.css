@@ -38,6 +38,26 @@ body {
   box-shadow: 5px 5px 5px 1px rgba(6, 70, 131, 0.1);
 }
 
+.preview {
+  visibility: visible;
+  transition: 300ms;
+}
+
+.preview-cover {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .alert {
   visibility: visible;
   transition: 300ms;
