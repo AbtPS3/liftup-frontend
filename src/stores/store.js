@@ -37,6 +37,7 @@ export const useToken = reactive({
 
   removeToken() {
     localStorage.removeItem("token");
+    useLoading.toggleVisibility(true);
     this.token = null;
   },
 });
