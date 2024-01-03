@@ -24,8 +24,6 @@ const token = computed(() => useToken.token);
       <NavTitle v-if="token == null" msg="Use the form on the right to login." />
       <NavTitle v-else msg="Upload CSV files on the right." />
       <nav class="main-links">
-        <!-- <RouterLink to="/" class="routerlink left-link">Login</RouterLink>
-        <a href="" class="routerlink left-link" v-on:click.prevent @click="usePreview.toggleVisibility(true)">Preview</a> -->
         <a v-if="token != null" href="/" class="routerlink" @click="useToken.removeToken()">Logout</a>
       </nav>
     </div>
