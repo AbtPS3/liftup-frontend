@@ -43,6 +43,7 @@ const token = computed(() => useToken.token);
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
 }
 
 .container-right {
