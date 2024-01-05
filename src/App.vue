@@ -21,7 +21,7 @@ const token = computed(() => useToken.token);
   <div class="container">
     <div class="container-left">
       <img class="logo" src="@/assets/tanzania-coat.png" alt="Tanzania Coat of Arms" width="100" height="100">
-      <NavTitle v-if="token == null" msg="Use the form on the right to login" />
+      <NavTitle v-if="token == null" msg="Use the form on the right to login." />
       <NavTitle v-else msg="Upload CSV files on the right." />
       <nav class="main-links">
         <a v-if="token != null" href="/" class="routerlink" @click="useToken.removeToken()">Logout</a>
