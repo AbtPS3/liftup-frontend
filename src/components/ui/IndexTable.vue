@@ -33,7 +33,7 @@
 
 <script setup>
 import { onMounted } from 'vue';
-import { useToken, usePreview, useFileStatus, useFileInput } from '../../stores/store';
+import { useToken, usePreview, useFileStatus, useFileInput, useLoading } from '../../stores/store';
 import Button from './Button.vue';
 import showAlert from '../scripts/showAlerts';
 import Papa from 'papaparse';
@@ -54,6 +54,7 @@ const handleUploadCancel = () => {
 }
 
 const uploadButtonClick = () => {
+  useLoading.toggleVisibility(true);
   useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
   uploadFile(headers, rows);
 };
@@ -75,6 +76,7 @@ const uploadFile = async (headers, rows) => {
     });
 
     useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
+    useLoading.toggleVisibility(false);
     showAlert("alert-success", "SUCCESS", response.data.payload.message);
     return true;
   } catch (error) {
