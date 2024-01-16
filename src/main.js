@@ -7,7 +7,7 @@ import { createI18n, useI18n } from "vue-i18n";
 import en from "./locales/en.json";
 import sw from "./locales/sw.json";
 
-const locale = localStorage.getItem("locale") || "sw";
+const locale = localStorage.getItem("locale") || "en";
 
 export const i18n = createI18n({
   locale: locale,
