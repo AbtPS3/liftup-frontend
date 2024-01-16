@@ -72,7 +72,7 @@
   --section-gap: 150px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--mq-black-norm);
     --color-background-soft: var(--mq-black-soft);
@@ -90,7 +90,7 @@
     --color-panel-left: var(--mq-black-soft);
     --color-panel-right: var(--mq-black-mute);
   }
-}
+} */
 
 *,
 *::before,
