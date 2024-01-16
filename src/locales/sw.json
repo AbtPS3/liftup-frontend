@@ -1,0 +1,158 @@
+{
+  "shared": {
+    "logo": {
+      "alt": "Nembo ya Tanzania"
+    },
+    "link": {
+      "howto": "Maelekezo",
+      "logout": "Ondoka",
+      "upload": "Pakia",
+      "clients": "Wateja",
+      "contacts": "Waliotajwa"
+    }
+  },
+  "login": {
+    "left": {
+      "heading": "UCS LIFT UP",
+      "prompt": "Tafadhali ingia ili kupakia faili."
+    },
+    "right": {
+      "heading": "Tafadhali ingiza jina la mtumiaji na nywila ya UCS!",
+      "input": {
+        "username": {
+          "label": "Jina la Mtumiaji wa UCS",
+          "placeholder": "username yako"
+        },
+        "password": {
+          "label": "Password ya UCS",
+          "placeholder": "nywila yako"
+        },
+        "button": {
+          "value": "Ingia"
+        }
+      }
+    },
+    "alerts": {
+      "credentials": {
+        "title": "HAIJAKAMILIKA",
+        "text": "Jina la mtumiaji na nywila ni lazima."
+      },
+      "error": {
+        "title": "IMESHINDIKANA KUINGIA",
+        "text": "Haikuweza kuingia."
+      }
+    }
+  },
+  "upload": {
+    "left": {
+      "heading": "Mipakio ya UCS LIFT UP",
+      "prompt": "Pakia data kwa mradi wa TEPI."
+    },
+    "input": {
+      "facilityLabel": "Jina la Kituo cha UCS",
+      "providerLabel": "Jina la Mhudumu wa UCS",
+      "buttonValue": "Kagua Faili"
+    },
+    "heading": {
+      "form": "Tumia fomu kupakia faili za CSV."
+    },
+    "validation": {
+      "default": {
+        "heading": "Pakia faili",
+        "prompt": "Bonyeza au achia faili ya CSV kwa kupakia!"
+      },
+      "passed": {
+        "heading": "Chagua Faili ya CSV",
+        "prompt": "Bonyeza 'Kagua Faili' kuhakikisha!"
+      },
+      "type": {
+        "heading": "Aina ya Faili Sio Sahihi",
+        "prompt": "Bonyeza au achia faili ya CSV pekee!"
+      },
+      "size": {
+        "heading": "Faili Kubwa Mno",
+        "prompt": "Pakia faili ndogo, kiwango cha juu ni MB2!"
+      },
+      "headers": {
+        "heading": "Vichwa Vina Shida",
+        "prompt": "Pakia faili na headers sahihi!"
+      }
+    },
+    "alerts": {
+      "type": {
+        "title": "AINA YA FAILI",
+        "text": "Inawezekana kupakia faili za CSV pekee!"
+      },
+      "size": {
+        "title": "FAILI KUBWA SANA",
+        "text": "Faili kubwa mno, pakia faili ndogo!"
+      },
+      "headers": {
+        "clients": {
+          "title": "KOSA LA VICHWA VYA WATEJA",
+          "text": "Soma maelekezo kuhusu VICHWA VYA WATEJA!"
+        },
+        "contacts": {
+          "title": "KOSA LA VICHWA VYA WALIOTAJWA",
+          "text": "Soma maelekezo kuhusu VICHWA VYA WALIOTAJWA!"
+        }
+      }
+    }
+  },
+  "indexTable": {
+    "headings": {
+      "heading1": "SN",
+      "heading2": "Nambari ya CTC",
+      "heading3": "Jina la Kwanza",
+      "heading4": "Jina la Kati",
+      "heading5": "Jina la Ukoo",
+      "heading6": "Tarehe ya Kuzaliwa",
+      "heading7": "Jinsia",
+      "heading8": "ufikikaji",
+      "heading9": "Kitongoji/Barabara",
+      "heading10": "Simu ya Mkononi",
+      "heading11": "Mlezi",
+      "heading12": "Simu ya Mlezi",
+      "heading13": "Anaarifiwaje",
+      "heading14": "Mahusiano",
+      "heading15": "Nambari ya CTC ya Indeksi",
+      "heading16": "Nambari ya Kutajwa"
+    },
+    "buttons": {
+      "upload": "Pakia Faili Hii",
+      "cancel": "Puuza Faili"
+    },
+    "alerts": {
+      "cancel": {
+        "title": "KUPAKIA KUMEGHAIRIWA",
+        "text": "Kazi ya kupakia faili imeghairiwa!"
+      },
+      "success": {
+        "title": "KUPAKIA KUMEFANIKIWA",
+        "text": "Faili imesha pakuliwa kwa usindikaji!"
+      },
+      "error": {
+        "title": "KUPAKIA KUMESHINDIKANA",
+        "text": "Faili haikuweza kupakiwa!"
+      }
+    }
+  },
+  "instructions": {
+    "section1": {
+      "title": "Maelekezo ya Kuingia",
+      "text": "Ili kupakia faili kwenye seva za UCS kwa Mradi wa LiftUp, lazima uingie kwenye mfumo kwanza. Huna haja ya kujisajili mwenyewe, unaweza kutumia vitambulisho vile vile unavyotumia kuingia UCS kama mtoaji au msimamizi kasoro CHW. Ikiwa umesahau vitambulisho vyako vya UCS, tafadhali wasiliana na mtu muhimu katika MOH/NACP."
+    },
+    "section2": {
+      "title": "Maelekezo ya Kupakia",
+      "text": "Chombo hiki kinakubali kupakia wateja wa INDEKSI na CONTACTS wa CTC. Taarifa lazima ziwe katika muundo wa Comma Separated Values (CSV). Faili za CSV lazima ziwe na vichwa vilivyopangwa mapema ili ziwe sahihi. Vichwa vitaonyeshwa katika sehemu ya templeti hapa chini."
+    },
+    "section3": {
+      "title": "Templeti za CSV",
+      "text": "Tumia viungo hapa chini kupakua templeti za CSV za sampuli ambazo unaweza kujaza na data ya kituo chako na kutumia chombo hiki kupakia kwenye UCS."
+    },
+    "headers": {
+      "clients": "VICHWA VYA INDEKSI: ",
+      "contacts": "VICHWA VYA WALIOTAJWA: "
+    }
+  }
+}

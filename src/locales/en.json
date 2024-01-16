@@ -1,0 +1,158 @@
+{
+  "shared": {
+    "logo": {
+      "alt": "Tanzania Coat of Arms"
+    },
+    "link": {
+      "howto": "Instructions",
+      "logout": "Logout",
+      "upload": "Upload",
+      "clients": "Index Clients",
+      "contacts": "Elicitation Contacts"
+    }
+  },
+  "login": {
+    "left": {
+      "heading": "UCS LIFT UP",
+      "prompt": "Please login to upload files."
+    },
+    "right": {
+      "heading": "Please enter UCS username and password!",
+      "input": {
+        "username": {
+          "label": "UCS Username",
+          "placeholder": "username"
+        },
+        "password": {
+          "label": "UCS Password",
+          "placeholder": "password"
+        },
+        "button": {
+          "value": "Login"
+        }
+      }
+    },
+    "alerts": {
+      "credentials": {
+        "title": "INCOMPLETE",
+        "text": "Username and Password are required."
+      },
+      "error": {
+        "title": "LOGIN ERROR",
+        "text": "Could not login."
+      }
+    }
+  },
+  "upload": {
+    "left": {
+      "heading": "UCS LIFT UP UPLOADS",
+      "prompt": "Upload data for TEPI Initiative."
+    },
+    "input": {
+      "facilityLabel": "UCS Facility Name",
+      "providerLabel": "UCS Provider Name",
+      "buttonValue": "Preview File"
+    },
+    "heading": {
+      "form": "Use the form to upload CSV files."
+    },
+    "validation": {
+      "default": {
+        "heading": "Upload a file",
+        "prompt": "Click or drop a CSV file to upload!"
+      },
+      "passed": {
+        "heading": "Select CSV File",
+        "prompt": "Click 'Preview File' to preview!"
+      },
+      "type": {
+        "heading": "Wrong Filetype",
+        "prompt": "Click or drop CSV file only!"
+      },
+      "size": {
+        "heading": "File Too Large",
+        "prompt": "Upload a smaller file, max 2MB!"
+      },
+      "headers": {
+        "heading": "Headers Mismatch",
+        "prompt": "Upload a file with correct headers!"
+      }
+    },
+    "alerts": {
+      "type": {
+        "title": "FILE ERROR",
+        "text": "Only CSV files can be uploaded!"
+      },
+      "size": {
+        "title": "SIZE ERROR",
+        "text": "File too large, upload a smaller file!"
+      },
+      "headers": {
+        "clients": {
+          "title": "CLIENT HEADERS ERROR",
+          "text": "Read instructions on CLIENT UPLOAD headers!"
+        },
+        "contacts": {
+          "title": "CONTACT HEADERS ERROR",
+          "text": "Read instructions on CONTACT UPLOAD headers!"
+        }
+      }
+    }
+  },
+  "indexTable": {
+    "headings": {
+      "heading1": "SN",
+      "heading2": "CTC Number",
+      "heading3": "First Name",
+      "heading4": "Middle Name",
+      "heading5": "Surname",
+      "heading6": "Date of Birth",
+      "heading7": "Sex",
+      "heading8": "Map Cue",
+      "heading9": "Hamlet/Street",
+      "heading10": "Mobile Number",
+      "heading11": "Caretaker",
+      "heading12": "Caretaker Phone",
+      "heading13": "Notification Type",
+      "heading14": "Relationship",
+      "heading15": "Index CTC Number",
+      "heading16": "Elicitation Number"
+    },
+    "buttons": {
+      "upload": "Upload This File",
+      "cancel": "Ignore File"
+    },
+    "alerts": {
+      "cancel": {
+        "title": "UPLOAD CANCELLED",
+        "text": "File upload has been cancelled!"
+      },
+      "success": {
+        "title": "UPLOAD SUCCESS",
+        "text": "File has been uploaded for processing!"
+      },
+      "error": {
+        "title": "UPLOAD FAILED",
+        "text": "File could not be uploaded!"
+      }
+    }
+  },
+  "instructions": {
+    "section1": {
+      "title": "Login Instructions",
+      "text": "In order to upload files to UCS servers for LiftUp initiative, you need to login to the system first. You do not need to register yourself, you can use the same credentials that you use to login to UCS as a provider or administrator. Users with CHW rights will not be able to login to this tool. If you have forgotten your UCS credentials pease contact a relevant person at MOH/NACP."
+    },
+    "section2": {
+      "title": "Upoading Instructions",
+      "text": "This tool accepts both INDEX CLIENT uploads and ELICITED CONTACT uploads. The uploads have to be in a Comma Separated Values (CSV) format. The CSV files have to include predesigned headers for them to be valid. The headers will be shown in the template section below."
+    },
+    "section3": {
+      "title": "CSV Tempates",
+      "text": "Use the links below to download sample CSV templates that you can fill with your facility data and use this tool to upload them to UCS."
+    },
+    "headers": {
+      "clients": "INDEX HEADERS: ",
+      "contacts": "CONTACTS HEADERS: "
+    }
+  }
+}

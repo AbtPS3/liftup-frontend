@@ -1,23 +1,41 @@
 <template>
   <div class="table-container">
     <table>
+      <!-- Uncomment the next TR kama unataka kutumia dynamic headers kutoka kwenye .env -->
       <!-- <tr class="table-header">
         <th class="left-cell">SN</th>
         <td v-for="header in headers" :key="header">{{ header }}</td>
       </tr> -->
-      <tr class="table-header">
-        <th class="left-cell">SN</th>
-        <td>CTC Number</td>
-        <td>First Name</td>
-        <td>Midle Name</td>
-        <td>Surname</td>
-        <td>Date of Birth</td>
-        <td>Gender</td>
-        <td>Map Cue</td>
-        <td>Hamlet/Street</td>
-        <td>Mobile Number</td>
-        <td>Caretaker Name</td>
-        <td>Caretaker Mobile</td>
+      <tr v-if="mode == 'clients'" class="table-header">
+        <th class="left-cell">{{ t('indexTable.headings.heading1') }}</th>
+        <td>{{ t('indexTable.headings.heading2') }}</td>
+        <td>{{ t('indexTable.headings.heading3') }}</td>
+        <td>{{ t('indexTable.headings.heading4') }}</td>
+        <td>{{ t('indexTable.headings.heading5') }}</td>
+        <td>{{ t('indexTable.headings.heading6') }}</td>
+        <td>{{ t('indexTable.headings.heading7') }}</td>
+        <td>{{ t('indexTable.headings.heading8') }}</td>
+        <td>{{ t('indexTable.headings.heading9') }}</td>
+        <td>{{ t('indexTable.headings.heading10') }}</td>
+        <td>{{ t('indexTable.headings.heading11') }}</td>
+        <td>{{ t('indexTable.headings.heading12') }}</td>
+      </tr>
+      <tr v-else class="table-header">
+        <th class="left-cell">{{ t('indexTable.headings.heading1') }}</th>
+        <td>{{ t('indexTable.headings.heading3') }}</td>
+        <td>{{ t('indexTable.headings.heading4') }}</td>
+        <td>{{ t('indexTable.headings.heading5') }}</td>
+        <td>{{ t('indexTable.headings.heading6') }}</td>
+        <td>{{ t('indexTable.headings.heading7') }}</td>
+        <td>{{ t('indexTable.headings.heading8') }}</td>
+        <td>{{ t('indexTable.headings.heading9') }}</td>
+        <td>{{ t('indexTable.headings.heading10') }}</td>
+        <td>{{ t('indexTable.headings.heading11') }}</td>
+        <td>{{ t('indexTable.headings.heading12') }}</td>
+        <td>{{ t('indexTable.headings.heading13') }}</td>
+        <td>{{ t('indexTable.headings.heading14') }}</td>
+        <td>{{ t('indexTable.headings.heading15') }}</td>
+        <td>{{ t('indexTable.headings.heading16') }}</td>
       </tr>
       <tr v-for="(row, index) in rows" :key="row">
         <th class="left-cell"><span v-if="index < rows.length">{{ index + 1 }}</span></th>
@@ -26,45 +44,60 @@
     </table>
   </div>
   <div class="action-buttons">
-    <Button :type="'input-btn btn-primary'" :value="'Upload This File'" @click="uploadButtonClick" />
-    <Button :type="'input-btn btn-danger'" :value="'Cancel Upload'" @click="handleUploadCancel" />
+    <FormButton :type="'input-btn btn-primary'" :value="t('indexTable.buttons.upload')" @click="uploadButtonClick" />
+    <FormButton :type="'input-btn btn-danger'" :value="t('indexTable.buttons.cancel')" @click="handleUploadCancel" />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { useToken, usePreview, useFileStatus, useFileInput, useLoading } from '../../stores/store';
-import Button from './Button.vue';
-import showAlert from '../scripts/showAlerts';
+import { ref, onMounted, computed } from 'vue';
+import { useToken, usePreview, useFileStatus, useFileInput, useLoading, useMode } from '@/stores/state';
+import FormButton from '@/components/ui/FormButton.vue';
+import showAlert from '@/scripts/showAlert';
 import Papa from 'papaparse';
 import axios from 'axios';
+import { useI18n } from "vue-i18n";
+import { jwtDecode } from 'jwt-decode';
 
+const { t } = useI18n();
 const csvData = usePreview.getCsvData();
 const rows = csvData.rows;
 const headers = csvData.headers;
-const token = useToken.token;
+const token = computed(() => useToken.token);
+const decodedJwt = jwtDecode(token.value);
+const facilityName = ref(decodedJwt.data.facility);
+const mode = computed(() => useMode.mode);
 
 onMounted(() => { });
 
 const handleUploadCancel = () => {
   usePreview.removeCsvData();
-  useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
-  useFileInput.toggleValue(null);
-  showAlert("alert-info", "INFO", "File upload/preview cancelled!");
+  useFileStatus.toggleStatus(false, t('upload.validation.passed.heading'), t('upload.validation.passed.prompt'));
+  useFileInput.toggleStatus(null);
+  showAlert("alert-info", t('indexTable.alerts.cancel.title'), t('indexTable.alerts.cancel.text'));
 }
 
 const uploadButtonClick = () => {
   useLoading.toggleVisibility(true);
-  useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
+  useFileStatus.toggleStatus(false, t('upload.validation.passed.heading'), t('upload.validation.passed.prompt'));
   uploadFile(headers, rows);
 };
 
 const uploadFile = async (headers, rows) => {
+
+  // const formData = new FormData();
+  // formData.append('file', blob, filename);
+
+  let filename;
+  const currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
+  filename = `${currentDate}_${mode.value}_${facilityName.value}.csv`;
+  // console.log(filename);
+
   const csvString = Papa.unparse([headers, ...rows]);
   const blob = new Blob([csvString], { type: 'text/csv' });
 
   const formData = new FormData();
-  formData.append('file', blob, 'filename.csv');
+  formData.append('file', blob, filename);
 
   try {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -72,16 +105,17 @@ const uploadFile = async (headers, rows) => {
     const backendAddress = `${backendUrl}:${backendPort}/api/v1/uploads`;
 
     const response = await axios.post(backendAddress, formData, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token.value}` },
     });
 
-    useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
+    useFileStatus.toggleStatus(false, t('upload.validation.passed.heading'), t('upload.validation.passed.prompt'));
     useLoading.toggleVisibility(false);
-    showAlert("alert-success", "SUCCESS", response.data.payload.message);
+    showAlert("alert-success", t('indexTable.alerts.success.title'), response.data.payload.message);
     return true;
   } catch (error) {
-    console.error('Error during file upload:', error);
-    showAlert("alert-error", "ERROR", error.message);
+    useLoading.toggleVisibility(false);
+    // console.log(t('indexTable.alerts.error.title') + ": ", error.response.data);
+    showAlert("alert-error", t('indexTable.alerts.error.title'), error.message);
     return false;
   }
 };
@@ -91,6 +125,7 @@ const uploadFile = async (headers, rows) => {
 <style scoped>
 .table-container {
   max-height: 75%;
+  max-width: 90vw;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -113,9 +148,13 @@ table {
 .table-header {
   height: 45px;
   color: #e6e6e6;
-  background-color: rgba(15, 104, 37, 0.7);
+  background-color: var(--color-success-mute);
   font-size: 1.1em;
-  font-weight: bolder;
+}
+
+.table-header td,
+th {
+  font-weight: bold;
 }
 
 td {

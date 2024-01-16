@@ -1,31 +1,29 @@
-# UCS Lift-Up Uploader Frontend
+# mediaq
 
-## Installation
+This template should help get you started developing with Vue 3 in Vite.
 
-1. Clone this project to your PC through `git clone https://github.com/AbtPS3/ucs-liftup-uploader-frontend.git`.
+## Recommended IDE Setup
 
-2. Navigate inside the cloned directory ` cd ./ucs-liftup-uploader-frontend`.
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-3. Copy example.env to a new file called .env and change all credentials as needed.
+## Customize configuration
 
-4. Build the project using `npm run build`
+See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-5. Create a folder in /var/www/html called ucs-liftup-uploader-frontend by using `mkdir -p /var/www/html/ucs-liftup-uploader-frontend`.
+## Project Setup
 
-6. Create a symbolic link to the dist folder by using the command `ln -s ./dist /var/www/html/ucs-liftup-uploader-frontend/`.
+```sh
+npm install
+```
 
-## Configure Nginx
+### Compile and Hot-Reload for Development
 
-Configure your Nginx conf to point requests to localhost port 8082 to this folder in /var/ and create relevant proxy-pass to the backend server port if hosted on the same server.
+```sh
+npm run dev
+```
 
-## License
+### Compile and Minify for Production
 
-ISC
-
-## Author
-
-MOH, PS3+, NACP
-
-## Version
-
-1.0.1
+```sh
+npm run build
+```

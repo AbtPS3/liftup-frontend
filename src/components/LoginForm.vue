@@ -1,19 +1,11 @@
 
 <template>
   <div class="form-group">
+    <p class="upload-heading">{{ $t('login.right.heading') }}</p>
     <form @submit.prevent="login">
-      <div class="input-group input-mid">
-        <label for="username">UCS Username</label>
-        <input v-model="username" type="text" class="input-text large-text" id="username" name="username"
-          autocomplete="username">
-      </div>
-      <div class="input-group input-mid">
-        <label for="password">Password</label>
-        <input v-model="password" type="password" class="input-text large-text" id="password" name="password">
-      </div>
-      <div class="input-group input-mid">
-        <input type="submit" value="Login" class="input-btn large-text">
-      </div>
+      <FormInput type="text" :label="$t('login.right.input.username.label')" field="username" v-model=username />
+      <FormInput type="password" :label="$t('login.right.input.password.label')" field="password" v-model=password />
+      <FormButton :value="$t('login.right.input.button.value')" type="input-btn large-text" />
     </form>
   </div>
 </template>
@@ -23,9 +15,13 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 import { useRouter } from 'vue-router';
-import { useToken, useLoading } from '../stores/store';
-import showAlert from './scripts/showAlerts';
+import { useToken, useLoading, usePath } from '@/stores/state';
+import showAlert from '@/scripts/showAlert';
+import FormInput from '@/components/ui/FormInput.vue';
+import FormButton from '@/components/ui/FormButton.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const username = ref('');
 const password = ref('');
 const router = useRouter();
@@ -41,7 +37,7 @@ const login = async () => {
   if (username.value === '' || password.value === '') {
     // Reset loading on validation failure
     useLoading.toggleVisibility(false);
-    showAlert("alert-warning", "WARNING", "Username and password are required!");
+    showAlert("alert-warning", t('login.alerts.credentials.title'), t('login.alerts.credentials.text'));
     return; // Return early if validation fails
   }
 
@@ -57,14 +53,15 @@ const login = async () => {
     // Store the token in Vue store
     const token = response.data.payload.token;
     useToken.setToken(token);
+    usePath.changeName('upload');
 
     // Redirect the user to /uploads route
     await router.push('/upload');
   } catch (error) {
     // Set the error message for alerts
-    const errorMessage = error.message || "Wrong username or password!";
+    const errorMessage = error.message || t('login.alerts.error.text');
     useLoading.toggleVisibility(false);
-    showAlert("alert-error", "ERROR", errorMessage);
+    showAlert("alert-error", t('login.alerts.error.title'), errorMessage);
   } finally {
     // Reset loading on completion (success or failure)
     useLoading.toggleVisibility(false);
@@ -72,7 +69,16 @@ const login = async () => {
 };
 </script>
 
-<style scoped>
+<style>
+.upload-heading {
+  font-size: 1.1rem;
+  color: var(--mq-green-soft);
+}
+
+form {
+  width: 80%;
+}
+
 .form-group {
   position: relative;
   display: flex;
@@ -80,23 +86,21 @@ const login = async () => {
   width: 100%;
   flex-direction: column;
   justify-content: space-evenly;
-  padding-left: 20%;
+  align-items: center;
   overflow: hidden;
-  ;
 }
 
 .input-mid {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 100%;
   margin-top: 5%;
 }
 
 .input-group-tall {
   position: relative;
   display: flex;
-  width: 80%;
   margin-top: 5%;
 }
 
@@ -111,10 +115,11 @@ const login = async () => {
   border-radius: 5px;
   border: 1px solid #c3c3c3;
   font-size: 0.9em;
+  padding-left: 15px;
 }
 
 .input-group .large-text {
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 .input-group input:focus {
@@ -129,12 +134,45 @@ const login = async () => {
   cursor: pointer;
   height: 40px;
   border-radius: 5px;
-  border: 1px solid #c3c3c3;
-  color: #666;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
   font-size: 1.2em;
+  background-color: var(--color-background-soft);
 }
 
 .input-btn:hover {
-  background-color: #fff;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border-hover);
+}
+
+@media (max-width: 1024px) {
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: fit-content;
+    max-width: 500px;
+  }
+
+  .input-mid {
+    margin-top: 5px;
+  }
+
+  .input-group-tall {
+    margin-top: 5px;
+  }
+
+  .input-group label {
+    padding: 0 0 2px 5px;
+  }
+
+  .input-group input {
+    height: 40px;
+    font-size: 0.7em;
+  }
+
+  .input-btn {
+    margin-top: 20px;
+  }
 }
 </style>

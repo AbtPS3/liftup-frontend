@@ -1,37 +1,221 @@
 @import './base.css';
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
-}
-
-a,
-.link {
+a {
   text-decoration: none;
-  color: rgba(119, 173, 120, 1);
+  color: var(--mq-green-norm);
   transition: 0.4s;
-  letter-spacing: 0.1em;
-  font-size: 1.2em;
+  padding: 3px;
+  cursor: pointer;
 }
 
 @media (hover: hover) {
   a:hover {
-    color: rgba(80, 75, 67, 1);
+    color: var(--mq-green-mute);
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+.main {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  top: 0;
+  margin: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+  height: 65%;
+  width: 65%;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 5px 5px 5px 1px var(--color-box-shadow);
+}
+
+.preview {
+  visibility: visible;
+  transition: 300ms;
+}
+
+.preview-cover {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.alert {
+  visibility: visible;
+  transition: 300ms;
+}
+
+.alert-cover {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+}
+
+.alert-box {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  height: 9%;
+  width: fit-content;
+  min-height: 65px;
+  min-width: 280px;
+  font-size: 1.1em;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  padding: 0 10px 0 10px;
+}
+
+.alert-error {
+  background-color: rgba(172, 57, 49, 0.5);
+  background-color: var(--color-alert-error);
+  color: rgba(255, 255, 255, 1);
+}
+
+.alert-warning {
+  background-color: rgba(245, 184, 65, 1);
+  background-color: var(--color-alert-warning);
+  color: rgba(255, 255, 255, 1);
+}
+
+.alert-info {
+  background-color: rgba(165, 216, 255, 0.6);
+  background-color: var(--color-alert-info);
+  color: rgba(255, 255, 255, 1);
+}
+
+.alert-success {
+  background-color: rgba(39, 136, 49, 0.7);
+  background-color: var(--color-alert-success);
+  color: rgba(255, 255, 255, 1);
+}
+
+.alert-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.alert-message {
+  font-weight: normal;
+}
+
+.loading {
+  visibility: visible;
+  transition: 300ms;
+}
+
+.loading-cover {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-box {
+  position: absolute;
+  width: fit-content;
+  color: white;
+  font-size: 3em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  padding: 0 10px 0 10px;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: smaller;
+}
+
+footer a {
+  color: var(--color-text-soft);
+}
+
+footer a:hover {
+  color: var(--mq-green-norm);
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: underline;
+}
+
+.text-large {
+  font-size: 1.1em;
+  text-align: justify;
+}
+
+
+@media (max-width: 1024px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.1fr 1.9fr;
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    box-shadow: none;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+  .alert-cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .alert-box {
+    position: relative;
+    padding: 0;
+    margin-left: 30px;
+    margin-top: -50px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .container {
+    min-height: 600px;
+    min-width: 990px;
   }
 }

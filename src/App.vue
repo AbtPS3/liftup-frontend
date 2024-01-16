@@ -1,18 +1,6 @@
-<script setup>
-import { computed } from "vue";
-import { RouterView } from "vue-router"
-import { useAlert } from "@/stores/store";
-import NavTitle from "./components/NavTitle.vue";
-import Alert from "./components/Alert.vue";
-import Preview from "./components/Preview.vue";
-import { useToken, useLoading, usePreview } from "@/stores/store";
-
-const token = computed(() => useToken.token);
-</script>
-
 <template>
   <Preview v-if="usePreview.visible" />
-  <Alert :title="useAlert.title" :message="useAlert.message" :type="useAlert.type" v-if="useAlert.visible" />
+  <AlertCover :title="useAlert.title" :message="useAlert.message" :type="useAlert.type" v-if="useAlert.visible" />
   <div v-if="useLoading.visible" class="loading loading-cover">
     <div class="loading-box">
       <img src="@/assets/tepi-loading.svg" alt="loading animation" style="height: 50px; width: 50px;">
@@ -20,40 +8,64 @@ const token = computed(() => useToken.token);
   </div>
   <div class="container">
     <div class="container-left">
-      <img class="logo" src="@/assets/tanzania-coat.png" alt="Tanzania Coat of Arms" width="100" height="100">
-      <NavTitle v-if="token == null" msg="Please login to upload files!" />
-      <NavTitle v-else msg="Upload CSV files on the right." />
-      <nav class="main-links">
-        <a v-if="token != null" href="/" class="routerlink" @click="useToken.removeToken()">Logout</a>
+      <img class="logo" src="@/assets/tanzania-coat.png" :alt="$t('shared.logo.alt')">
+      <PageTitle v-if="token == null" :title="$t('login.left.heading')" :prompt="$t('login.left.prompt')" />
+      <PageTitle v-else :title="$t('upload.left.heading')" :prompt="$t('upload.left.prompt')" />
+      <nav class="main-links" v-if="token !== null">
+        <RouterLink v-if="usePath.name !== 'instructions'" to="/instructions" class="routerlink"
+          @click="usePath.changeName('instructions')">{{ $t('shared.link.howto') }}
+        </RouterLink>
+        <RouterLink v-if="usePath.name !== 'upload'" to="/upload" class="routerlink"
+          @click="usePath.changeName('upload')">{{ $t('shared.link.upload') }}</RouterLink>
+        | <a href="/" class="routerlink" @click="useToken.removeToken()">{{ $t('shared.link.logout') }}</a>
       </nav>
+      <br>
     </div>
     <div class="container-right">
+      <ModeSelector v-if="token !== null && usePath.name == 'upload'" />
       <RouterView />
     </div>
   </div>
+  <footer>
+    <a @click.prevent="useLocale.changeLanguage('en')">English</a> |
+    <a @click.prevent="useLocale.changeLanguage('sw')">Kiswahili</a>
+  </footer>
 </template>
+
+<script setup>
+import { computed } from 'vue';
+import { RouterLink, RouterView } from 'vue-router'
+import PageTitle from './components/PageTitle.vue'
+import { useToken, useAlert, useLoading, useLocale, usePreview, usePath } from './stores/state';
+import AlertCover from '@/components/ui/AlertCover.vue';
+import ModeSelector from './components/ui/ModeSelector.vue';
+import Preview from './components/ui/Preview.vue';
+
+const token = computed(() => useToken.token);
+
+</script>
 
 <style scoped>
 .container-left {
   position: relative;
-  height: 60%;
-  width: 45%;
-  color: #333;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  place-content: center;
   align-items: center;
-  justify-content: space-around;
-
+  background-color: var(--color-panel-left);
+  text-align: center;
 }
 
 .container-right {
   position: relative;
   height: 100%;
-  width: 55%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: #e2e2e2;
+  background-color: var(--color-panel-right);
 }
 
 main {
@@ -74,9 +86,8 @@ main {
 }
 
 .main-links {
-  height: 15%;
-  margin-top: 10%;
-  font-size: 1em;
+  margin: 5px;
+  font-size: 1.1em;
 }
 
 .main-links .routerlink {
@@ -86,5 +97,47 @@ main {
 .left-link::after {
   content: ' | ';
   color: grey;
+}
+
+@media (min-width: 1025px) {
+  .container-left {
+    padding-top: 30px;
+  }
+
+  .container-left img {
+    margin: 5px;
+    height: 120px;
+    width: 120px;
+  }
+
+  .main-links {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+
+  main {
+    padding: 20px;
+  }
+
+  .container-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+  }
+
+  .container-left img {
+    margin: 5px;
+    height: 80px;
+    width: 80px;
+  }
+
+  .main-links {
+    width: auto;
+  }
+
 }
 </style>

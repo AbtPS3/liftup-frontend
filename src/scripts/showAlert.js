@@ -1,4 +1,4 @@
-import { useAlert } from "../../stores/store";
+import { useAlert } from "@/stores/state";
 
 function showAlert(alertType, alertTitle, alertMessage) {
   useAlert.toggleVisibility(true);
@@ -7,7 +7,7 @@ function showAlert(alertType, alertTitle, alertMessage) {
   useAlert.changeMessage(alertMessage);
   setTimeout(() => {
     useAlert.toggleVisibility(false);
-  }, 5000);
+  }, 3000);
 }
 
 export default showAlert;

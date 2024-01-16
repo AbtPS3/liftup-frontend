@@ -1,48 +1,46 @@
 <template>
   <div class="form-group">
-    <div class="input-group input-mid">
-      <label for="facility_name">Facility Name</label>
-      <input v-model="facilityName" class="input-text" type="text" name="facility_name" id="facility_name" disabled>
-    </div>
-    <div class="input-group input-mid">
-      <label for="provider_id">Provider ID</label>
-      <input v-model="userName" class="input-text" type="text" name="provider_id" id="provider_id" disabled>
-    </div>
-    <div class="input-group input-group-tall">
-      <div class="upload-area" tabindex="0" @dragover.prevent @drop="handleDrop" @dragleave="handleDragLeave">
-        <img class="small-icon" src="@/assets/upload-icon.png" alt="Upload Icon">
-        <p class="upload-title">{{ fileTitle }}</p>
-        <p class="upload-details">{{ fileMessage }}</p>
-        <input type="file" class="csv-file" tabindex="-1" ref="fileInput" @change="handleFileChange" accept="csv" />
+    <p class="upload-heading">{{ $t('upload.heading.form') }}</p>
+    <form @submit.prevent="login">
+      <FormDisabled type="text" :label="$t('upload.input.facilityLabel')" field="facility_name" :value=facilityName />
+      <FormDisabled type="text" :label="$t('upload.input.providerLabel')" field="provider_id" :value=userName />
+      <div class="input-group input-group-tall">
+        <div class="upload-area" tabindex="0" @dragover.prevent @drop="handleDrop" @dragleave="handleDragLeave">
+          <img class="small-icon" src="@/assets/upload-icon.png" alt="Upload Icon">
+          <p class="upload-title">{{ fileTitle }}</p>
+          <p class="upload-details">{{ fileMessage }}</p>
+          <input type="file" class="csv-file" tabindex="-1" ref="fileInput" @change="handleFileChange" accept="csv" />
+        </div>
       </div>
-    </div>
-    <div class="input-group input-mid">
-      <Button v-if="fileStatus == true" :class="'input-btn large-text'" :value="'Preview File'"
+      <FormButton v-if="fileStatus == true" :value="$t('upload.input.buttonValue')" type="input-btn large-text"
         @click="usePreview.toggleVisibility(true)" />
-    </div>
+    </form>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
 import { jwtDecode } from "jwt-decode";
+import { useToken, usePreview, useFileStatus, useMode } from "@/stores/state";
 import Papa from "papaparse";
-import { useToken, usePreview, useFileStatus } from "../stores/store";
-import showAlert from "./scripts/showAlerts";
-import arraysEqual from "./scripts/arrayEquals";
-import Button from "./ui/Button.vue";
+import showAlert from "@/scripts/showAlert";
+import arraysEqual from "@/scripts/arrayEquals";
+import FormDisabled from '@/components/ui/FormDisabled.vue';
+import FormButton from '@/components/ui/FormButton.vue';
+import { useI18n } from "vue-i18n";
 
-const token = useToken.token;
-const decodedJwt = jwtDecode(token);
-const facilityName = decodedJwt.data.facility;
-const userName = decodedJwt.data.providerId;
-
+const { t } = useI18n();
+const token = computed(() => useToken.token);
+const decodedJwt = jwtDecode(token.value);
+const facilityName = ref(decodedJwt.data.facility);
+const userName = ref(decodedJwt.data.providerId);
 const isDragging = ref(false);
 const fileInput = ref(null);
-const fileStatus = computed(() => useFileStatus.value);
+const fileStatus = computed(() => useFileStatus.status);
 const fileTitle = computed(() => useFileStatus.title);
 const fileMessage = computed(() => useFileStatus.message);
 const csvData = ref(null);
+const mode = computed(() => useMode.mode);
 
 const handleDrop = (event) => {
   event.preventDefault();
@@ -67,15 +65,15 @@ const handleFileChange = async (event) => {
 function processCsv(files) {
   for (const file of files) {
     if (files.length > 0) {
-      useFileStatus.toggleValue(true, file.name, "Click 'Preview File' to preview!");
+      useFileStatus.toggleStatus(true, file.name, t('upload.validation.passed.prompt'));
       if (files[0].type != "text/csv") {
-        useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
+        useFileStatus.toggleStatus(false, t('upload.validation.type.heading'), t('upload.validation.type.prompt'));
         fileInput.value = null;
-        showAlert("alert-error", "ERROR", "Only CSV files allowed!");
+        showAlert("alert-error", t('upload.alerts.type.title'), t('upload.alerts.type.text'));
       } else if (files[0].size > import.meta.env.VITE_MAX_FILE_SIZE) {
-        useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
+        useFileStatus.toggleStatus(false, t('upload.validation.size.heading'), t('upload.validation.size.prompt'));
         fileInput.value = null;
-        showAlert("alert-error", "ERROR", "CSV file-size limit reached!");
+        showAlert("alert-error", t('upload.alerts.size.title'), t('upload.alerts.size.text'));
       } else {
         const reader = new FileReader();
         reader.onload = () => {
@@ -84,12 +82,26 @@ function processCsv(files) {
               csvData.value = result.data;
               const rawCsvData = csvData._rawValue;
               const expectedHeaders = import.meta.env.VITE_CSV_HEADERS.split(",");
-              if (!arraysEqual(rawCsvData[0], expectedHeaders)) {
-                useFileStatus.toggleValue(false, "Upload a file", "Click or Drop your file here!");
-                fileInput.value = null;
-                showAlert("alert-error", "ERROR", "File headings are not valid!");
+              const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
+              const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
+
+
+              if (mode.value == 'clients') {
+                if (!arraysEqual(rawCsvData[0], expectedClientsHeaders)) {
+                  useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
+                  fileInput.value = null;
+                  showAlert("alert-error", t('upload.alerts.headers.clients.title'), t('upload.alerts.headers.clients.text'));
+                } else {
+                  usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
+                }
               } else {
-                usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
+                if (!arraysEqual(rawCsvData[0], expectedContactsHeaders)) {
+                  useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
+                  fileInput.value = null;
+                  showAlert("alert-error", t('upload.alerts.headers.contacts.title'), t('upload.alerts.headers.contacts.text'));
+                } else {
+                  usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
+                }
               }
             },
           });
@@ -101,65 +113,16 @@ function processCsv(files) {
 }
 </script>
 
+
+
 <style scoped>
-.form-group {
-  position: relative;
-  display: flex;
-  height: 100%;
-  width: 100%;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  overflow: hidden;
-}
-
-.input-mid {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  margin-top: 5%;
-}
-
-.input-group-tall {
-  position: relative;
-  display: flex;
-  width: 80%;
-  margin-top: 5%;
-}
-
-.input-group label {
-  font-size: 0.9em;
-  color: #999;
-  padding: 0 0 5px 10px;
-}
-
-.input-group input {
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid #c3c3c3;
-  font-size: 0.9em;
-  padding: 0 10px 0 10px;
-}
-
-.input-group .large-text {
-  font-size: 1.2em;
-}
-
-.input-group input:focus {
-  border: 1px solid #989898;
-  outline: none !important;
-  color: #333;
-  font-size: 1.2em;
-}
-
 .upload-area {
-  border: 2px dashed #ccc;
+  border: 2px dashed var(--color-border);
   border-radius: 5px;
-  background-color: #eaeaea;
+  background-color: var(--color-background-soft);
   text-align: center;
   cursor: pointer;
-  height: 100%;
+  height: 150px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -168,7 +131,7 @@ function processCsv(files) {
 }
 
 .upload-area:hover {
-  border-color: #4CAF50;
+  border-color: var(--color-border-hover);
 }
 
 .upload-area input {
@@ -178,12 +141,12 @@ function processCsv(files) {
   left: 0;
   height: 100%;
   width: 100%;
-  color: #666;
+  color: var(--color-text);
 }
 
 .upload-area .upload-title {
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 .upload-area .upload-details {
@@ -193,6 +156,6 @@ function processCsv(files) {
 .upload-area .small-icon {
   height: 32px;
   width: 32px;
-  padding-top: 10px;
+  margin-top: 10px;
 }
 </style>

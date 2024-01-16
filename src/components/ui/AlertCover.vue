@@ -2,7 +2,8 @@
   <div class="alert" @click="useAlert.toggleVisibility(false)">
     <div class="alert-cover">
       <div class="alert-box" :class="[type]">
-        <strong>{{ title }}:&nbsp;</strong> {{ message }}
+        <span class="alert-title">{{ title }}</span>
+        <span class="alert-message">{{ message }}</span>
       </div>
     </div>
   </div>
@@ -10,7 +11,7 @@
 
 <script setup>
 
-import { useAlert } from '../stores/store';
+import { useAlert } from '@/stores/state';
 
 const props = defineProps(["title", "message", "type"]);
 

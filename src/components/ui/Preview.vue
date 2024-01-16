@@ -8,12 +8,8 @@
 
 <script setup>
 
-import { usePreview } from '../stores/store';
+import { usePreview } from '@/stores/state';
 
-import IndexTable from './ui/IndexTable.vue';
-
-// const props = defineProps(["header", "rows"]);
+import IndexTable from '@/components/ui/IndexTable.vue';
 
 </script>
-
-<style scoped></style>
