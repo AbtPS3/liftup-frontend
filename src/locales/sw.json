@@ -76,6 +76,10 @@
       "headers": {
         "heading": "Vichwa Vina Shida",
         "prompt": "Pakia faili na headers sahihi!"
+      },
+      "dob": {
+        "heading": "Rekebisha Tarehe",
+        "prompt": "Rekebisha tarehe ya kuzaliwa kisha pakia upya."
       }
     },
     "alerts": {
@@ -95,6 +99,10 @@
         "contacts": {
           "title": "KOSA LA VICHWA VYA WALIOTAJWA",
           "text": "Soma maelekezo kuhusu VICHWA VYA WALIOTAJWA!"
+        },
+        "dob": {
+          "title": "KOSA LA TAREHE",
+          "text": "Tarehe inataka mwaka-mwezi-siku! mf. 2023-03-17"
         }
       }
     }

@@ -76,6 +76,10 @@
       "headers": {
         "heading": "Headers Mismatch",
         "prompt": "Upload a file with correct headers!"
+      },
+      "dob": {
+        "heading": "DOB Format",
+        "prompt": "Please use correct date format."
       }
     },
     "alerts": {
@@ -95,6 +99,10 @@
         "contacts": {
           "title": "CONTACT HEADERS ERROR",
           "text": "Read instructions on CONTACT UPLOAD headers!"
+        },
+        "dob": {
+          "title": "DOB ERROR",
+          "text": "Dates must be in yyyy-MM-dd e.g. 2023-11-21"
         }
       }
     }

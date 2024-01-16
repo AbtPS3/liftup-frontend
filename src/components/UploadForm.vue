@@ -92,7 +92,20 @@ function processCsv(files) {
                   fileInput.value = null;
                   showAlert("alert-error", t('upload.alerts.headers.clients.title'), t('upload.alerts.headers.clients.text'));
                 } else {
-                  usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
+                  // Check the format for every fifth column starting from the second row (index 1)
+                  const isValidFormat = rawCsvData.slice(1).every(row => {
+                    const fifthColumnValue = row[4]; // 4 for fifth row (dob)
+                    return isDateFormatValid(fifthColumnValue);
+                  });
+                  if (isValidFormat) {
+                    // If the format is valid for every fifth column, proceed to usePreview
+                    usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
+                  } else {
+                    // If the format check fails for any fifth column, show an error alert
+                    useFileStatus.toggleStatus(false, t('upload.validation.dob.heading'), t('upload.validation.dob.prompt'));
+                    fileInput.value = null;
+                    showAlert("alert-error", t('upload.alerts.headers.dob.title'), t('upload.alerts.headers.dob.text'));
+                  }
                 }
               } else {
                 if (!arraysEqual(rawCsvData[0], expectedContactsHeaders)) {
@@ -100,7 +113,20 @@ function processCsv(files) {
                   fileInput.value = null;
                   showAlert("alert-error", t('upload.alerts.headers.contacts.title'), t('upload.alerts.headers.contacts.text'));
                 } else {
-                  usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
+                  // Check the format for every fifth column starting from the second row (index 1)
+                  const isValidFormat = rawCsvData.slice(1).every(row => {
+                    const fifthColumnValue = row[3]; // 4 for fifth row (dob)
+                    return isDateFormatValid(fifthColumnValue);
+                  });
+                  if (isValidFormat) {
+                    // If the format is valid for every fifth column, proceed to usePreview
+                    usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
+                  } else {
+                    // If the format check fails for any fifth column, show an error alert
+                    useFileStatus.toggleStatus(false, t('upload.validation.dob.heading'), t('upload.validation.dob.prompt'));
+                    fileInput.value = null;
+                    showAlert("alert-error", t('upload.alerts.headers.dob.title'), t('upload.alerts.headers.dob.text'));
+                  }
                 }
               }
             },
@@ -110,6 +136,11 @@ function processCsv(files) {
       }
     }
   }
+}
+function isDateFormatValid(dateString) {
+  // Regular expression for yyyy-MM-dd format
+  const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+  return dateFormatRegex.test(dateString);
 }
 </script>
 
