@@ -137,11 +137,18 @@ function processCsv(files) {
     }
   }
 }
+
 function isDateFormatValid(dateString) {
-  // Regular expression for yyyy-MM-dd format
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
-  return dateFormatRegex.test(dateString);
+  if (dateString == undefined || '') {
+    return true;
+  } else {
+    return dateFormatRegex.test(dateString);
+  }
 }
+
+
+
 </script>
 
 

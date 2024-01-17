@@ -37,7 +37,7 @@
         <td>{{ t('indexTable.headings.heading15') }}</td>
         <td>{{ t('indexTable.headings.heading16') }}</td>
       </tr>
-      <tr v-for="(row, index) in rows" :key="row">
+      <tr v-for="(row, index) in nonEmptyRows" :key="row">
         <th class="left-cell"><span v-if="index < rows.length">{{ index + 1 }}</span></th>
         <td v-for="item in row">{{ item }}</td>
       </tr>
@@ -62,6 +62,10 @@ import { jwtDecode } from 'jwt-decode';
 const { t } = useI18n();
 const csvData = usePreview.getCsvData();
 const rows = csvData.rows;
+// Filter out empty rows
+const nonEmptyRows = rows.filter(row =>
+  row.some(value => value !== undefined && value !== '')
+);
 const headers = csvData.headers;
 const token = computed(() => useToken.token);
 const decodedJwt = jwtDecode(token.value);
@@ -93,7 +97,7 @@ const uploadFile = async (headers, rows) => {
   filename = `${currentDate}_${mode.value}_${facilityName.value}.csv`;
   // console.log(filename);
 
-  const csvString = Papa.unparse([headers, ...rows]);
+  const csvString = Papa.unparse([headers, ...nonEmptyRows]);
   const blob = new Blob([csvString], { type: 'text/csv' });
 
   const formData = new FormData();
