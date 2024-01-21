@@ -44,7 +44,7 @@ const login = async () => {
   try {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const backendPort = import.meta.env.VITE_BACKEND_PORT;
-    const backendAddress = backendUrl + ":" + backendPort + "/api/v1/uploads/login";
+    const backendAddress = backendUrl + ":" + backendPort + "/api/v1/authentication/login";
     const response = await axios.post(backendAddress, {
       username: username.value,
       password: password.value,
