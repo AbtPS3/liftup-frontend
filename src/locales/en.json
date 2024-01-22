@@ -17,7 +17,7 @@
       "prompt": "Please login to upload files."
     },
     "right": {
-      "heading": "Please enter UCS username and password!",
+      "heading": "Enter UCS username and password!",
       "input": {
         "username": {
           "label": "UCS Username",
