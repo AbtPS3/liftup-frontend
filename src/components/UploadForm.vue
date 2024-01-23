@@ -52,7 +52,7 @@ const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(
 const clientsCtcNumberColumnIndex = import.meta.env.VITE_CSV_CLIENTS_CTC_COLUMN - 1;
 const contactsCtcNumberColumnIndex = import.meta.env.VITE_CSV_CONTACTS_CTC_COLUMN - 1;
 const clientsDateColumnIndex = import.meta.env.VITE_CSV_CLIENTS_DATE_COLUMN - 1;
-const contactsDateColumnIndex = import.meta.env.VITE_CSV_CLIENTS_DATE_COLUMN - 1;
+const contactsDateColumnIndex = import.meta.env.VITE_CSV_CONTACTS_DATE_COLUMN - 1;
 
 
 const handleDragOver = (event) => {
