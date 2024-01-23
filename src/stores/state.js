@@ -58,7 +58,7 @@ const prompt =
   locale === "en" ? "Click/Drag to upload a CSV file." : "Bofya hapa kuweka faili la CSV.";
 
 export const useFileStatus = reactive({
-  status: ref(localStorage.getItem("FileStatus") || false),
+  status: ref(false),
   title: ref("" || heading),
   message: ref("" || prompt),
 
@@ -69,7 +69,7 @@ export const useFileStatus = reactive({
   },
 
   setFileStatus(status) {
-    localStorage.setItem("FileStatus", status);
+    // localStorage.setItem("FileStatus", status);
     this.status = status;
   },
 

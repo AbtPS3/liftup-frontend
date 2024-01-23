@@ -5,13 +5,11 @@
       <FormDisabled type="text" :label="$t('upload.input.facilityLabel')" field="facility_name" :value=facilityName />
       <FormDisabled type="text" :label="$t('upload.input.providerLabel')" field="provider_id" :value=userName />
       <div class="input-group input-group-tall">
-        <div class="upload-area" tabindex="0" @dragover.prevent="handleDragOver" @drop="handleDrop"
-          @dragleave="handleDragLeave">
+        <div class="upload-area" tabindex="0" @dragover.prevent @drop="handleDrop" @dragleave="handleDragLeave">
           <img class="small-icon" src="@/assets/upload-icon.png" alt="Upload Icon">
           <p class="upload-title">{{ fileTitle }}</p>
           <p class="upload-details">{{ fileMessage }}</p>
-          <input type="file" class="csv-file" tabindex="-1" ref="fileInput" @change="handleFileChange"
-            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          <input type="file" class="csv-file" tabindex="-1" ref="fileInput" @change="handleFileChange" accept="csv" />
         </div>
       </div>
       <FormButton v-if="fileStatus == true" :value="$t('upload.input.buttonValue')" type="input-btn large-text"
@@ -44,18 +42,15 @@ const fileMessage = computed(() => useFileStatus.message);
 const csvData = ref(null);
 const mode = computed(() => useMode.mode);
 
-const handleDragOver = (event) => {
-  event.preventDefault();
-  isDragging.value = true; // Setting isDragging to true when dragover event occurs
-  fileMessage.value = "Release to upload!"; // Changing the message when a dragover event occurs!
-};
-
-const handleDrop = async (event) => {
+const handleDrop = (event) => {
   event.preventDefault();
   isDragging.value = false;
   const files = event.dataTransfer.files;
   processCsv(files)
-  event.dataTransfer.value = "";
+
+  if (isDragging.value) {
+    fileMessage.value = "Release to upload!";
+  }
 };
 
 const handleDragLeave = () => {
@@ -65,7 +60,6 @@ const handleDragLeave = () => {
 const handleFileChange = async (event) => {
   const files = event.target.files;
   processCsv(files)
-  event.target.value = "";
 };
 
 function processCsv(files) {
@@ -87,6 +81,7 @@ function processCsv(files) {
             complete: (result) => {
               csvData.value = result.data;
               const rawCsvData = csvData._rawValue;
+              const expectedHeaders = import.meta.env.VITE_CSV_HEADERS.split(",");
               const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
               const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
 
