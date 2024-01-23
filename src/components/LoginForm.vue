@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script lang="js" setup>
+<script setup>
 import { ref } from 'vue';
 import axios from 'axios';
 

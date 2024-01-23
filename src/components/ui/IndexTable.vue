@@ -191,7 +191,7 @@ td {
   }
 
   td {
-    padding: 8px;
+    padding: 4px;
     max-width: 100px;
     height: 20px;
   }
