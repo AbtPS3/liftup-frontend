@@ -80,6 +80,10 @@
       "dob": {
         "heading": "DOB Format",
         "prompt": "Please use correct date format."
+      },
+      "ctc": {
+        "heading": "CTC Number Format",
+        "prompt": "Please check all CTC Numbers."
       }
     },
     "alerts": {
@@ -103,6 +107,10 @@
         "dob": {
           "title": "DOB ERROR",
           "text": "Dates must be in yyyy-MM-dd e.g. 2023-11-21"
+        },
+        "ctc": {
+          "title": "CTC # ERROR",
+          "text": "CTC Number format must be XX-XX-XXXX-XXXXXX."
         }
       }
     }

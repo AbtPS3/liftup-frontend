@@ -139,5 +139,10 @@ main {
     width: auto;
   }
 
+  .main {
+    width: 60%;
+    min-width: 600px;
+  }
+
 }
 </style>

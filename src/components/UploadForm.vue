@@ -30,6 +30,8 @@ import arraysEqual from "@/scripts/arrayEquals";
 import FormDisabled from '@/components/ui/FormDisabled.vue';
 import FormButton from '@/components/ui/FormButton.vue';
 import { useI18n } from "vue-i18n";
+import * as XLSX from "xlsx";
+import moment from "moment";
 
 const { t } = useI18n();
 const token = computed(() => useToken.token);
@@ -44,6 +46,15 @@ const fileMessage = computed(() => useFileStatus.message);
 const csvData = ref(null);
 const mode = computed(() => useMode.mode);
 
+// Shared environment variables
+const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
+const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
+const clientsCtcNumberColumnIndex = import.meta.env.VITE_CSV_CLIENTS_CTC_COLUMN - 1;
+const contactsCtcNumberColumnIndex = import.meta.env.VITE_CSV_CONTACTS_CTC_COLUMN - 1;
+const clientsDateColumnIndex = import.meta.env.VITE_CSV_CLIENTS_DATE_COLUMN - 1;
+const contactsDateColumnIndex = import.meta.env.VITE_CSV_CLIENTS_DATE_COLUMN - 1;
+
+
 const handleDragOver = (event) => {
   event.preventDefault();
   isDragging.value = true; // Setting isDragging to true when dragover event occurs
@@ -54,7 +65,7 @@ const handleDrop = async (event) => {
   event.preventDefault();
   isDragging.value = false;
   const files = event.dataTransfer.files;
-  processCsv(files)
+  processFile(files)
   event.dataTransfer.value = "";
 };
 
@@ -64,94 +75,152 @@ const handleDragLeave = () => {
 
 const handleFileChange = async (event) => {
   const files = event.target.files;
-  processCsv(files)
+  processFile(files)
   event.target.value = "";
 };
 
-function processCsv(files) {
+function processFile(files) {
   for (const file of files) {
     if (files.length > 0) {
-      useFileStatus.toggleStatus(true, file.name, t('upload.validation.passed.prompt'));
-      if (files[0].type != "text/csv") {
+      const fileType = file.type;
+
+      if (fileType === 'text/csv' || fileType === 'application/vnd.ms-excel' || fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        // CSV or Excel file
+        useFileStatus.toggleStatus(true, file.name, t('upload.validation.passed.prompt'));
+        if (fileType !== 'text/csv') {
+          // Handle Excel file
+          readExcelFile(file);
+        } else {
+          // Handle CSV file
+          readCsvFile(file);
+        }
+      } else {
         useFileStatus.toggleStatus(false, t('upload.validation.type.heading'), t('upload.validation.type.prompt'));
         fileInput.value = null;
         showAlert("alert-error", t('upload.alerts.type.title'), t('upload.alerts.type.text'));
-      } else if (files[0].size > import.meta.env.VITE_MAX_FILE_SIZE) {
-        useFileStatus.toggleStatus(false, t('upload.validation.size.heading'), t('upload.validation.size.prompt'));
-        fileInput.value = null;
-        showAlert("alert-error", t('upload.alerts.size.title'), t('upload.alerts.size.text'));
-      } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          Papa.parse(reader.result, {
-            complete: (result) => {
-              csvData.value = result.data;
-              const rawCsvData = csvData._rawValue;
-              const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
-              const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
-
-
-              if (mode.value == 'clients') {
-                if (!arraysEqual(rawCsvData[0], expectedClientsHeaders)) {
-                  useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
-                  fileInput.value = null;
-                  showAlert("alert-error", t('upload.alerts.headers.clients.title'), t('upload.alerts.headers.clients.text'));
-                } else {
-                  // Check the format for every fifth column starting from the second row (index 1)
-                  const isValidFormat = rawCsvData.slice(1).every(row => {
-                    const fifthColumnValue = row[4]; // 4 for fifth row (dob)
-                    return isDateFormatValid(fifthColumnValue);
-                  });
-                  if (isValidFormat) {
-                    // If the format is valid for every fifth column, proceed to usePreview
-                    usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
-                  } else {
-                    // If the format check fails for any fifth column, show an error alert
-                    useFileStatus.toggleStatus(false, t('upload.validation.dob.heading'), t('upload.validation.dob.prompt'));
-                    fileInput.value = null;
-                    showAlert("alert-error", t('upload.alerts.headers.dob.title'), t('upload.alerts.headers.dob.text'));
-                  }
-                }
-              } else {
-                if (!arraysEqual(rawCsvData[0], expectedContactsHeaders)) {
-                  useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
-                  fileInput.value = null;
-                  showAlert("alert-error", t('upload.alerts.headers.contacts.title'), t('upload.alerts.headers.contacts.text'));
-                } else {
-                  // Check the format for every fifth column starting from the second row (index 1)
-                  const isValidFormat = rawCsvData.slice(1).every(row => {
-                    const fifthColumnValue = row[3]; // 4 for fifth row (dob)
-                    return isDateFormatValid(fifthColumnValue);
-                  });
-                  if (isValidFormat) {
-                    // If the format is valid for every fifth column, proceed to usePreview
-                    usePreview.setCsvData(rawCsvData[0], rawCsvData.slice(1))
-                  } else {
-                    // If the format check fails for any fifth column, show an error alert
-                    useFileStatus.toggleStatus(false, t('upload.validation.dob.heading'), t('upload.validation.dob.prompt'));
-                    fileInput.value = null;
-                    showAlert("alert-error", t('upload.alerts.headers.dob.title'), t('upload.alerts.headers.dob.text'));
-                  }
-                }
-              }
-            },
-          });
-        };
-        reader.readAsText(file);
       }
     }
   }
 }
 
-function isDateFormatValid(dateString) {
+// Handling CSV files
+const readCsvFile = (file) => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    Papa.parse(reader.result, {
+      complete: (result) => {
+        // Process CSV data
+        csvData.value = result.data;
+        const rawCsvData = csvData._rawValue;
+        const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
+        const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
+        if (mode.value === 'clients') {
+          processData(rawCsvData, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsCtcNumberColumnIndex);
+        } else {
+          processData(rawCsvData, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsCtcNumberColumnIndex);
+        }
+      },
+    });
+  };
+  reader.readAsText(file);
+}
+
+// Handling EXCEL files
+const readExcelFile = (file) => {
+  const reader = new FileReader();
+  reader.onload = (excel) => {
+    const data = new Uint8Array(excel.target.result);
+    const workbook = XLSX.read(data, { type: 'array', raw: true, cellDates: true });
+    const sheetName = workbook.SheetNames[0];
+    const rawExcelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1, raw: true, cellDates: true });
+
+    // Filter out empty lines
+    const nonEmptyExcelRows = rawExcelData.filter(row => row.some(cell => cell !== null && cell !== ''));
+
+    if (mode.value === 'clients') {
+      processData(nonEmptyExcelRows, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsCtcNumberColumnIndex);
+    } else {
+      processData(nonEmptyExcelRows, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsCtcNumberColumnIndex);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+};
+
+
+const isDateFormatValid = (dateString) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
-  if (dateString == undefined || '') {
-    return true;
+  if (dateString == undefined || dateString == '') {
+    return false;
   } else {
     return dateFormatRegex.test(dateString);
   }
 }
 
+const formatDate = (dateString) => {
+  if (!dateString) {
+    return null;
+  }
+  const dateStringAsString = dateString.toString();
+  const dateFormat1 = 'YYYY-MM-DD';
+  const parsedDate = moment(new Date(dateStringAsString));
+  if (parsedDate.isValid()) {
+    return parsedDate.format(dateFormat1);
+  } else {
+    return null;
+  }
+}
+
+const isCtcNumberFormatValid = (ctcNumberString) => {
+  const ctcNumberFormatRegex = /^\d{2}-\d{2}-\d{4}-\d{6}$/;
+  if (ctcNumberString == undefined || ctcNumberString == '') {
+    return false;
+  } else {
+    return ctcNumberFormatRegex.test(ctcNumberString);
+  }
+}
+
+const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberColumnIndex) => {
+  if (!arraysEqual(rawData[0], expectedHeaders)) {
+    useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
+    fileInput.value = null;
+    showAlert(`alert-error`, t(`upload.alerts.headers.${mode}.title`), t(`upload.alerts.headers.${mode}.text`));
+  } else {
+    // Map the rawData to replace the date column with formatted date values
+    const formattedData = rawData.map(row => {
+      const dateColumnValue = row[dateColumnIndex];
+      const formattedDateColumnValue = formatDate(dateColumnValue);
+      return [...row.slice(0, dateColumnIndex), formattedDateColumnValue, ...row.slice(dateColumnIndex + 1)];
+    });
+
+    // Check the format for every date column starting from the second row (index 1)
+    const dateIsValidFormat = formattedData.slice(1).every(row => {
+      const formattedDateColumnValue = row[dateColumnIndex];
+      return isDateFormatValid(formattedDateColumnValue);
+    });
+
+    // Check the format for every date column starting from the second row (index 1)
+    const ctcNumberIsValidFormat = formattedData.slice(1).every(row => {
+      const formattedCtcNumberColumnValue = row[ctcNumberColumnIndex];
+      return isCtcNumberFormatValid(formattedCtcNumberColumnValue);
+    });
+
+    if (!dateIsValidFormat) {
+      // If the format check fails for any date column, show an error alert
+      useFileStatus.toggleStatus(false, t('upload.validation.dob.heading'), t('upload.validation.dob.prompt'));
+      fileInput.value = null;
+      showAlert(`alert-error`, t(`upload.alerts.headers.dob.title`), t(`upload.alerts.headers.dob.text`));
+
+    } else if (!ctcNumberIsValidFormat) {
+      // If the format check fails for any CTC column, show an error alert
+      useFileStatus.toggleStatus(false, t('upload.validation.ctc.heading'), t('upload.validation.ctc.prompt'));
+      fileInput.value = null;
+      showAlert(`alert-error`, t(`upload.alerts.headers.ctc.title`), t(`upload.alerts.headers.ctc.text`));
+    } else {
+      // If the format is valid for every date column, proceed to usePreview
+      usePreview.setCsvData(formattedData[0], formattedData.slice(1));
+    }
+  }
+};
 
 
 </script>

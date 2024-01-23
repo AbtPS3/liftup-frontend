@@ -151,7 +151,8 @@ form {
     flex-direction: column;
     justify-content: flex-start;
     height: fit-content;
-    max-width: 500px;
+    min-width: 350px;
+    max-width: 800px;
   }
 
   .input-mid {

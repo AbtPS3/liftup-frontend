@@ -184,4 +184,20 @@ td {
   align-items: center;
   min-width: 30%;
 }
+
+@media (max-width: 1024px) {
+  table {
+    font-size: smaller;
+  }
+
+  td {
+    padding: 8px;
+    max-width: 100px;
+    height: 20px;
+  }
+
+  th {
+    padding: 0 8px 0 8px;
+  }
+}
 </style>
