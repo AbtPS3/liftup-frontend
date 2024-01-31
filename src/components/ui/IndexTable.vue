@@ -88,6 +88,7 @@ const uploadButtonClick = () => {
 };
 
 const uploadFile = async (headers, rows) => {
+  console.log(headers);
 
   // const formData = new FormData();
   // formData.append('file', blob, filename);

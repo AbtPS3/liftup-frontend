@@ -160,6 +160,12 @@ const formatDate = (dateString) => {
   if (!dateString) {
     return null;
   }
+
+  // Handle the first row exception - misomisondo umepigaje hapo
+  if (dateString === "dateOfBirth") {
+    return "dateOfBirth";
+  }
+
   const dateStringAsString = dateString.toString();
   const dateFormat1 = 'YYYY-MM-DD';
   const parsedDate = moment(new Date(dateStringAsString));
@@ -191,6 +197,8 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       const formattedDateColumnValue = formatDate(dateColumnValue);
       return [...row.slice(0, dateColumnIndex), formattedDateColumnValue, ...row.slice(dateColumnIndex + 1)];
     });
+
+    console.log("Formated Data", formattedData);
 
     // Check the format for every date column starting from the second row (index 1)
     const dateIsValidFormat = formattedData.slice(1).every(row => {
