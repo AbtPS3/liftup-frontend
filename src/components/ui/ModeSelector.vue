@@ -1,9 +1,10 @@
 <template>
   <div class="mode-selector">
-    <a class="selector-link" :class="{ 'left-tab selected': selectedMode === 'clients' }" @click="selectMode('clients')">
+    <a class="selector-link" :class="{ 'left-tab selected-left': selectedMode === 'clients' }"
+      @click="selectMode('clients')">
       {{ $t('shared.link.clients') }}
     </a>
-    <a class="selector-link" :class="{ 'right-tab selected': selectedMode === 'contacts' }"
+    <a class="selector-link selector-link-right" :class="{ 'right-tab selected-right': selectedMode === 'contacts' }"
       @click="selectMode('contacts')">
       {{ $t('shared.link.contacts') }}
     </a>
@@ -47,11 +48,19 @@ const selectMode = (mode) => {
 .selector-link:hover,
 .selector-link:visited {
   /* background-color: var(--color-background-mute); */
-  border-bottom: 2px solid var(--color-success-norm);
+  border-bottom: 2px solid var(--color-border-green);
 }
 
-.selected {
+.selected-left {
   /* background-color: var(--color-background-mute); */
-  border-bottom: 2px solid var(--color-success-norm);
+  border-bottom: 2px solid var(--color-border-green);
+}
+
+
+.selector-link-right:visited,
+.selector-link-right:hover,
+.selected-right {
+  border-bottom: 2px solid var(--color-border-green);
+  background-color: var(--color-tab-right);
 }
 </style>

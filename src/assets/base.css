@@ -3,6 +3,7 @@
   --mq-white-norm: #FFFFFF;
   --mq-white-soft: #F2F9F1;
   --mq-white-mute: #E4F3E2;
+  --mq-white-fade: #c8e4c4;
 
   --mq-black-norm: #070E06;
   --mq-black-soft: #0E1D0C;
@@ -11,6 +12,10 @@
   --mq-green-norm: #4D9E42;
   --mq-green-soft: #3F8136;
   --mq-green-mute: #31652A;
+
+  --mq-blue-norm: #d8e1ff;
+  --mq-blue-soft: #869de4;
+  --mq-blue-mute: #4c68bb;
 
   --mq-red-norm: #AC3220;
   --mq-red-soft: #D94730;
@@ -46,8 +51,11 @@
 
   --color-border: var(--mq-divider-light-norm);
   --color-border-hover: var(--mq-divider-light-soft);
+  --color-border-green: var(--mq-green-mute);
+  --color-border-blue: var(--mq-blue-soft);
 
   --color-heading: var(--mq-text-light-norm);
+  --color-heading-green: var(--mq-green-soft);
   --color-text: var(--mq-text-light-soft);
   --color-text-soft: var(--mq-text-light-mute);
 
@@ -55,6 +63,10 @@
 
   --color-panel-left: var(--mq-white-soft);
   --color-panel-right: var(--mq-white-mute);
+
+  --color-tab-left: var(--mq-white-mute);
+  --color-tab-right: var(--mq-white-fade);
+
 
   --color-alert-success: var(--mq-alert-success);
   --color-alert-warning: var(--mq-alert-warning);

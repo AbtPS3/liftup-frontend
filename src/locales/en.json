@@ -7,8 +7,8 @@
       "howto": "Instructions",
       "logout": "Logout",
       "upload": "Upload",
-      "clients": "Index Clients",
-      "contacts": "Elicitation Contacts"
+      "clients": "Clients",
+      "contacts": "Contacts"
     }
   },
   "login": {
@@ -54,20 +54,20 @@
       "buttonValue": "Preview File"
     },
     "heading": {
-      "form": "Use the form to upload CSV files."
+      "form": "Use the form to upload XLSX/CSV files."
     },
     "validation": {
       "default": {
         "heading": "Upload a file",
-        "prompt": "Click or drop a CSV file to upload!"
+        "prompt": "Click or drop a XLSX/CSV file to upload!"
       },
       "passed": {
-        "heading": "Select CSV File",
+        "heading": "Select XLSX/CSV File",
         "prompt": "Click 'Preview File' to preview!"
       },
       "type": {
         "heading": "Wrong Filetype",
-        "prompt": "Click or drop CSV file only!"
+        "prompt": "Click or drop XLSX/CSV file only!"
       },
       "size": {
         "heading": "File Too Large",
@@ -93,7 +93,7 @@
       },
       "size": {
         "title": "SIZE ERROR",
-        "text": "File too large, upload a smaller file!"
+        "text": "File too large, file limit is 1MB!"
       },
       "headers": {
         "clients": {
@@ -109,7 +109,7 @@
           "text": "Dates must be in yyyy-MM-dd e.g. 2023-11-21"
         },
         "ctc": {
-          "title": "CTC # ERROR",
+          "title": "CTC# ERROR",
           "text": "CTC Number format must be XX-XX-XXXX-XXXXXX."
         }
       }
@@ -160,11 +160,11 @@
     },
     "section2": {
       "title": "Upoading Instructions",
-      "text": "This tool accepts both INDEX CLIENT uploads and ELICITED CONTACT uploads. The uploads have to be in a Comma Separated Values (CSV) format. The CSV files have to include predesigned headers for them to be valid. The headers will be shown in the template section below."
+      "text": "This tool accepts both INDEX CLIENT uploads and ELICITED CONTACT uploads. The uploads have to be in a XLSX/CSV format. The XLSX/CSV files have to include predesigned headers for them to be valid. The headers will be shown in the template section below."
     },
     "section3": {
-      "title": "CSV Tempates",
-      "text": "Use the links below to download sample CSV templates that you can fill with your facility data and use this tool to upload them to UCS."
+      "title": "XLSX/CSV Tempates",
+      "text": "Use the links below to download sample XLSX/CSV templates that you can fill with your facility data and use this tool to upload them to UCS."
     },
     "headers": {
       "clients": "INDEX HEADERS: ",

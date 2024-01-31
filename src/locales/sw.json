@@ -46,7 +46,7 @@
   "upload": {
     "left": {
       "heading": "Mipakio ya UCS LIFT UP",
-      "prompt": "Pakia data kwa mradi wa TEPI."
+      "prompt": "Tuma tarifa za mradi wa TEPI."
     },
     "input": {
       "facilityLabel": "Jina la Kituo cha UCS",
@@ -54,24 +54,24 @@
       "buttonValue": "Kagua Faili"
     },
     "heading": {
-      "form": "Tumia fomu kupakia faili za CSV."
+      "form": "Tumia fomu kupakia faili za Ekseli au CSV."
     },
     "validation": {
       "default": {
         "heading": "Pakia faili",
-        "prompt": "Bonyeza au achia faili ya CSV kwa kupakia!"
+        "prompt": "Bonyeza au achia faili ya Ekseli au CSV kwa kupakia!"
       },
       "passed": {
-        "heading": "Chagua Faili ya CSV",
+        "heading": "Chagua Faili ya Ekseli au CSV",
         "prompt": "Bonyeza 'Kagua Faili' kuhakikisha!"
       },
       "type": {
         "heading": "Aina ya Faili Sio Sahihi",
-        "prompt": "Bonyeza au achia faili ya CSV pekee!"
+        "prompt": "Bonyeza au achia faili ya Ekseli au CSV pekee!"
       },
       "size": {
         "heading": "Faili Kubwa Mno",
-        "prompt": "Pakia faili ndogo, kiwango cha juu ni MB2!"
+        "prompt": "Pakia faili ndogo, kiwango cha juu ni MB 1!"
       },
       "headers": {
         "heading": "Vichwa Vina Shida",
@@ -89,7 +89,7 @@
     "alerts": {
       "type": {
         "title": "AINA YA FAILI",
-        "text": "Inawezekana kupakia faili za CSV pekee!"
+        "text": "Inawezekana kupakia faili za Ekseli au CSV pekee!"
       },
       "size": {
         "title": "FAILI KUBWA SANA",
@@ -97,12 +97,12 @@
       },
       "headers": {
         "clients": {
-          "title": "KOSA LA VICHWA VYA WATEJA",
-          "text": "Soma maelekezo kuhusu VICHWA VYA WATEJA!"
+          "title": "KOSA LA 'HEADING' ZA WATEJA",
+          "text": "Soma maelekezo kuhusu HEADING ZA WATEJA!"
         },
         "contacts": {
-          "title": "KOSA LA VICHWA VYA WALIOTAJWA",
-          "text": "Soma maelekezo kuhusu VICHWA VYA WALIOTAJWA!"
+          "title": "KOSA LA 'HEADING' zA WALIOTAJWA",
+          "text": "Soma maelekezo kuhusu 'HEADING' ZA WALIOTAJWA!"
         },
         "dob": {
           "title": "KOSA LA TAREHE",
@@ -160,11 +160,11 @@
     },
     "section2": {
       "title": "Maelekezo ya Kupakia",
-      "text": "Chombo hiki kinakubali kupakia wateja wa INDEKSI na CONTACTS wa CTC. Taarifa lazima ziwe katika muundo wa Comma Separated Values (CSV). Faili za CSV lazima ziwe na vichwa vilivyopangwa mapema ili ziwe sahihi. Vichwa vitaonyeshwa katika sehemu ya templeti hapa chini."
+      "text": "Chombo hiki kinakubali kupakia wateja wa INDEKSI na CONTACTS wa CTC. Taarifa lazima ziwe katika muundo wa Ekseli au CSV. Faili ni lazima ziwe na vichwa vilivyopangwa mapema ili ziwe sahihi. Vichwa vitaonyeshwa katika sehemu ya templeti hapa chini."
     },
     "section3": {
-      "title": "Templeti za CSV",
-      "text": "Tumia viungo hapa chini kupakua templeti za CSV za sampuli ambazo unaweza kujaza na data ya kituo chako na kutumia chombo hiki kupakia kwenye UCS."
+      "title": "Templeti za XLSX na CSV",
+      "text": "Tumia viungo hapa chini kupakua templeti za XLSX/CSV za sampuli ambazo unaweza kujaza na data ya kituo chako na kutumia chombo hiki kupakia kwenye UCS."
     },
     "headers": {
       "clients": "VICHWA VYA INDEKSI: ",

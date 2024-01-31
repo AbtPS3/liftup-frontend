@@ -11,6 +11,7 @@ export const useToken = reactive({
   },
 
   removeToken() {
+    useLoading.toggleVisibility(true);
     this.token = null;
     localStorage.removeItem("token");
   },
@@ -43,26 +44,21 @@ export const useLoading = reactive({
   },
 });
 
-export const useLocale = {
-  language: localStorage.getItem("locale"),
+export const useLocale = reactive({
+  language: ref(localStorage.getItem("locale") || "en"),
 
   changeLanguage(selectedLanguage) {
     this.language = selectedLanguage;
     changeLocale(selectedLanguage);
   },
-};
+});
 
-const locale = localStorage.getItem("locale");
-const heading = locale === "en" || !locale ? "Upload" : "Weka Faili";
-
-const prompt =
-  locale === "en" || !locale
-    ? "Click/Drag to upload a CSV file."
-    : "Bofya hapa kuweka faili la CSV.";
 export const useFileStatus = reactive({
+  title: ref(useLocale.language === "en" ? "Upload" : "Weka Faili"),
+  message: ref(
+    useLocale.language === "en" ? "Click/Drag to upload." : "Bofya kuweka faili la CSV."
+  ),
   status: ref(false),
-  title: ref("" || heading),
-  message: ref("" || prompt),
   toggleStatus(status, title, message) {
     this.setFileStatus(status);
     this.setFileTitle(title);
@@ -80,7 +76,7 @@ export const useFileStatus = reactive({
 });
 
 export const usePreview = reactive({
-  visible: false,
+  visible: ref(false),
   csvData: { headers: [], rows: [] },
   toggleVisibility(visibility) {
     this.visible = visibility;

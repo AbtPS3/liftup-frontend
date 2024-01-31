@@ -1,4 +1,5 @@
 <template>
+  <Selector v-if="token !== null" />
   <Preview v-if="usePreview.visible" />
   <AlertCover :title="useAlert.title" :message="useAlert.message" :type="useAlert.type" v-if="useAlert.visible" />
   <div v-if="useLoading.visible" class="loading loading-cover">
@@ -15,14 +16,18 @@
         <RouterLink v-if="usePath.name !== 'instructions'" to="/instructions" class="routerlink"
           @click="usePath.changeName('instructions')">{{ $t('shared.link.howto') }}
         </RouterLink>
-        <RouterLink v-if="usePath.name !== 'upload'" to="/upload" class="routerlink"
+        <RouterLink v-if="usePath.name !== 'upload' && usePath.name !== 'home'" to="/upload" class="routerlink"
           @click="usePath.changeName('upload')">{{ $t('shared.link.upload') }}</RouterLink>
         | <a href="/" class="routerlink" @click="useToken.removeToken()">{{ $t('shared.link.logout') }}</a>
       </nav>
       <br>
     </div>
-    <div class="container-right">
-      <ModeSelector v-if="token !== null && usePath.name == 'upload'" />
+    <div class="container-right-clients" v-if="useMode.mode == 'clients'">
+      <ModeTitle v-if="token !== null && usePath.name == 'upload'" />
+      <RouterView />
+    </div>
+    <div class="container-right-contacts" v-else>
+      <ModeTitle v-if="token !== null && usePath.name == 'upload'" />
       <RouterView />
     </div>
   </div>
@@ -35,11 +40,14 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
-import PageTitle from './components/PageTitle.vue'
-import { useToken, useAlert, useLoading, useLocale, usePreview, usePath } from './stores/state';
+
+import PageTitle from '@/components/PageTitle.vue'
+import { useToken, useAlert, useLoading, useLocale, usePreview, usePath, useMode } from '@/stores/state';
 import AlertCover from '@/components/ui/AlertCover.vue';
-import ModeSelector from './components/ui/ModeSelector.vue';
-import Preview from './components/ui/Preview.vue';
+// import ModeSelector from '@/components/ui/ModeSelector.vue';
+import ModeTitle from '@/components/ui/ModeTitle.vue';
+import Preview from '@/components/ui/Preview.vue';
+import Selector from '@/components/ui/SelectorTab.vue';
 
 const token = computed(() => useToken.token);
 
@@ -58,14 +66,24 @@ const token = computed(() => useToken.token);
   text-align: center;
 }
 
-.container-right {
+.container-right-clients {
   position: relative;
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: var(--color-panel-right);
+  background-color: var(--color-tab-left);
+}
+
+.container-right-contacts {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: var(--color-tab-right);
 }
 
 main {
