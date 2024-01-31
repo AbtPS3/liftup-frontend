@@ -13,10 +13,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed } from "vue";
 import { useMode } from "@/stores/state";
 
-const selectedMode = ref(useMode.mode);
+const selectedMode = computed(() => useMode.mode);
 </script>
 
 <style scoped>
