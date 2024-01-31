@@ -13,6 +13,12 @@ export const useToken = reactive({
     this.token = null;
     localStorage.removeItem("token");
     localStorage.removeItem("path");
+    localStorage.removeItem("previewVisible");
+    localStorage.removeItem("csvData");
+    localStorage.removeItem("mode");
+    localStorage.removeItem("FileTitle");
+    localStorage.removeItem("FileMessage");
+    localStorage.removeItem("FileStatus");
   },
 });
 
