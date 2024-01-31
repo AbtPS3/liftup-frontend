@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import PageTitle from './components/PageTitle.vue'
 import { useToken, useAlert, useLoading, useLocale, usePreview, usePath } from './stores/state';
