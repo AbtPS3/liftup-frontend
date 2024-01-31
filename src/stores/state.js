@@ -56,7 +56,7 @@ export const useLocale = reactive({
 export const useFileStatus = reactive({
   title: ref(useLocale.language === "en" ? "Upload" : "Weka Faili"),
   message: ref(
-    useLocale.language === "en" ? "Click/Drag to upload." : "Bofya kuweka faili la CSV."
+    useLocale.language === "en" ? "Click/Drag to upload." : "Bofya kuweka faili la XLSX/CSV."
   ),
   status: ref(false),
   toggleStatus(status, title, message) {
