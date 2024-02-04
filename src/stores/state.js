@@ -2,7 +2,8 @@ import { reactive, ref } from "vue";
 import { changeLocale } from "@/main";
 
 export const useToken = reactive({
-  token: ref(localStorage.getItem("token")),
+  // token: ref(localStorage.getItem("token")),
+  token: ref(null),
 
   setToken(newToken) {
     this.token = newToken;

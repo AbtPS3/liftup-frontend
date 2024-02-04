@@ -64,6 +64,7 @@ const token = computed(() => useToken.token);
   align-items: center;
   background-color: var(--color-panel-left);
   text-align: center;
+  border-radius: 20px 0 0 20px;
 }
 
 .container-right-clients {
@@ -74,6 +75,7 @@ const token = computed(() => useToken.token);
   flex-direction: column;
   justify-content: space-around;
   background-color: var(--color-tab-left);
+  border-radius: 0 20px 20px 0;
 }
 
 .container-right-contacts {
