@@ -53,8 +53,9 @@ const selectMode = (mode) => {
 .selector-tab-left:hover,
 .selector-tab-right:hover {
   /* background-color: var(--color-background-soft); */
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
+  color: var(--mq-green-norm);
 }
 
 .selector-tab-left {
