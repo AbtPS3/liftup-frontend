@@ -75,7 +75,7 @@
       },
       "headers": {
         "heading": "Vichwa Vina Shida",
-        "prompt": "Pakia faili na headers sahihi!"
+        "prompt": "Pakia faili na 'headers' sahihi!"
       },
       "dob": {
         "heading": "Rekebisha Tarehe",
@@ -136,7 +136,7 @@
     },
     "buttons": {
       "upload": "Pakia Faili Hii",
-      "cancel": "Puuza Faili"
+      "cancel": "Puuzia Faili"
     },
     "alerts": {
       "cancel": {
@@ -145,11 +145,11 @@
       },
       "success": {
         "title": "KUPAKIA KUMEFANIKIWA",
-        "text": "Faili imesha pakuliwa kwa usindikaji!"
+        "text": "Faili limesha pakiwa na linachakatwa!"
       },
       "error": {
         "title": "KUPAKIA KUMESHINDIKANA",
-        "text": "Faili haikuweza kupakiwa!"
+        "text": "Faili halikuweza kupakiwa!"
       }
     }
   },
