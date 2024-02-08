@@ -26,6 +26,10 @@ const username = ref('');
 const password = ref('');
 const router = useRouter();
 
+if (useToken.token) {
+  router.push('/upload');
+}
+
 const login = async () => {
   // Check if already loading
   if (useLoading.visible) return;
