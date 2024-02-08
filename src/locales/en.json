@@ -54,11 +54,11 @@
       "buttonValue": "Preview File"
     },
     "heading": {
-      "form": "Use the form to upload XLSX/CSV files."
+      "form": "Use the + button to upload XLSX/CSV files."
     },
     "validation": {
       "default": {
-        "heading": "Upload a file",
+        "heading": "Last Uploaded Files",
         "prompt": "Click or drop a XLSX/CSV file to upload!"
       },
       "passed": {

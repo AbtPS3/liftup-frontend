@@ -13,4 +13,10 @@ const props = defineProps(["type", "label", "field", "value"]);
 input {
   color: var(--color-text-soft);
 }
+
+@media (max-width: 1024px) {
+  .input-group {
+    margin-top: 20px;
+  }
+}
 </style>

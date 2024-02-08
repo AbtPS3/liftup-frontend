@@ -1,23 +1,28 @@
 <template>
   <div class="form-group">
     <p class="upload-heading">{{ $t('upload.heading.form') }}</p>
-    <form @submit.prevent="login">
+    <form @submit.prevent="upload">
       <FormDisabled type="text" :label="$t('upload.input.facilityLabel')" field="facility_name" :value=facilityName />
       <FormDisabled type="text" :label="$t('upload.input.providerLabel')" field="provider_id" :value=userName />
       <div class="input-group input-group-tall">
         <div class="upload-area" tabindex="0" @dragover.prevent="handleDragOver" @drop="handleDrop"
           @dragleave="handleDragLeave">
-          <img class="small-icon" src="@/assets/upload-icon.png" alt="Upload Icon">
-          <p class="upload-title">{{ fileTitle }}</p>
-          <p class="upload-details">{{ fileMessage }}</p>
-          <input type="file" class="csv-file" tabindex="-1" ref="fileInput" @change="handleFileChange"
-            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+          <p class="upload-title">{{ $t('upload.validation.default.heading') }}</p>
+          <div class="uploaded-wrapper">
+            <span class="uploaded-files" v-for="ufile of lastFiveFiles" v-if="uploadedFiles.length > 0">{{ ufile }}</span>
+            <span class="uploaded-files" v-else>No files in record.</span>
+          </div>
         </div>
       </div>
       <FormButton v-if="fileStatus == true" :value="$t('upload.input.buttonValue')" type="input-btn large-text"
         @click="usePreview.toggleVisibility(true)" />
     </form>
+
   </div>
+  <input type="file" name="upload-circle" id="uc" class="hidden" style="display: none" ref="fileInput"
+    @change="handleFileChange"
+    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+  <label class="upload-circle" for="uc">+</label>
 </template>
 
 <script setup>
@@ -45,6 +50,8 @@ const fileTitle = computed(() => useFileStatus.title);
 const fileMessage = computed(() => useFileStatus.message);
 const csvData = ref(null);
 const mode = computed(() => useMode.mode);
+const uploadedFiles = computed(() => usePreview.uploadedFilesList);
+const lastFiveFiles = computed(() => uploadedFiles.value.reverse().slice(0, 6));
 
 // Shared environment variables
 const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
@@ -121,9 +128,9 @@ const readCsvFile = (file) => {
         const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
         const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
         if (mode.value === 'clients') {
-          processData(rawCsvData, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsCtcNumberColumnIndex);
+          processData(rawCsvData, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsCtcNumberColumnIndex, file.name);
         } else {
-          processData(rawCsvData, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsCtcNumberColumnIndex);
+          processData(rawCsvData, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsCtcNumberColumnIndex, file.name);
         }
       },
     });
@@ -204,14 +211,19 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       return [...row.slice(0, dateColumnIndex), formattedDateColumnValue, ...row.slice(dateColumnIndex + 1)];
     });
 
+    // Filter out empty rows
+    const nonEmptyRows = formattedData.filter(row => {
+      return !row.every(value => value === null || value === undefined || value.trim() === "");
+    });
+
     // Check the format for every date column starting from the second row (index 1)
-    const dateIsValidFormat = formattedData.slice(1).every(row => {
+    const dateIsValidFormat = nonEmptyRows.slice(1).every(row => {
       const formattedDateColumnValue = row[dateColumnIndex];
       return isDateFormatValid(formattedDateColumnValue);
     });
 
     // Check the format for every date column starting from the second row (index 1)
-    const ctcNumberIsValidFormat = formattedData.slice(1).every(row => {
+    const ctcNumberIsValidFormat = nonEmptyRows.slice(1).every(row => {
       const formattedCtcNumberColumnValue = row[ctcNumberColumnIndex];
       return isCtcNumberFormatValid(formattedCtcNumberColumnValue);
     });
@@ -229,7 +241,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       showAlert(`alert-error`, t(`upload.alerts.headers.ctc.title`), t(`upload.alerts.headers.ctc.text`));
     } else {
       // If the format is valid for every date column, proceed to usePreview
-      usePreview.setCsvData(formattedData[0], formattedData.slice(1), fileName);
+      usePreview.setCsvData(nonEmptyRows[0], nonEmptyRows.slice(1), fileName);
     }
   }
 };
@@ -237,15 +249,13 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
 
 </script>
 
-
-
 <style scoped>
 .upload-area {
-  border: 2px dashed var(--color-border);
+  border: 1px solid var(--color-border);
   border-radius: 5px;
   background-color: var(--color-background-soft);
   text-align: center;
-  cursor: pointer;
+  /* cursor: pointer; */
   height: 150px;
   width: 100%;
   display: flex;
@@ -281,5 +291,56 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
   height: 32px;
   width: 32px;
   margin-top: 10px;
+}
+
+.upload-circle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--mq-green-norm);
+  color: white;
+  width: 50px;
+  height: 50px;
+  font-size: xx-large;
+  font-weight: lighter;
+  border-radius: 50%;
+  box-shadow: 1px 1px 3px var(--mq-divider-light-norm);
+  cursor: pointer;
+}
+
+.upload-circle:hover {
+  background-color: var(--mq-green-soft);
+  color: white;
+  box-shadow: 2px 2px 5px var(--mq-divider-light-norm);
+}
+
+.uploaded-wrapper {
+  position: relative;
+  display: inline;
+}
+
+.uploaded-files {
+  display: inline-block;
+  margin: 5px 5px;
+  padding: 0 5px;
+  /* font-size: smaller !important; */
+  background-color: var(--color-background-fade);
+  color: white;
+  border-radius: 10px;
+}
+
+@media (max-width: 1024px) {
+  .upload-circle {
+    position: absolute;
+    bottom: 35%;
+    left: 45%;
+  }
+
+  .upload-area {
+    margin-top: 30px;
+  }
 }
 </style>

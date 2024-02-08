@@ -78,11 +78,18 @@ const selectMode = (mode) => {
 
 .tab-unselected-left {
   box-shadow: 2px 2px 2px var(--color-box-shadow);
-  /* z-index: 2; */
 }
 
 .tab-unselected-right {
   box-shadow: -2px 2px 2px var(--color-box-shadow);
-  /* z-index: 2; */
+}
+
+@media (max-width: 1024px) {
+  .selector-tab {
+    top: 70px;
+    left: -57px;
+    transform: rotate(-90deg);
+    z-index: 2;
+  }
 }
 </style>

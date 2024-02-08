@@ -54,12 +54,12 @@
       "buttonValue": "Kagua Faili"
     },
     "heading": {
-      "form": "Tumia fomu kupakia faili za Ekseli au CSV."
+      "form": "Tumia kitufe '+' kupakia faili za Ekseli au CSV."
     },
     "validation": {
       "default": {
-        "heading": "Pakia faili",
-        "prompt": "Bonyeza au achia faili ya Ekseli au CSV kwa kupakia!"
+        "heading": "Mafaili Ya Mwisho Kupakiwa",
+        "prompt": "Bonyeza + au achia faili ya Ekseli au CSV kwa kupakia!"
       },
       "passed": {
         "heading": "Chagua Faili ya Ekseli au CSV",

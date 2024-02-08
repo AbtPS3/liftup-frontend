@@ -4,6 +4,7 @@
   --mq-white-soft: #F2F9F1;
   --mq-white-mute: #E4F3E2;
   --mq-white-fade: #c8e4c4;
+  --mq-white-dark: #acc7a9;
 
   --mq-black-norm: #070E06;
   --mq-black-soft: #0E1D0C;
@@ -48,6 +49,7 @@
   --color-background: var(--mq-white-norm);
   --color-background-soft: var(--mq-white-soft);
   --color-background-mute: var(--mq-white-mute);
+  --color-background-fade: var(--mq-white-dark);
 
   --color-border: var(--mq-divider-light-norm);
   --color-border-hover: var(--mq-divider-light-soft);

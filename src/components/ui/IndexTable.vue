@@ -110,7 +110,11 @@ const uploadFile = async (headers, _rows) => {
 
     useFileStatus.toggleStatus(false, t('upload.validation.passed.heading'), t('upload.validation.passed.prompt'));
     useLoading.toggleVisibility(false);
-    showAlert("alert-success", t('indexTable.alerts.success.title'), response.data.payload.message);
+    if (!response.data.payload.rejected) {
+      showAlert("alert-success", t('indexTable.alerts.success.title'), response.data.payload.message);
+    } else {
+      showAlert("alert-warning", "SOME RECORDS REJECTED", "Click <a>here</a> to view rejected records")
+    }
     const originalFileName = usePreview.fileName;
     usePreview.addUploadedFile(originalFileName);
     return true;
