@@ -83,6 +83,12 @@ function processFile(files) {
   for (const file of files) {
     if (files.length > 0) {
       const fileType = file.type;
+      const uploadedFiles = usePreview.uploadedFilesList;
+      uploadedFiles.forEach(uploadedFile => {
+        if (file.name == uploadedFile) {
+          showAlert("alert-error", t('upload.alerts.repeat.title'), t('upload.alerts.repeat.text'));
+        }
+      });
 
       if (fileType === 'text/csv' || fileType === 'application/vnd.ms-excel' || fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
         // CSV or Excel file
@@ -138,9 +144,9 @@ const readExcelFile = (file) => {
     const nonEmptyExcelRows = rawExcelData.filter(row => row.some(cell => cell !== null && cell !== ''));
 
     if (mode.value === 'clients') {
-      processData(nonEmptyExcelRows, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsCtcNumberColumnIndex);
+      processData(nonEmptyExcelRows, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsCtcNumberColumnIndex, file.name);
     } else {
-      processData(nonEmptyExcelRows, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsCtcNumberColumnIndex);
+      processData(nonEmptyExcelRows, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsCtcNumberColumnIndex, file.name);
     }
   };
   reader.readAsArrayBuffer(file);
@@ -185,7 +191,7 @@ const isCtcNumberFormatValid = (ctcNumberString) => {
   }
 }
 
-const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberColumnIndex) => {
+const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberColumnIndex, fileName) => {
   if (!arraysEqual(rawData[0], expectedHeaders)) {
     useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
     fileInput.value = null;
@@ -197,8 +203,6 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       const formattedDateColumnValue = formatDate(dateColumnValue);
       return [...row.slice(0, dateColumnIndex), formattedDateColumnValue, ...row.slice(dateColumnIndex + 1)];
     });
-
-    console.log("Formated Data", formattedData);
 
     // Check the format for every date column starting from the second row (index 1)
     const dateIsValidFormat = formattedData.slice(1).every(row => {
@@ -225,7 +229,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       showAlert(`alert-error`, t(`upload.alerts.headers.ctc.title`), t(`upload.alerts.headers.ctc.text`));
     } else {
       // If the format is valid for every date column, proceed to usePreview
-      usePreview.setCsvData(formattedData[0], formattedData.slice(1));
+      usePreview.setCsvData(formattedData[0], formattedData.slice(1), fileName);
     }
   }
 };

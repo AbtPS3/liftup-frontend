@@ -95,6 +95,10 @@
         "title": "FAILI KUBWA SANA",
         "text": "Faili kubwa mno, pakia faili ndogo!"
       },
+      "repeat": {
+        "title": "LIMESHATUMWA",
+        "text": "Faili hili lilishawahi kutumwa tena!"
+      },
       "headers": {
         "clients": {
           "title": "KOSA LA 'HEADING' ZA WATEJA",

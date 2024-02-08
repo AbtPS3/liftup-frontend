@@ -2,8 +2,8 @@ import { reactive, ref } from "vue";
 import { changeLocale } from "@/main";
 
 export const useToken = reactive({
-  // token: ref(localStorage.getItem("token")),
-  token: ref(null),
+  token: ref(localStorage.getItem("token") || ref(null)),
+  // token: ref(null),
 
   setToken(newToken) {
     this.token = newToken;
@@ -81,12 +81,15 @@ export const useFileStatus = reactive({
 export const usePreview = reactive({
   visible: ref(false),
   csvData: { headers: [], rows: [] },
+  originalFileName: ref(""),
+  uploadedFilesList: JSON.parse(localStorage.getItem("uploadedFiles") || "[]"),
   toggleVisibility(visibility) {
     this.visible = visibility;
   },
-  setCsvData(headers, rows) {
+  setCsvData(headers, rows, fileName) {
     const payload = { headers, rows };
     this.csvData = payload;
+    this.fileName = fileName;
   },
   getCsvData() {
     return this.csvData;
@@ -95,6 +98,16 @@ export const usePreview = reactive({
     this.csvData = { headers: [], rows: [] };
     this.visible = false;
     useFileStatus.toggleStatus(false);
+  },
+  addUploadedFile(fileName) {
+    this.uploadedFilesList.push(fileName);
+    localStorage.setItem("uploadedFiles", JSON.stringify(this.uploadedFilesList));
+  },
+  getUploadedFiles() {
+    return this.uploadedFilesList;
+  },
+  removeUploadedFiles() {
+    this.uploadedFilesList = [];
   },
 });
 

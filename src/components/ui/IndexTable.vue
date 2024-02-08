@@ -62,6 +62,7 @@ import { jwtDecode } from 'jwt-decode';
 const { t } = useI18n();
 const csvData = usePreview.getCsvData();
 const rows = csvData.rows;
+
 // Filter out empty rows
 const nonEmptyRows = rows.filter(row =>
   row.some(value => value !== undefined && value !== '')
@@ -87,16 +88,10 @@ const uploadButtonClick = () => {
   uploadFile(headers, rows);
 };
 
-const uploadFile = async (headers, rows) => {
-  console.log(headers);
-
-  // const formData = new FormData();
-  // formData.append('file', blob, filename);
-
+const uploadFile = async (headers, _rows) => {
   let filename;
   const currentDate = new Date().toISOString().split('T')[0]; // Get current date in "YYYY-MM-DD" format
   filename = `${currentDate}_${mode.value}_${facilityName.value}.csv`;
-  // console.log(filename);
 
   const csvString = Papa.unparse([headers, ...nonEmptyRows]);
   const blob = new Blob([csvString], { type: 'text/csv' });
@@ -116,10 +111,11 @@ const uploadFile = async (headers, rows) => {
     useFileStatus.toggleStatus(false, t('upload.validation.passed.heading'), t('upload.validation.passed.prompt'));
     useLoading.toggleVisibility(false);
     showAlert("alert-success", t('indexTable.alerts.success.title'), response.data.payload.message);
+    const originalFileName = usePreview.fileName;
+    usePreview.addUploadedFile(originalFileName);
     return true;
   } catch (error) {
     useLoading.toggleVisibility(false);
-    // console.log(t('indexTable.alerts.error.title') + ": ", error.response.data);
     showAlert("alert-error", t('indexTable.alerts.error.title'), error.message);
     return false;
   }

@@ -95,6 +95,10 @@
         "title": "SIZE ERROR",
         "text": "File too large, file limit is 1MB!"
       },
+      "repeat": {
+        "title": "FILE EXISTS",
+        "text": "You have already uploaded this file."
+      },
       "headers": {
         "clients": {
           "title": "CLIENT HEADERS ERROR",
