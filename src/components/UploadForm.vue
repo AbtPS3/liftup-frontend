@@ -7,10 +7,10 @@
       <div class="input-group input-group-tall">
         <div class="upload-area" tabindex="0" @dragover.prevent="handleDragOver" @drop="handleDrop"
           @dragleave="handleDragLeave">
-          <p class="upload-title">{{ $t('upload.validation.default.heading') }}</p>
+          <p class="upload-title">{{ $t('upload.history.default.heading') }}</p>
           <div class="uploaded-wrapper">
             <span class="uploaded-files" v-for="ufile of lastFiveFiles" v-if="uploadedFiles.length > 0">{{ ufile }}</span>
-            <span class="uploaded-files" v-else>No files in record.</span>
+            <span class="uploaded-files" v-else>{{ $t('upload.history.default.prompt') }}</span>
           </div>
         </div>
       </div>

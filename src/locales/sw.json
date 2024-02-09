@@ -56,34 +56,10 @@
     "heading": {
       "form": "Tumia kitufe '+' kupakia faili za Ekseli au CSV."
     },
-    "validation": {
+    "history": {
       "default": {
         "heading": "Mafaili Ya Mwisho Kupakiwa",
-        "prompt": "Bonyeza + au achia faili ya Ekseli au CSV kwa kupakia!"
-      },
-      "passed": {
-        "heading": "Chagua Faili ya Ekseli au CSV",
-        "prompt": "Bonyeza 'Kagua Faili' kuhakikisha!"
-      },
-      "type": {
-        "heading": "Aina ya Faili Sio Sahihi",
-        "prompt": "Bonyeza au achia faili ya Ekseli au CSV pekee!"
-      },
-      "size": {
-        "heading": "Faili Kubwa Mno",
-        "prompt": "Pakia faili ndogo, kiwango cha juu ni MB 1!"
-      },
-      "headers": {
-        "heading": "Vichwa Vina Shida",
-        "prompt": "Pakia faili na 'headers' sahihi!"
-      },
-      "dob": {
-        "heading": "Rekebisha Tarehe",
-        "prompt": "Rekebisha tarehe ya kuzaliwa kisha pakia upya."
-      },
-      "ctc": {
-        "heading": "Nambari ya CTC",
-        "prompt": "Tafadhali hakiki nambari ya CTC."
+        "prompt": "Hakuna faili kwenye kumbukumbu!"
       }
     },
     "alerts": {
