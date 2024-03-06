@@ -9,7 +9,8 @@
           @dragleave="handleDragLeave">
           <p class="upload-title">{{ $t('upload.validation.default.heading') }}</p>
           <div class="uploaded-wrapper">
-            <span class="uploaded-files" v-for="ufile of lastFiveFiles" v-if="uploadedFiles.length > 0">{{ ufile }}</span>
+            <span class="uploaded-files" v-for="ufile of lastFiveFiles" v-if="uploadedFiles.length > 0">{{ ufile
+              }}</span>
             <span class="uploaded-files" v-else>No files in record.</span>
           </div>
         </div>
@@ -306,7 +307,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
   height: 50px;
   font-size: xx-large;
   font-weight: lighter;
-  border-radius: 50%;
+  border-radius: 30%;
   box-shadow: 1px 1px 3px var(--mq-divider-light-norm);
   cursor: pointer;
 }

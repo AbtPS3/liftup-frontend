@@ -2,10 +2,14 @@
   <div class="selector-tab">
     <div class="selector-tab-left"
       :class="{ 'tab-selected-left': selectedMode === 'clients' }, { 'tab-unselected-left': selectedMode === 'contacts' }"
-      @click="selectMode('clients')">{{ $t('shared.link.clients') }}</div>
+      @click="selectMode('clients')">{{ $t('shared.link.clients') }}
+      <!-- <span class="underliner" v-if="useMode.mode == 'clients'"></span> -->
+    </div>
     <div class="selector-tab-right"
       :class="{ 'tab-selected-right': selectedMode === 'contacts' }, { 'tab-unselected-right': selectedMode === 'clients' }"
-      @click="selectMode('contacts')">{{ $t('shared.link.contacts') }}</div>
+      @click="selectMode('contacts')">{{ $t('shared.link.contacts') }}
+      <!-- <span class="underliner" v-if="useMode.mode == 'contacts'"></span> -->
+    </div>
   </div>
 </template>
 
@@ -23,6 +27,13 @@ const selectMode = (mode) => {
 </script>
 
 <style scoped>
+.underliner {
+  position: relative;
+  width: 40%;
+  height: 3px;
+  background-color: green;
+}
+
 .selector-tab {
   position: absolute;
   top: 0;
@@ -45,6 +56,7 @@ const selectMode = (mode) => {
   width: 50%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 2;
@@ -68,8 +80,27 @@ const selectMode = (mode) => {
   border-radius: 0 0 20px 0;
 }
 
+.tab-selected-right::after {
+  content: '';
+  width: 30%;
+  height: 2px;
+  background: green;
+  position: absolute;
+  bottom: 0;
+}
+
+
 .tab-selected-left {
   z-index: 1;
+}
+
+.tab-selected-left::after {
+  content: '';
+  width: 30%;
+  height: 2px;
+  background: green;
+  position: absolute;
+  bottom: 0;
 }
 
 .tab-selected-right {
