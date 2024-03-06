@@ -100,7 +100,7 @@ function processFile(files) {
 
       if (fileType === 'text/csv' || fileType === 'application/vnd.ms-excel' || fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
         // CSV or Excel file
-        useFileStatus.toggleStatus(true, file.name, t('upload.validation.passed.prompt'));
+        useFileStatus.toggleStatus(true, file.name, t('upload.history.default.prompt'));
         if (fileType !== 'text/csv') {
           // Handle Excel file
           readExcelFile(file);
@@ -109,7 +109,7 @@ function processFile(files) {
           readCsvFile(file);
         }
       } else {
-        useFileStatus.toggleStatus(false, t('upload.validation.type.heading'), t('upload.validation.type.prompt'));
+        useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
         fileInput.value = null;
         showAlert("alert-error", t('upload.alerts.type.title'), t('upload.alerts.type.text'));
       }
