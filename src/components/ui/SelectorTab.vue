@@ -118,7 +118,7 @@ const selectMode = (mode) => {
 @media (max-width: 1024px) {
   .selector-tab {
     top: 70px;
-    left: -57px;
+    left: -47px;
     transform: rotate(-90deg);
     z-index: 2;
   }
