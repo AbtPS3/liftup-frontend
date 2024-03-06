@@ -56,34 +56,10 @@
     "heading": {
       "form": "Use the + button to upload XLSX/CSV files."
     },
-    "validation": {
+    "history": {
       "default": {
         "heading": "Last Uploaded Files",
-        "prompt": "Click or drop a XLSX/CSV file to upload!"
-      },
-      "passed": {
-        "heading": "Select XLSX/CSV File",
-        "prompt": "Click 'Preview File' to preview!"
-      },
-      "type": {
-        "heading": "Wrong Filetype",
-        "prompt": "Click or drop XLSX/CSV file only!"
-      },
-      "size": {
-        "heading": "File Too Large",
-        "prompt": "Upload a smaller file, max 2MB!"
-      },
-      "headers": {
-        "heading": "Headers Mismatch",
-        "prompt": "Upload a file with correct headers!"
-      },
-      "dob": {
-        "heading": "DOB Format",
-        "prompt": "Please use correct date format."
-      },
-      "ctc": {
-        "heading": "CTC Number Format",
-        "prompt": "Please check all CTC Numbers."
+        "prompt": "No files in record."
       }
     },
     "alerts": {
