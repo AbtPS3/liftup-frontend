@@ -54,6 +54,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useToken, usePreview, useFileStatus, useFileInput, useLoading, useMode } from '@/stores/state';
 import FormButton from '@/components/ui/FormButton.vue';
 import showAlert from '@/scripts/showAlert';
+import showModal from '@/scripts/showModal';
 import Papa from 'papaparse';
 import axios from 'axios';
 import { useI18n } from "vue-i18n";
@@ -77,14 +78,14 @@ onMounted(() => { });
 
 const handleUploadCancel = () => {
   usePreview.removeCsvData();
-  useFileStatus.toggleStatus(false, t('upload.validation.passed.heading'), t('upload.validation.passed.prompt'));
+  useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
   useFileInput.toggleStatus(null);
   showAlert("alert-info", t('indexTable.alerts.cancel.title'), t('indexTable.alerts.cancel.text'));
 }
 
 const uploadButtonClick = () => {
   useLoading.toggleVisibility(true);
-  useFileStatus.toggleStatus(false, t('upload.validation.passed.heading'), t('upload.validation.passed.prompt'));
+  useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
   uploadFile(headers, rows);
 };
 
@@ -108,15 +109,21 @@ const uploadFile = async (headers, _rows) => {
       headers: { Authorization: `Bearer ${token.value}` },
     });
 
-    useFileStatus.toggleStatus(false, t('upload.validation.passed.heading'), t('upload.validation.passed.prompt'));
+    useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
     useLoading.toggleVisibility(false);
     if (!response.data.payload.rejected) {
       showAlert("alert-success", t('indexTable.alerts.success.title'), response.data.payload.message);
     } else {
-      showAlert("alert-warning", "SOME RECORDS REJECTED", "Click <a>here</a> to view rejected records")
+      // const rejectedRows = response.data.payload.rejectedRows;
+      const rejectedRows = response.data.payload.rejectedRows.map(row =>
+        Object.values(row)
+      );
+      const rejectedCsvString = Papa.unparse([headers, ...rejectedRows]);
+      const blob = new Blob([rejectedCsvString], { type: 'text/csv' });
+      showModal(blob, "SOME RECORDS REJECTED", "Click download below to view rejected records")
     }
     const originalFileName = usePreview.fileName;
-    usePreview.addUploadedFile(originalFileName);
+    // usePreview.addUploadedFile(originalFileName);
     return true;
   } catch (error) {
     useLoading.toggleVisibility(false);

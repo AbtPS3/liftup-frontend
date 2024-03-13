@@ -3,7 +3,6 @@ import { changeLocale } from "@/main";
 
 export const useToken = reactive({
   token: ref(localStorage.getItem("token") || ref(null)),
-  // token: ref(null),
 
   setToken(newToken) {
     this.token = newToken;
@@ -34,6 +33,25 @@ export const useAlert = reactive({
   },
   changeType(type) {
     this.type = type;
+  },
+});
+
+export const useModal = reactive({
+  visible: false,
+  title: "",
+  message: "",
+  data: [],
+  toggleVisibility(visibility) {
+    this.visible = visibility;
+  },
+  changeTitle(title) {
+    this.title = title;
+  },
+  changeMessage(message) {
+    this.message = message;
+  },
+  changeData(data) {
+    this.data = data;
   },
 });
 
