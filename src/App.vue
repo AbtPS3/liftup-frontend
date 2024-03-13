@@ -2,6 +2,7 @@
   <Selector v-if="token !== null" />
   <Preview v-if="usePreview.visible" />
   <AlertCover :title="useAlert.title" :message="useAlert.message" :type="useAlert.type" v-if="useAlert.visible" />
+  <ModalCover :title="useModal.title" :message="useModal.message" v-if="useModal.visible" />
   <div v-if="useLoading.visible" class="loading loading-cover">
     <div class="loading-box">
       <img src="@/assets/tepi-loading.svg" alt="loading animation" style="height: 50px; width: 50px;">
@@ -42,8 +43,9 @@ import { computed, ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 
 import PageTitle from '@/components/PageTitle.vue'
-import { useToken, useAlert, useLoading, useLocale, usePreview, usePath, useMode } from '@/stores/state';
+import { useToken, useAlert, useModal, useLoading, useLocale, usePreview, usePath, useMode } from '@/stores/state';
 import AlertCover from '@/components/ui/AlertCover.vue';
+import ModalCover from '@/components/ui/ModalCover.vue';
 // import ModeSelector from '@/components/ui/ModeSelector.vue';
 import ModeTitle from '@/components/ui/ModeTitle.vue';
 import Preview from '@/components/ui/Preview.vue';
