@@ -123,7 +123,7 @@ const uploadFile = async (headers, _rows) => {
       showModal(blob, "SOME RECORDS REJECTED", "Click download below to view rejected records")
     }
     const originalFileName = usePreview.fileName;
-    // usePreview.addUploadedFile(originalFileName);
+    usePreview.addUploadedFile(originalFileName);
     return true;
   } catch (error) {
     useLoading.toggleVisibility(false);
