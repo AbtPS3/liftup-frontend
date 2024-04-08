@@ -10,8 +10,8 @@
           <p class="upload-title" v-if="fileStatus == true">{{ $t('upload.validation.valid.heading') }}</p>
           <p class="upload-title" v-else>{{ $t('upload.history.default.heading') }}</p>
           <div class="uploaded-wrapper">
-            <!-- <span class="uploaded-files" v-if="fileStatus == true">{{ $t('upload.validation.valid.prompt') }}</span> -->
-            <span class="uploaded-files" v-if="fileStatus == true">{{ fileMessage }}</span>
+            <span class="uploaded-files" v-if="fileStatus == true">{{ $t('upload.validation.valid.prompt') }}</span>
+            <span class="uploaded-files" v-if="fileStatus == true">{{ fileTitle }}</span>
             <span class="uploaded-files" v-for="ufile of lastFiveFiles" v-else-if="uploadedFiles.length > 0">{{ ufile
               }}</span>
             <span class="uploaded-files" v-else>{{ $t('upload.history.default.prompt') }}</span>
@@ -245,7 +245,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       showAlert(`alert-error`, t(`upload.alerts.headers.ctc.title`), t(`upload.alerts.headers.ctc.text`));
     } else {
       // If the format is valid for every date column, proceed to usePreview
-      useFileStatus.toggleStatus(true, t('upload.validation.valid.heading'), file.name);
+      useFileStatus.toggleStatus(true, t('upload.validation.valid.heading'), t('upload.validation.valid.prompt'));
       usePreview.setCsvData(nonEmptyRows[0], nonEmptyRows.slice(1), fileName);
     }
   }
