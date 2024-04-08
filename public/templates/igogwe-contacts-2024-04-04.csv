@@ -1,0 +1,14 @@
+﻿firstName,middleName,surname,dateOfBirth,gender,mapCue,hamlet,phoneNumber,careTakerName,careTakerPhoneNumber,notificationType,relationship,indexClientCtcNumber,elicitationNumber
+Juma,Jabu,Kichwa,28/02/2007,Male,Kwa mjumbe,Buguruni,0711202329,Hanifa,0714987654,client_referral,biological_child,12-34-5678-910506,12-34-5678-910506-bc01
+Yasinta,Husseni,Mchongo,25/03/2010,Female,Karibu na msikiti,Malapa,0711202329,Sista Naniliu,0714987650,contract_referral,non_biological_child,12-34-5678-910506,12-34-5678-910506-hh02
+Maria,Percy,Tau,19/04/2013,Female,Nyuma ya posta,Amana,0711202330,Mojaa,0714987651,client_referral,biological_child,12-34-5678-910506,12-34-5678-910506-bc01
+Lucy,Kibaki,Michael,14/05/2016,Female,Shuleni,Boma,0711202331,Siksi,0714987652,client_referral,biological_child,12-34-5678-910506,12-34-5678-910506-bc02
+Mwantumu,Asumani,Mahiza,09/06/2019,Female,Mtaa wa tatu,Shule ya Uhuru,0711202332,Banjoo,0714987653,client_referral,biological_child,12-34-5678-910507,12-34-5678-910507-bc01
+Pili,Nikama,Tatu,04/07/2022,Female,Banda la kwanza,Mtaa wa Congo,0711202333,Chonjo,0714987654,client_referral,non_biological_child,12-34-5678-910507,12-34-5678-910507-hh01
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
