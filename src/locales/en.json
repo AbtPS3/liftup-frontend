@@ -93,6 +93,20 @@
           "text": "CTC Number format must be XX-XX-XXXX-XXXXXX."
         }
       }
+    },
+    "validation": {
+      "valid": {
+        "heading": "Valid File",
+        "prompt": "click 'Preview File' to preview it!"
+      },
+      "ctc": {
+        "heading": "CTC Number Error",
+        "prompt": "Errors found in CTC numbers!"
+      },
+      "dob": {
+        "heading": "DOB Error",
+        "prompt": "Errors found in DOB!"
+      }
     }
   },
   "indexTable": {
