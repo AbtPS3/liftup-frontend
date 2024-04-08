@@ -242,7 +242,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       showAlert(`alert-error`, t(`upload.alerts.headers.ctc.title`), t(`upload.alerts.headers.ctc.text`));
     } else {
       // If the format is valid for every date column, proceed to usePreview
-      useFileStatus.toggleStatus(false, t('upload.validation.valid.heading'), t('upload.validation.valid.prompt'));
+      // useFileStatus.toggleStatus(false, t('upload.validation.valid.heading'), t('upload.validation.valid.prompt'));
       usePreview.setCsvData(nonEmptyRows[0], nonEmptyRows.slice(1), fileName);
     }
   }
