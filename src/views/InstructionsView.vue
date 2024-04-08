@@ -48,8 +48,8 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const indexHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
 const contactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
-const clientsFileUrl = "@/assets/templates/igogwe-clients-2024-04-04.xlsx";
-const contactsFileUrl = "@/assets/templates/igogwe-contacts-2024-04-04.xlsx";
+const clientsFileUrl = "/assets/templates/igogwe-clients-2024-04-04.xlsx";
+const contactsFileUrl = "/assets/templates/igogwe-contacts-2024-04-04.xlsx";
 </script>
 
 <style>
