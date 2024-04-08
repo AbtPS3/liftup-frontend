@@ -11,7 +11,7 @@
           <p class="upload-title" v-else>{{ $t('upload.history.default.heading') }}</p>
           <div class="uploaded-wrapper">
             <!-- <span class="uploaded-files" v-if="fileStatus == true">{{ $t('upload.validation.valid.prompt') }}</span> -->
-            <span class="uploaded-files" v-if="fileStatus == true">{{ fileTitle }}</span>
+            <span class="uploaded-files" v-if="fileStatus == true">{{ fileMessage }}</span>
             <span class="uploaded-files" v-for="ufile of lastFiveFiles" v-else-if="uploadedFiles.length > 0">{{ ufile
               }}</span>
             <span class="uploaded-files" v-else>{{ $t('upload.history.default.prompt') }}</span>
