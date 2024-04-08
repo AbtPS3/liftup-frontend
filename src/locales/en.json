@@ -106,6 +106,10 @@
       "dob": {
         "heading": "DOB Error",
         "prompt": "Errors found in DOB!"
+      },
+      "headers": {
+        "heading": "Headers Error",
+        "prompt": "Errors found in file headers, check the template!"
       }
     }
   },
