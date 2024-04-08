@@ -106,6 +106,10 @@
       "dob": {
         "heading": "Umekosea DOB",
         "prompt": "Kuna makosa kwenye tarehe ya kuzaliwa!"
+      },
+      "headers": {
+        "heading": "Umekosea Headers",
+        "prompt": "Kuna makosa kwenye 'vichwa' tazama template!"
       }
     }
   },

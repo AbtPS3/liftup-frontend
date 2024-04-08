@@ -7,9 +7,11 @@
       <div class="input-group input-group-tall">
         <div class="upload-area" tabindex="0" @dragover.prevent="handleDragOver" @drop="handleDrop"
           @dragleave="handleDragLeave">
-          <p class="upload-title">{{ $t('upload.history.default.heading') }}</p>
+          <p class="upload-title" v-if="fileStatus == true">{{ $t('upload.validation.valid.heading') }}</p>
+          <p class="upload-title" v-else>{{ $t('upload.history.default.heading') }}</p>
           <div class="uploaded-wrapper">
-            <span class="uploaded-files" v-for="ufile of lastFiveFiles" v-if="uploadedFiles.length > 0">{{ ufile
+            <span class="uploaded-files" v-if="fileStatus == true">{{ $t('upload.validation.valid.prompt') }}</span>
+            <span class="uploaded-files" v-for="ufile of lastFiveFiles" v-else-if="uploadedFiles.length > 0">{{ ufile
               }}</span>
             <span class="uploaded-files" v-else>{{ $t('upload.history.default.prompt') }}</span>
           </div>
