@@ -24,14 +24,18 @@
       <br>
       <div class="tabbed-text">
         <p><span class="heavy-text">{{ t('instructions.headers.clients') }}</span></p>
-        <p><span class="mono-text" v-for="header in indexHeaders" :key="header">{{ header + ", " }}</span></p>
-        <p><span class="template-link"><a :href="clientsFileUrl" download="facility-clients-yyyy-mm-dd.csv">Download
-              Clients Template</a></span></p>
+        <p>
+          <span class="mono-text" v-for="header in indexHeaders" :key="header">{{ header + ", " }}</span>
+          <span class="template-link"><a :href="clientsFileUrl" download="facility-clients-yyyy-mm-dd.csv">Download
+              Clients Template</a></span>
+        </p>
         <br>
         <p><span class="heavy-text">{{ t('instructions.headers.contacts') }}</span></p>
-        <p><span class="mono-text" v-for="header in contactsHeaders" :key="header">{{ header + ", " }}</span></p>
-        <p><span class="template-link"><a :href="contactsFileUrl" download="facility-contacts-yyyy-mm-dd.csv">Download
-              Contacts Template</a></span></p>
+        <p>
+          <span class="mono-text" v-for="header in contactsHeaders" :key="header">{{ header + ", " }}</span>
+          <span class="template-link"><a :href="contactsFileUrl" download="facility-contacts-yyyy-mm-dd.csv">Download
+              Contacts Template</a></span>
+        </p>
       </div>
     </span>
 
@@ -86,11 +90,11 @@ const contactsFileUrl = "/templates/igogwe-contacts-2024-04-04.csv";
 
 .template-link a {
   text-decoration: none;
-  color: blue;
+  color: rgb(24, 95, 153);
 }
 
 .template-link a:hover {
   text-decoration: underline;
-  color: rgb(78, 78, 255);
+  color: rgb(43, 43, 241);
 }
 </style>
