@@ -93,6 +93,20 @@
           "text": "Tafadhali hakikisha namba ipo XX-XX-XXXX-XXXXXX"
         }
       }
+    },
+    "validation": {
+      "valid": {
+        "heading": "Faili Sahihi",
+        "prompt": "bofya 'Kagua Faili' kuliona!"
+      },
+      "ctc": {
+        "heading": "Umekosea",
+        "prompt": "Kuna makosa kwenye nambari ya CTC!"
+      },
+      "dob": {
+        "heading": "Umekosea DOB",
+        "prompt": "Kuna makosa kwenye tarehe ya kuzaliwa!"
+      }
     }
   },
   "indexTable": {
