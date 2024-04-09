@@ -162,15 +162,31 @@ const readExcelFile = (file) => {
   reader.readAsArrayBuffer(file);
 };
 
+// @TODO: remove this if the one below works
+// const isDateFormatValid = (dateString) => {
+//   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+//   if (dateString == undefined || dateString == '') {
+//     return false;
+//   } else {
+//     return dateFormatRegex.test(dateString);
+//   }
+// }
 
+// Date Validator Update - April 09, 2024
 const isDateFormatValid = (dateString) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
   if (dateString == undefined || dateString == '') {
     return false;
+  } else if (!isNaN(dateString) && dateString >= 15 && dateString <= 55) {
+    const today = new Date();
+    const yearOfBirth = today.getFullYear() - parseInt(dateString);
+    const formattedDate = `01-07-${yearOfBirth}`;
+    return dateFormatRegex.test(formatDate); // Assuming this condition is considered valid
   } else {
     return dateFormatRegex.test(dateString);
   }
 }
+
 
 const formatDate = (dateString) => {
   if (!dateString) {
