@@ -181,7 +181,7 @@ const isDateFormatValid = (dateString) => {
     const today = new Date();
     const yearOfBirth = today.getFullYear() - parseInt(dateString);
     const formattedDate = `01-07-${yearOfBirth}`;
-    return dateFormatRegex.test(formatDate); // Assuming this condition is considered valid
+    return dateFormatRegex.test(formattedDate);
   } else {
     return dateFormatRegex.test(dateString);
   }
