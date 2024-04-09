@@ -174,31 +174,31 @@ const readExcelFile = (file) => {
 // }
 
 // Date Validator Update - April 09, 2024
-// const isDateFormatValid = (dateString) => {
-//   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
-//   if (!isNaN(dateString) && dateString >= 15 && dateString <= 55) {
-//     return true;
-//   } else if (dateString == undefined || dateString == '') {
-//     return false;
-//   } else {
-//     return dateFormatRegex.test(dateString);
-//   }
-// }
-
 const isDateFormatValid = (dateString) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
-  const ageFormatRegex = /^(1[5-9]|[2-4][0-9]|5[0-5])$/; // Matches numbers between 15 and 55
-  if (dateString == undefined || dateString == '') {
-    console.log(false);
+  if (!isNaN(dateString) && dateString >= 15 && dateString <= 55) {
+    return true;
+  } else if (dateString == undefined || dateString == '') {
     return false;
-  } else if (ageFormatRegex.test(dateString)) {
-    console.log(true);
-    return true; // Return true for age between 15 and 55
   } else {
-    console.log(dateFormatRegex.test(dateString));
     return dateFormatRegex.test(dateString);
   }
 }
+
+// const isDateFormatValid = (dateString) => {
+//   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+//   const ageFormatRegex = /^(1[5-9]|[2-4][0-9]|5[0-5])$/; // Matches numbers between 15 and 55
+//   if (dateString == undefined || dateString == '') {
+//     console.log(false);
+//     return false;
+//   } else if (ageFormatRegex.test(dateString)) {
+//     console.log(true);
+//     return true; // Return true for age between 15 and 55
+//   } else {
+//     console.log(dateFormatRegex.test(dateString));
+//     return dateFormatRegex.test(dateString);
+//   }
+// }
 
 
 const formatDate = (dateString) => {
