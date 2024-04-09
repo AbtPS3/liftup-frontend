@@ -175,10 +175,8 @@ const readExcelFile = (file) => {
 
 // Date Validator Update - April 09, 2024
 const isDateFormatValid = (dateString) => {
-  const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/ || /^(1[5-9]|[2-4][0-9]|5[0-5])$/;
   if (dateString == undefined || dateString == '') {
-    return false;
-  } else if (!isNaN(dateString) && dateString >= 15 && dateString <= 55) {
     return false;
   } else {
     return dateFormatRegex.test(dateString);
