@@ -31,6 +31,8 @@ a {
   position: relative;
   height: 65%;
   width: 65%;
+  max-height: 65vh;
+  max-width: 65vw;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   justify-content: space-between;
