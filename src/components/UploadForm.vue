@@ -40,6 +40,7 @@ import FormButton from '@/components/ui/FormButton.vue';
 import { useI18n } from "vue-i18n";
 import * as XLSX from "xlsx";
 import moment from "moment";
+import { parse } from "papaparse";
 
 const { t } = useI18n();
 const token = computed(() => useToken.token);
@@ -178,10 +179,7 @@ const isDateFormatValid = (dateString) => {
   if (dateString == undefined || dateString == '') {
     return false;
   } else if (!isNaN(dateString) && dateString >= 15 && dateString <= 55) {
-    const today = new Date();
-    const yearOfBirth = today.getFullYear() - parseInt(dateString);
-    const formattedDate = `01-07-${yearOfBirth}`;
-    return dateFormatRegex.test(formattedDate);
+    return true;
   } else {
     return dateFormatRegex.test(dateString);
   }
@@ -196,6 +194,20 @@ const formatDate = (dateString) => {
   // Handle the first row exception - misomisondo umepigaje hapo
   if (dateString === "dateOfBirth") {
     return "dateOfBirth";
+  }
+
+  if (!isNaN(dateString) && dateString >= 15 && dateString <= 55) {
+    const today = new Date();
+    const yearOfBirth = today.getFullYear() - parseInt(dateString);
+    const formattedDate = `01-07-${yearOfBirth}`;
+    const dateStringAsString = formattedDate.toString();
+    const dateFormat1 = 'YYYY-MM-DD';
+    const parsedDate = moment(new Date(dateStringAsString));
+    if (parsedDate.isValid()) {
+      return parsedDate.format(dateFormat1);
+    } else {
+      return null;
+    }
   }
 
   const dateStringAsString = dateString.toString();
