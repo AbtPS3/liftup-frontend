@@ -222,7 +222,7 @@ const formatDate = (dateString) => {
     if (parsedDate.isValid()) {
       return parsedDate.format(dateFormat1);
     } else {
-      return null;
+      return false;
     }
   }
 
