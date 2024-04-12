@@ -169,13 +169,14 @@ const isDateFormatValid = (dateStrings) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
   const ageFormatRegex = /^(1[5-9]|[2-4][0-9]|5[0-5])$/; // Matches numbers between 15 and 55
 
-  // If dateStrings is not an array, return false
-  // if (!Array.isArray(dateStrings)) {
-  //   return false;
-  // }
+  // If dateStrings is not an array or has less than two elements, return false
+  if (!Array.isArray(dateStrings) || dateStrings.length < 2) {
+    return false;
+  }
 
-  // Check each date string
-  for (const dateString of dateStrings) {
+  // Check each date string starting from the second row (index 1)
+  for (let i = 1; i < dateStrings.length; i++) {
+    const dateString = dateStrings[i];
     if (dateString == undefined || dateString == '') {
       return false;
     } else {
@@ -187,6 +188,7 @@ const isDateFormatValid = (dateStrings) => {
 
   return true;
 }
+
 
 
 const formatDate = (dateString) => {
