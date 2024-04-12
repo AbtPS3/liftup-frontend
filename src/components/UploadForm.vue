@@ -171,6 +171,7 @@ const isDateFormatValid = (dateStrings) => {
 
   // Check each date string in the array
   for (const dateString of dateStrings) {
+    console.log("DATE STRING", dateString)
     if (dateString == undefined || dateString == '') {
       return false;
     } else {
@@ -201,9 +202,7 @@ const formatDate = (dateString) => {
   if (!isNaN(dateString) && dateString >= 15 && dateString <= 55) {
     const today = new Date();
     const yearOfBirth = today.getFullYear() - parseInt(dateString);
-    console.log("Year of Birth", yearOfBirth)
     const formattedDate = `01-07-${yearOfBirth}`;
-    console.log("Formatted Date", formattedDate)
     const dateStringAsString = formattedDate.toString();
     const dateFormat1 = 'YYYY-MM-DD';
     const parsedDate = moment(new Date(dateStringAsString));
