@@ -253,7 +253,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
     // Check the format for every date column starting from the second row (index 1)
     const dateIsValidFormat = nonEmptyRows.slice(1).every(row => {
       const formattedDateColumnValue = row[dateColumnIndex];
-      console.log("FORMATTED DATE COLUMN VALUE", formattedDateColumnValue)
+      console.log("FORMATTED DATE COLUMN VALUE", formattedDateColumnValue);
       return isDateFormatValid(formattedDateColumnValue);
     });
 
