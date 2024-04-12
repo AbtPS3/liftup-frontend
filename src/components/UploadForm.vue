@@ -166,28 +166,25 @@ const readExcelFile = (file) => {
 
 // Date Validator Update - April 09, 2024
 const isDateFormatValid = (dateStrings) => {
-  const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/; // Watches for a formatted date yyyy-mm-dd
   const ageFormatRegex = /^(1[5-9]|[2-4][0-9]|5[0-5])$/; // Matches numbers between 15 and 55
 
-  // If dateStrings is not an array or has less than two elements, return false
-  // if (!Array.isArray(dateStrings) || dateStrings.length < 2) {
-  //   return false;
-  // }
-
-  // Check each date string starting from the second row (index 1)
-  for (let i = 1; i < dateStrings.length; i++) {
-    const dateString = dateStrings[i];
+  // Check each date string in the array
+  for (const dateString of dateStrings) {
     if (dateString == undefined || dateString == '') {
       return false;
     } else {
+      // Check if the date string matches either date format regex or age format regex
       if (!dateFormatRegex.test(dateString) && !ageFormatRegex.test(dateString)) {
         return false;
       }
     }
   }
 
+  // If all date strings are valid, return true
   return true;
 }
+
 
 
 
