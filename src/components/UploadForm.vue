@@ -222,7 +222,7 @@ const formatDate = (dateString) => {
     if (parsedDate.isValid()) {
       return parsedDate.format(dateFormat1);
     } else {
-      return false;
+      return null;
     }
   }
 
@@ -279,7 +279,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       // If the format check fails for any date column, show an error alert
       useFileStatus.toggleStatus(false, t('upload.validation.dob.heading'), t('upload.validation.dob.prompt'));
       fileInput.value = null;
-      showAlert(`alert-error`, t(`upload.alerts.headers.dob.title`), t(`upload.alerts.headers.dob.text`));
+      return showAlert(`alert-error`, t(`upload.alerts.headers.dob.title`), t(`upload.alerts.headers.dob.text`));
 
     } else if (!ctcNumberIsValidFormat) {
       // If the format check fails for any CTC column, show an error alert
