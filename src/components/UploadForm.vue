@@ -55,7 +55,7 @@ const fileMessage = computed(() => useFileStatus.message);
 const csvData = ref(null);
 const mode = computed(() => useMode.mode);
 const uploadedFiles = computed(() => usePreview.uploadedFilesList);
-const lastFiveFiles = computed(() => uploadedFiles.value.reverse().slice(0, 6));
+const lastFiveFiles = computed(() => uploadedFiles.value.reverse().slice(0, 5));
 
 // Shared environment variables
 const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
