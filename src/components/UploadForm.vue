@@ -173,11 +173,11 @@ const isDateFormatValid = (dateStrings) => {
   for (const dateString of dateStrings) {
     console.log("DATE STRING", dateString)
     if (dateString == undefined || dateString == '') {
-      return false;
+      return true;
     } else {
       // Check if the date string matches either date format regex or age format regex
       if (!dateFormatRegex.test(dateString) && !ageFormatRegex.test(dateString)) {
-        return false;
+        return true;
       }
     }
   }
