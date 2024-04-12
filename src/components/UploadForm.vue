@@ -365,7 +365,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
   display: inline-block;
   margin: 5px 5px;
   padding: 0 5px;
-  /* font-size: smaller !important; */
+  font-size: smaller !important;
   background-color: var(--color-background-fade);
   color: white;
   border-radius: 10px;
