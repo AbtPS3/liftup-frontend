@@ -165,23 +165,22 @@ const readExcelFile = (file) => {
 
 
 // Date Validator Update - April 09, 2024
-const isDateFormatValid = (dateStrings) => {
+const isDateFormatValid = (formattedDateValue) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/; // Watches for a formatted date yyyy-mm-dd
   const ageFormatRegex = /^(1[5-9]|[2-4][0-9]|5[0-5])$/; // Matches numbers between 15 and 55
 
   // Check each date string in the array
-  console.log("DATE STRINGS", dateStrings);
-  for (const dateString of dateStrings) {
-    console.log("DATE STRING", dateString);
-    if (dateString == undefined || dateString == '') {
+  console.log("DATE STRINGS", formattedDateValue);
+
+  if (formattedDateValue == undefined || formattedDateValue == '') {
+    return false;
+  } else {
+    // Check if the date string matches either date format regex or age format regex
+    if (!dateFormatRegex.test(formattedDateValue) && !ageFormatRegex.test(formattedDateValue)) {
       return false;
-    } else {
-      // Check if the date string matches either date format regex or age format regex
-      if (!dateFormatRegex.test(dateString) && !ageFormatRegex.test(dateString)) {
-        return false;
-      }
     }
   }
+
 
   // If all date strings are valid, return true
   return true;
