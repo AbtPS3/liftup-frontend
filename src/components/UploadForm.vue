@@ -170,8 +170,9 @@ const isDateFormatValid = (dateStrings) => {
   const ageFormatRegex = /^(1[5-9]|[2-4][0-9]|5[0-5])$/; // Matches numbers between 15 and 55
 
   // Check each date string in the array
+  console.log("DATE STRINGS", dateStrings);
   for (const dateString of dateStrings) {
-    console.log("DATE STRING", dateString)
+    console.log("DATE STRING", dateString);
     if (dateString == undefined || dateString == '') {
       return false;
     } else {
