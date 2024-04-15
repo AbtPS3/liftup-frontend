@@ -171,7 +171,7 @@ const isDateFormatValid = (dateStrings) => {
 
   // Check each date string in the array
   for (const dateString of dateStrings) {
-    console.log("DATE STRING", dateString)
+    console.log("DATE STRING", dateString.value)
     if (dateString == undefined || dateString == '') {
       return true;
     } else {
