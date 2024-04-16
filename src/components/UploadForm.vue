@@ -197,6 +197,7 @@ const formatDate = (dateString) => {
   if (!isNaN(dateString) && dateString >= 15 && dateString <= 55) {
     const today = new Date();
     const yearOfBirth = today.getFullYear() - parseInt(dateString);
+    console.log("Year of Birth", yearOfBirth);
     const formattedDate = `01-07-${yearOfBirth}`;
     const dateStringAsString = formattedDate.toString();
     const dateFormat1 = 'YYYY-MM-DD';
@@ -214,7 +215,6 @@ const formatDate = (dateString) => {
   if (parsedDate.isValid()) {
     return parsedDate.format(dateFormat1);
   } else {
-    console.log("DATE ERROR, age rage out!")
     return false;
   }
 }
