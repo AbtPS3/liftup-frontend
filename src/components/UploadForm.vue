@@ -168,21 +168,18 @@ const readExcelFile = (file) => {
 const isDateFormatValid = (formattedDateValue) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/; // Watches for a formatted date yyyy-mm-dd
   const ageFormatRegex = /^(1[5-9]|[2-4][0-9]|5[0-5])$/; // Matches numbers between 15 and 55
-  var validFormat = true;
 
   if (formattedDateValue == undefined || formattedDateValue == '') {
-    validFormat = false;
+    return false;
   } else {
     // Check if the date string matches either date format regex or age format regex
     if (!dateFormatRegex.test(formattedDateValue) && !ageFormatRegex.test(formattedDateValue)) {
-      validFormat = false;
-      console.log("FAILED VALID FORMAT", validFormat)
+      return false;
     }
   }
 
   // If all date strings are valid, return final validFormat
-  console.log("VALID FORMAT", validFormat)
-  return validFormat;
+  return true;
 }
 
 
@@ -252,6 +249,7 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
     // Check the format for every date column starting from the second row (index 1)
     const dateIsValidFormat = nonEmptyRows.slice(1).every(row => {
       const formattedDateColumnValue = row[dateColumnIndex];
+      console.log("VALIDITY", isDateFormatValid(formattedDateColumnValue));
       return isDateFormatValid(formattedDateColumnValue);
     });
 
