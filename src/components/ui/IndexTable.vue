@@ -103,7 +103,8 @@ const uploadFile = async (headers, _rows) => {
   try {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const backendPort = import.meta.env.VITE_BACKEND_PORT;
-    const backendAddress = `${backendUrl}:${backendPort}/api/v1/upload`;
+    const backendPath = import.meta.env.VITE_BACKEND_PATH;
+    const backendAddress = `${backendUrl}:${backendPort + backendPath}/api/v1/upload`;
 
     const response = await axios.post(backendAddress, formData, {
       headers: { Authorization: `Bearer ${token.value}` },

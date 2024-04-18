@@ -1,4 +1,3 @@
-
 <template>
   <div class="form-group">
     <p class="upload-heading">{{ $t('login.right.heading') }}</p>
@@ -48,7 +47,8 @@ const login = async () => {
   try {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const backendPort = import.meta.env.VITE_BACKEND_PORT;
-    const backendAddress = backendUrl + ":" + backendPort + "/api/v1/authentication/login";
+    const backendPath = import.meta.env.VITE_BACKEND_PATH;
+    const backendAddress = backendUrl + ":" + backendPort + backendPath + "/api/v1/authentication/login";
     const response = await axios.post(backendAddress, {
       username: username.value,
       password: password.value,
