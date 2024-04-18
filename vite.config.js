@@ -16,6 +16,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 1600,
     // assetsDir: "liftup/assets",
     // publicPath: "./",
-    base: "/liftup/",
   },
+  base: "/liftup/",
 });
