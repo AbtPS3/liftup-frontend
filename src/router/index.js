@@ -5,7 +5,7 @@ import { useToken } from "@/stores/state";
 import InstructionsView from "@/views/InstructionsView.vue";
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
