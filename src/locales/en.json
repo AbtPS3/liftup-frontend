@@ -149,6 +149,12 @@
         "title": "UPLOAD FAILED",
         "text": "File could not be uploaded!"
       }
+    },
+    "modals": {
+      "rejected": {
+        "title": "RECORDS REJECTED",
+        "text": "Some records have been rejected, use download link below to get them!"
+      }
     }
   },
   "instructions": {

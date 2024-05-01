@@ -115,13 +115,12 @@ const uploadFile = async (headers, _rows) => {
     if (!response.data.payload.rejected) {
       showAlert("alert-success", t('indexTable.alerts.success.title'), response.data.payload.message);
     } else {
-      // const rejectedRows = response.data.payload.rejectedRows;
       const rejectedRows = response.data.payload.rejectedRows.map(row =>
         Object.values(row)
       );
       const rejectedCsvString = Papa.unparse([headers, ...rejectedRows]);
       const blob = new Blob([rejectedCsvString], { type: 'text/csv' });
-      showModal(blob, "SOME RECORDS REJECTED", "Click download below to view rejected records")
+      showModal(blob, t('indexTable.modals.rejected.title'), t('indexTable.modals.rejected.text'))
     }
     const originalFileName = usePreview.fileName;
     usePreview.addUploadedFile(originalFileName);

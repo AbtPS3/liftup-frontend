@@ -149,6 +149,12 @@
         "title": "KUPAKIA KUMESHINDIKANA",
         "text": "Faili halikuweza kupakiwa!"
       }
+    },
+    "modals": {
+      "rejected": {
+        "title": "REKODI ZIMEKATALIWA",
+        "text": "Baadhi ya rekodi zimekataliwa, tumia 'download' hapa chini kuzipata!"
+      }
     }
   },
   "instructions": {
