@@ -26,7 +26,7 @@
         <p><span class="heavy-text">{{ t('instructions.headers.clients') }}</span></p>
         <p>
           <span class="mono-text" v-for="header in indexHeaders" :key="header">{{ header + ", " }}</span>
-          <span class="template-link"><a :href="clientsFileUrl" download="facility-clients-yyyy-mm-dd.csv">download
+          <span class="template-link"><a :href="clientsFileUrl" download="facility-clients-yyyy-mm-dd">download
               template</a></span>
         </p>
         <br>
