@@ -174,11 +174,11 @@
   "instructions": {
     "section1": {
       "title": "Maelekezo ya Kuingia",
-      "text": "Ili kupakia faili kwenye seva za UCS kwa Mradi wa LiftUp, lazima uingie kwenye mfumo kwanza. Huna haja ya kujisajili mwenyewe, unaweza kutumia vitambulisho vile vile unavyotumia kuingia UCS kama mtoaji au msimamizi kasoro CHW. Ikiwa umesahau vitambulisho vyako vya UCS, tafadhali wasiliana na mtu muhimu katika MOH/NACP."
+      "text": "Ili kupakia faili kwenye seva za UCS kwa Mradi wa LiftUp, lazima uingie kwenye mfumo. Huhitaji kujisajili , Tumia vitambulisho unavyotumia kuingia UCS kama mtoa-huduma asiye CHW. Ikiwa umesahau vitambulisho vyako vya UCS, tafadhali wasiliana na MOH/NACP."
     },
     "section2": {
       "title": "Maelekezo ya Kupakia",
-      "text": "Chombo hiki kinakubali kupakia wateja wa INDEKSI na CONTACTS wa CTC. Taarifa lazima ziwe katika muundo wa Ekseli au CSV. Faili ni lazima ziwe na vichwa vilivyopangwa mapema ili ziwe sahihi. Vichwa vitaonyeshwa katika sehemu ya templeti hapa chini."
+      "text": "Chombo hiki kinakubali kupakia wateja wa INDEKSI, CONTACTS na MATOKEO YA UPIMAJI. Taarifa lazima ziwe katika muundo wa Ekseli au CSV. Faili ni lazima ziwe na vichwa vilivyopangwa mapema ili ziwe sahihi. Vichwa vitaonyeshwa katika sehemu ya templeti hapa chini."
     },
     "section3": {
       "title": "Templeti za XLSX na CSV",
@@ -186,7 +186,8 @@
     },
     "headers": {
       "clients": "VICHWA VYA INDEKSI: ",
-      "contacts": "VICHWA VYA WALIOTAJWA: "
+      "contacts": "VICHWA VYA WALIOTAJWA: ",
+      "results": "VICHWA VYA MATOKEO: "
     }
   }
 }

@@ -27,14 +27,22 @@
         <p>
           <span class="mono-text" v-for="header in indexHeaders" :key="header">{{ header + ", " }}</span>
           <span class="template-link"><a :href="clientsFileUrl" download="facility-clients-yyyy-mm-dd">download
-              template</a></span>
+              clients template</a></span>
         </p>
         <br>
         <p><span class="heavy-text">{{ t('instructions.headers.contacts') }}</span></p>
         <p>
           <span class="mono-text" v-for="header in contactsHeaders" :key="header">{{ header + ", " }}</span>
           <span class="template-link"><a :href="contactsFileUrl" download="facility-contacts-yyyy-mm-dd">download
+              contacts
               template</a></span>
+        </p>
+        <br>
+        <p><span class="heavy-text">{{ t('instructions.headers.results') }}</span></p>
+        <p>
+          <span class="mono-text" v-for="header in resultsHeaders" :key="header">{{ header + ", " }}</span>
+          <span class="template-link"><a :href="resultsFileUrl" download="facility-results-yyyy-mm-dd">download
+              results template</a></span>
         </p>
       </div>
     </span>
@@ -48,8 +56,10 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 const indexHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
 const contactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
+const resultsHeaders = import.meta.env.VITE_CSV_RESULTS_HEADERS.split(",");
 const clientsFileUrl = import.meta.env.VITE_CLIENTS_TEMPLATE;
 const contactsFileUrl = import.meta.env.VITE_CONTACTS_TEMPLATE;
+const resultsFileUrl = import.meta.env.VITE_RESULTS_TEMPLATE;
 
 </script>
 

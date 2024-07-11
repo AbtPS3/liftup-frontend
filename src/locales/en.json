@@ -175,11 +175,11 @@
   "instructions": {
     "section1": {
       "title": "Login Instructions",
-      "text": "In order to upload files to UCS servers for LiftUp initiative, you need to login to the system first. You do not need to register yourself, you can use the same credentials that you use to login to UCS as a provider or administrator. Users with CHW rights will not be able to login to this tool. If you have forgotten your UCS credentials pease contact a relevant person at MOH/NACP."
+      "text": "In order to upload files to UCS servers for LiftUp initiative, you need to login first. No registration needed, use the same credentials that you use to login to UCS as a provider, not CHW. If you have forgotten your UCS credentials pease contact at MOH/NACP."
     },
     "section2": {
       "title": "Upoading Instructions",
-      "text": "This tool accepts both INDEX CLIENT uploads and ELICITED CONTACT uploads. The uploads have to be in a XLSX/CSV format. The XLSX/CSV files have to include predesigned headers for them to be valid. The headers will be shown in the template section below."
+      "text": "This tool accepts INDEX CLIENT uploads, ELICITED CONTACT uploads and CONTACT RESULTS upload. The uploads have to be in a XLSX/CSV format. The XLSX/CSV files have to include predesigned headers for them to be valid. The headers will be shown in the template section below."
     },
     "section3": {
       "title": "XLSX/CSV Tempates",
@@ -187,7 +187,8 @@
     },
     "headers": {
       "clients": "INDEX HEADERS: ",
-      "contacts": "CONTACTS HEADERS: "
+      "contacts": "CONTACTS HEADERS: ",
+      "results": "RESULTS HEADERS: "
     }
   }
 }
