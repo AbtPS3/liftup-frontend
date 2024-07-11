@@ -173,7 +173,6 @@ const readExcelFile = (file) => {
   reader.readAsArrayBuffer(file);
 };
 
-
 // Date Validator Update - April 09, 2024
 const isDateFormatValid = (formattedDateValue) => {
   const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/; // Watches for a formatted date yyyy-mm-dd
@@ -190,9 +189,6 @@ const isDateFormatValid = (formattedDateValue) => {
   // If all date strings are valid, return final validFormat
   return true;
 }
-
-
-
 
 const formatDate = (dateString) => {
   if (!dateString) {
@@ -275,7 +271,7 @@ const processData = (rawData, expectedHeaders, mode, dobColumnIndex, indexCtcNum
       return !row.every(value => value === null || value === undefined || value.trim() === "");
     });
 
-    // Check the format for every date row starting from the second row (index 1)
+    // Check the format for every DOB row starting from the second row (index 1)
     const dateIsValidFormat = nonEmptyRows.slice(1).every(row => {
       const formattedDateColumnValue = row[dobColumnIndex];
       return isDateFormatValid(formattedDateColumnValue);
@@ -322,8 +318,7 @@ const processData = (rawData, expectedHeaders, mode, dobColumnIndex, indexCtcNum
       showAlert(`alert-error`, t(`upload.alerts.headers.contactCtc.title`), t(`upload.alerts.headers.contactCtc.text`));
     } else {
       // If the format is valid for every date column, proceed to usePreview
-      // useFileStatus.toggleStatus(true, t('upload.validation.valid.heading'), t('upload.validation.valid.prompt'));
-      useFileStatus.toggleStatus(true, "File is Valid", t('upload.validation.valid.prompt'));
+      useFileStatus.toggleStatus(true, t('upload.validation.valid.heading'), t('upload.validation.valid.prompt'));
       usePreview.setCsvData(nonEmptyRows[0], nonEmptyRows.slice(1), fileName);
     }
   }
@@ -338,7 +333,7 @@ const processData = (rawData, expectedHeaders, mode, dobColumnIndex, indexCtcNum
   border-radius: 5px;
   background-color: var(--color-background-soft);
   text-align: center;
-  /* cursor: pointer; */
+  cursor: not-allowed;
   height: 150px;
   width: 100%;
   display: flex;
