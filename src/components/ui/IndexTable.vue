@@ -103,7 +103,7 @@ const handleUploadCancel = () => {
   usePreview.removeCsvData();
   useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
   useFileInput.toggleStatus(null);
-  showAlert("alert-info", t('indexTable.alerts.cancel.title'), t('indexTable.alerts.cancel.text'));
+  showAlert("alert-warning", t('indexTable.alerts.cancel.title'), t('indexTable.alerts.cancel.text'));
 }
 
 const uploadButtonClick = () => {
