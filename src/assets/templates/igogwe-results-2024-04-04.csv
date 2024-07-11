@@ -1,0 +1,14 @@
+﻿firstName,middleName,surname,dateOfBirth,gender,mapCue,hamlet,phoneNumber,careTakerName,careTakerPhoneNumber,notificationType,relationship,indexClientCtcNumber,elicitationNumber,ineligibilityReason,notTestingReason,testResults,placeForTesting,testDate,ctcNumber
+Juma,Jabu,Kichwa,28/02/2007,Female,Kwa mjumbe,Buguruni,0711202329,Mama Jabu,0714987654,client_referral,biological,12-34-5678-910506,12-34-5678-910506-bc01,Known Positive,,Positive,Community,25/06/2024,12-34-5678-911506
+Yasinta,Husseni,Mchongo,01/03/2000,Female,Karibu na msikiti,Malapa,0711202329,Mama Jabu,0714987650,contract_referral,non_biological,12-34-5678-910506,12-34-5678-910506-hh01,Recent Negative,,Negative,CTC,26/06/2024,
+Maria,Percy,Tau,02/03/1998,Female,Nyuma ya posta,Amana,0711202330,Mama Jabu,0714987651,client_referral,biological_child,12-34-5678-910506,12-34-5678-910506-bc02,,Kits Out-Of-Stock,Unknown,Outpatient,27/06/2024,
+Lucy,Kibaki,Michael,03/03/1990,Female,Shuleni,Boma,0711202331,Hanifa Baisi,0714987652,client_referral,sexual_partner,12-34-5678-910506,12-34-5678-910506-sp02,Recent Negative,,Negative,Outpatient,28/06/2024,
+Mwantumu,Asumani,Mahiza,04/03/1992,Female,Mtaa wa tatu,Shule ya Uhuru,0711202332,Dada Mkubwa,0714987653,client_referral,biological_child,12-34-5678-910507,12-34-5678-910507-bc01,,,Positive,,29/06/2024,12-34-5678-911510
+Pili,Nikama,Tatu,05/03/2003,Female,Banda la kwanza,Mtaa wa Congo,0711202333,Dada Mkubwa,0714987654,client_referral,biological_child,12-34-5678-910507,12-34-5678-910507-bc02,,,Positive,CTC,30/06/2024,12-34-5678-911511
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,

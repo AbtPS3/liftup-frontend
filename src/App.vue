@@ -27,7 +27,11 @@
       <ModeTitle v-if="token !== null && usePath.name == 'upload'" />
       <RouterView />
     </div>
-    <div class="container-right-contacts" v-else>
+    <div class="container-right-contacts" v-else-if="useMode.mode == 'contacts'">
+      <ModeTitle v-if="token !== null && usePath.name == 'upload'" />
+      <RouterView />
+    </div>
+    <div class="container-right-results" v-else>
       <ModeTitle v-if="token !== null && usePath.name == 'upload'" />
       <RouterView />
     </div>
@@ -86,7 +90,19 @@ const token = computed(() => useToken.token);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  background-color: var(--color-tab-mid);
+  border-radius: 0 20px 20px 0;
+}
+
+.container-right-results {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   background-color: var(--color-tab-right);
+  border-radius: 0 20px 20px 0;
 }
 
 main {

@@ -8,7 +8,8 @@
       "logout": "Logout",
       "upload": "Upload",
       "clients": "Clients",
-      "contacts": "Contacts"
+      "contacts": "Contacts",
+      "results": "Results"
     }
   },
   "login": {
@@ -88,9 +89,13 @@
           "title": "DOB ERROR",
           "text": "Dates must be in yyyy-MM-dd e.g. 2023-11-21"
         },
-        "ctc": {
-          "title": "CTC# ERROR",
-          "text": "CTC Number format must be XX-XX-XXXX-XXXXXX."
+        "indexCtc": {
+          "title": "Index CTC# ERROR",
+          "text": "index CTC Number format must be XX-XX-XXXX-XXXXXX."
+        },
+        "contactCtc": {
+          "title": "Contact CTC# ERROR",
+          "text": "Contact CTC Number format must be XX-XX-XXXX-XXXXXX."
         }
       }
     },
@@ -99,9 +104,13 @@
         "heading": "Valid File",
         "prompt": "click 'Preview File' to preview it!"
       },
-      "ctc": {
-        "heading": "CTC Number Error",
-        "prompt": "Errors found in CTC numbers!"
+      "indexCtc": {
+        "heading": "Index CTC Number Error",
+        "prompt": "Errors found in Index CTC numbers!"
+      },
+      "contactCtc": {
+        "heading": "Contact CTC Number Error",
+        "prompt": "Errors found in Contact CTC numbers!"
       },
       "dob": {
         "heading": "DOB Error",
@@ -130,7 +139,13 @@
       "heading13": "Notification Type",
       "heading14": "Relationship",
       "heading15": "Index CTC Number",
-      "heading16": "Elicitation Number"
+      "heading16": "Elicitation Number",
+      "heading17": "ineligibility Reason",
+      "heading18": "Not Testing Reason",
+      "heading19": "Test Results",
+      "heading20": "Place For Testing",
+      "heading21": "Test Date",
+      "heading22": "CTC Number"
     },
     "buttons": {
       "upload": "Upload This File",

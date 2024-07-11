@@ -1,14 +1,16 @@
 <template>
   <div class="selector-tab">
     <div class="selector-tab-left"
-      :class="{ 'tab-selected-left': selectedMode === 'clients' }, { 'tab-unselected-left': selectedMode === 'contacts' }"
+      :class="{ 'tab-selected-left': selectedMode === 'clients' }, { 'tab-unselected-left': selectedMode !== 'clients' }"
       @click="selectMode('clients')">{{ $t('shared.link.clients') }}
-      <!-- <span class="underliner" v-if="useMode.mode == 'clients'"></span> -->
+    </div>
+    <div class="selector-tab-mid"
+      :class="{ 'tab-selected-mid': selectedMode === 'contacts' }, { 'tab-unselected-mid': selectedMode !== 'contacts' }"
+      @click="selectMode('contacts')">{{ $t('shared.link.contacts') }}
     </div>
     <div class="selector-tab-right"
-      :class="{ 'tab-selected-right': selectedMode === 'contacts' }, { 'tab-unselected-right': selectedMode === 'clients' }"
-      @click="selectMode('contacts')">{{ $t('shared.link.contacts') }}
-      <!-- <span class="underliner" v-if="useMode.mode == 'contacts'"></span> -->
+      :class="{ 'tab-selected-right': selectedMode === 'results' }, { 'tab-unselected-right': selectedMode !== 'results' }"
+      @click="selectMode('results')">{{ $t('shared.link.results') }}
     </div>
   </div>
 </template>
@@ -38,8 +40,8 @@ const selectMode = (mode) => {
   position: absolute;
   top: 0;
   width: 18%;
-  max-width: 250px;
-  min-width: 150px;
+  max-width: 350px;
+  min-width: 250px;
   height: 4%;
   max-height: 50px;
   min-height: 30px;
@@ -52,6 +54,7 @@ const selectMode = (mode) => {
 }
 
 .selector-tab-left,
+.selector-tab-mid,
 .selector-tab-right {
   width: 50%;
   height: 100%;
@@ -63,8 +66,8 @@ const selectMode = (mode) => {
 }
 
 .selector-tab-left:hover,
+.selector-tab-mid:hover,
 .selector-tab-right:hover {
-  /* background-color: var(--color-background-soft); */
   text-decoration: none;
   cursor: pointer;
   color: var(--mq-green-norm);
@@ -75,14 +78,22 @@ const selectMode = (mode) => {
   border-radius: 0 0 0 20px;
 }
 
+.selector-tab-mid {
+  background-color: var(--color-tab-mid);
+  /* border-radius: 0 0 0 20px; */
+}
+
 .selector-tab-right {
   background-color: var(--color-tab-right);
   border-radius: 0 0 20px 0;
 }
 
+
+.tab-selected-left::after,
+.tab-selected-mid::after,
 .tab-selected-right::after {
   content: '';
-  width: 30%;
+  width: 20%;
   height: 2px;
   background: green;
   position: absolute;
@@ -90,19 +101,8 @@ const selectMode = (mode) => {
 }
 
 
-.tab-selected-left {
-  z-index: 1;
-}
-
-.tab-selected-left::after {
-  content: '';
-  width: 30%;
-  height: 2px;
-  background: green;
-  position: absolute;
-  bottom: 0;
-}
-
+.tab-selected-left,
+.tab-selected-mid,
 .tab-selected-right {
   z-index: 1;
 }
@@ -111,8 +111,12 @@ const selectMode = (mode) => {
   box-shadow: 2px 2px 2px var(--color-box-shadow);
 }
 
+.tab-unselected-mid {
+  box-shadow: 2px 2px 2px var(--color-box-shadow);
+}
+
 .tab-unselected-right {
-  box-shadow: -2px 2px 2px var(--color-box-shadow);
+  box-shadow: 2px 2px 2px var(--color-box-shadow);
 }
 
 @media (max-width: 1024px) {

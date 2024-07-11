@@ -8,7 +8,8 @@
       "logout": "Ondoka",
       "upload": "Pakia",
       "clients": "Wateja",
-      "contacts": "Waliotajwa"
+      "contacts": "Waliotajwa",
+      "results": "Majibu"
     }
   },
   "login": {
@@ -88,8 +89,12 @@
           "title": "KOSA LA TAREHE",
           "text": "Tarehe inataka mwaka-mwezi-siku! mf. 2023-03-17"
         },
-        "ctc": {
-          "title": "Namba ya CTC",
+        "indexCtc": {
+          "title": "Namba ya mteja CTC",
+          "text": "Tafadhali hakikisha namba ipo XX-XX-XXXX-XXXXXX"
+        },
+        "contactCtc": {
+          "title": "Namba ya mtajwa CTC",
           "text": "Tafadhali hakikisha namba ipo XX-XX-XXXX-XXXXXX"
         }
       }
@@ -99,9 +104,13 @@
         "heading": "Faili Sahihi",
         "prompt": "bofya 'Kagua Faili' kuliona!"
       },
-      "ctc": {
+      "indexCtc": {
         "heading": "Umekosea",
-        "prompt": "Kuna makosa kwenye nambari ya CTC!"
+        "prompt": "Kuna makosa kwenye nambari ya mteja ya CTC!"
+      },
+      "contactCtc": {
+        "heading": "Umekosea",
+        "prompt": "Kuna makosa kwenye nambari ya mtajwa ya CTC!"
       },
       "dob": {
         "heading": "Umekosea DOB",
@@ -130,7 +139,12 @@
       "heading13": "Anaarifiwaje",
       "heading14": "Mahusiano",
       "heading15": "Nambari ya CTC ya Indeksi",
-      "heading16": "Nambari ya Kutajwa"
+      "heading16": "Nambari ya Kutajwa",
+      "heading18": "Sababu Za Kutopima",
+      "heading19": "Matokeo",
+      "heading20": "Mahali Alipopimia",
+      "heading21": "Tarehe ya Upimaji",
+      "heading22": "Nambari ya CTC"
     },
     "buttons": {
       "upload": "Pakia Faili Hii",

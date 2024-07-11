@@ -60,10 +60,14 @@ const lastFiveFiles = computed(() => uploadedFiles.value.reverse().slice(0, 5));
 // Shared environment variables
 const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
 const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
-const clientsCtcNumberColumnIndex = import.meta.env.VITE_CSV_CLIENTS_CTC_COLUMN - 1;
-const contactsCtcNumberColumnIndex = import.meta.env.VITE_CSV_CONTACTS_CTC_COLUMN - 1;
+const expectedResultsHeaders = import.meta.env.VITE_CSV_RESULTS_HEADERS.split(",");
+const clientsIndexCtcNumberColumnIndex = import.meta.env.VITE_CSV_CLIENTS_INDEX_CTC_COLUMN - 1;
+const contactsIndexCtcNumberColumnIndex = import.meta.env.VITE_CSV_CONTACTS_INDEX_CTC_COLUMN - 1;
 const clientsDateColumnIndex = import.meta.env.VITE_CSV_CLIENTS_DATE_COLUMN - 1;
 const contactsDateColumnIndex = import.meta.env.VITE_CSV_CONTACTS_DATE_COLUMN - 1;
+const resultsIndexCtcNumberColumnIndex = import.meta.env.VITE_CSV_RESULTS_INDEX_CTC_COLUMN - 1;
+const resultsContactCtcNumberColumnIndex = import.meta.env.VITE_CSV_RESULTS_CONTACT_CTC_COLUMN - 1;
+const resultsDateColumnIndex = import.meta.env.VITE_CSV_RESULTS_DATE_COLUMN - 1;
 
 
 const handleDragOver = (event) => {
@@ -131,10 +135,13 @@ const readCsvFile = (file) => {
         const rawCsvData = csvData._rawValue;
         const expectedClientsHeaders = import.meta.env.VITE_CSV_CLIENTS_HEADERS.split(",");
         const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
+        const expectedResultsHeaders = import.meta.env.VITE_CSV_RESULTS_HEADERS.split(",");
         if (mode.value === 'clients') {
-          processData(rawCsvData, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsCtcNumberColumnIndex, file.name);
+          processData(rawCsvData, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsIndexCtcNumberColumnIndex, file.name);
+        } else if (mode.value === 'contacts') {
+          processData(rawCsvData, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsIndexCtcNumberColumnIndex, file.name);
         } else {
-          processData(rawCsvData, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsCtcNumberColumnIndex, file.name);
+          processData(rawCsvData, expectedResultsHeaders, 'results', resultsDateColumnIndex, resultsIndexCtcNumberColumnIndex, file.name);
         }
       },
     });
@@ -155,9 +162,11 @@ const readExcelFile = (file) => {
     const nonEmptyExcelRows = rawExcelData.filter(row => row.some(cell => cell !== null && cell !== ''));
 
     if (mode.value === 'clients') {
-      processData(nonEmptyExcelRows, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsCtcNumberColumnIndex, file.name);
+      processData(nonEmptyExcelRows, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsIndexCtcNumberColumnIndex, file.name);
+    } else if (mode.value === 'contacts') {
+      processData(nonEmptyExcelRows, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsIndexCtcNumberColumnIndex, file.name);
     } else {
-      processData(nonEmptyExcelRows, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsCtcNumberColumnIndex, file.name);
+      processData(nonEmptyExcelRows, expectedResultsHeaders, 'results', resultsDateColumnIndex, resultsIndexCtcNumberColumnIndex, file.name);
     }
   };
   reader.readAsArrayBuffer(file);
@@ -228,7 +237,7 @@ const isCtcNumberFormatValid = (ctcNumberString) => {
   }
 }
 
-const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberColumnIndex, fileName) => {
+const processData = (rawData, expectedHeaders, mode, dateColumnIndex, indexCtcNumberColumnIndex, fileName) => {
   if (!arraysEqual(rawData[0], expectedHeaders)) {
     useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
     fileInput.value = null;
@@ -252,11 +261,27 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       return isDateFormatValid(formattedDateColumnValue);
     });
 
-    // Check the format for every date column starting from the second row (index 1)
-    const ctcNumberIsValidFormat = nonEmptyRows.slice(1).every(row => {
-      const formattedCtcNumberColumnValue = row[ctcNumberColumnIndex];
-      return isCtcNumberFormatValid(formattedCtcNumberColumnValue);
+    // Check the format for Index Client CTC number based on column position
+    const indexCtcNumberIsValidFormat = nonEmptyRows.slice(1).every(row => {
+      const formattedIndexCtcNumberColumnValue = row[indexCtcNumberColumnIndex];
+      return isCtcNumberFormatValid(formattedIndexCtcNumberColumnValue);
     });
+
+    // Check the format for contact's CTC number based on column position
+    const contactCtcNumberIsValidFormat = nonEmptyRows.slice(1).every(row => {
+      const formattedContactCtcNumberColumnValue = row[resultsContactCtcNumberColumnIndex];
+
+      // Skip validation if formattedContactCtcNumberColumnValue is empty, null or undefined
+      if (formattedContactCtcNumberColumnValue === null ||
+        formattedContactCtcNumberColumnValue === undefined ||
+        formattedContactCtcNumberColumnValue.trim() === '') {
+        return true; // Skip validation
+      }
+
+      // Run the validator if the value is present
+      return isCtcNumberFormatValid(formattedContactCtcNumberColumnValue);
+    });
+
 
     if (!dateIsValidFormat) {
       // If the format check fails for any date column, show an error alert
@@ -264,14 +289,21 @@ const processData = (rawData, expectedHeaders, mode, dateColumnIndex, ctcNumberC
       fileInput.value = null;
       return showAlert(`alert-error`, t(`upload.alerts.headers.dob.title`), t(`upload.alerts.headers.dob.text`));
 
-    } else if (!ctcNumberIsValidFormat) {
+    } else if (!indexCtcNumberIsValidFormat) {
       // If the format check fails for any CTC column, show an error alert
-      useFileStatus.toggleStatus(false, t('upload.validation.ctc.heading'), t('upload.validation.ctc.prompt'));
+      useFileStatus.toggleStatus(false, t('upload.validation.indexCtc.heading'), t('upload.validation.indexCtc.prompt'));
       fileInput.value = null;
-      showAlert(`alert-error`, t(`upload.alerts.headers.ctc.title`), t(`upload.alerts.headers.ctc.text`));
+      showAlert(`alert-error`, t(`upload.alerts.headers.indexCtc.title`), t(`upload.alerts.headers.indexCtc.text`));
+    }
+    else if (mode === 'results' & !contactCtcNumberIsValidFormat) {
+      // If the format check fails for any CTC column, show an error alert
+      useFileStatus.toggleStatus(false, t('upload.validation.contactCtc.heading'), t('upload.validation.contactCtc.prompt'));
+      fileInput.value = null;
+      showAlert(`alert-error`, t(`upload.alerts.headers.contactCtc.title`), t(`upload.alerts.headers.contactCtc.text`));
     } else {
       // If the format is valid for every date column, proceed to usePreview
-      useFileStatus.toggleStatus(true, t('upload.validation.valid.heading'), t('upload.validation.valid.prompt'));
+      // useFileStatus.toggleStatus(true, t('upload.validation.valid.heading'), t('upload.validation.valid.prompt'));
+      useFileStatus.toggleStatus(true, "File is Valid", t('upload.validation.valid.prompt'));
       usePreview.setCsvData(nonEmptyRows[0], nonEmptyRows.slice(1), fileName);
     }
   }

@@ -66,7 +66,8 @@
   --color-panel-left: var(--mq-white-soft);
   --color-panel-right: var(--mq-white-mute);
 
-  --color-tab-left: var(--mq-white-mute);
+  --color-tab-left: var(--mq-white-soft);
+  --color-tab-mid: var(--mq-white-mute);
   --color-tab-right: var(--mq-white-fade);
 
 

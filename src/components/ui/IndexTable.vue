@@ -20,6 +20,23 @@
         <td>{{ t('indexTable.headings.heading11') }}</td>
         <td>{{ t('indexTable.headings.heading12') }}</td>
       </tr>
+      <tr v-if="mode == 'contacts'" class="table-header">
+        <th class="left-cell">{{ t('indexTable.headings.heading1') }}</th>
+        <td>{{ t('indexTable.headings.heading3') }}</td>
+        <td>{{ t('indexTable.headings.heading4') }}</td>
+        <td>{{ t('indexTable.headings.heading5') }}</td>
+        <td>{{ t('indexTable.headings.heading6') }}</td>
+        <td>{{ t('indexTable.headings.heading7') }}</td>
+        <td>{{ t('indexTable.headings.heading8') }}</td>
+        <td>{{ t('indexTable.headings.heading9') }}</td>
+        <td>{{ t('indexTable.headings.heading10') }}</td>
+        <td>{{ t('indexTable.headings.heading11') }}</td>
+        <td>{{ t('indexTable.headings.heading12') }}</td>
+        <td>{{ t('indexTable.headings.heading13') }}</td>
+        <td>{{ t('indexTable.headings.heading14') }}</td>
+        <td>{{ t('indexTable.headings.heading15') }}</td>
+        <td>{{ t('indexTable.headings.heading16') }}</td>
+      </tr>
       <tr v-else class="table-header">
         <th class="left-cell">{{ t('indexTable.headings.heading1') }}</th>
         <td>{{ t('indexTable.headings.heading3') }}</td>
@@ -36,6 +53,12 @@
         <td>{{ t('indexTable.headings.heading14') }}</td>
         <td>{{ t('indexTable.headings.heading15') }}</td>
         <td>{{ t('indexTable.headings.heading16') }}</td>
+        <td>{{ t('indexTable.headings.heading17') }}</td>
+        <td>{{ t('indexTable.headings.heading18') }}</td>
+        <td>{{ t('indexTable.headings.heading19') }}</td>
+        <td>{{ t('indexTable.headings.heading20') }}</td>
+        <td>{{ t('indexTable.headings.heading21') }}</td>
+        <td>{{ t('indexTable.headings.heading22') }}</td>
       </tr>
       <tr v-for="(row, index) in nonEmptyRows" :key="row">
         <th class="left-cell"><span v-if="index < rows.length">{{ index + 1 }}</span></th>

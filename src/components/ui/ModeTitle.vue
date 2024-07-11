@@ -5,8 +5,12 @@
       {{ $t('shared.link.clients') }}
     </h1>
 
-    <h1 v-else>
+    <h1 v-else-if="selectedMode === 'contacts'">
       {{ $t('shared.link.contacts') }}
+    </h1>
+
+    <h1 v-else>
+      {{ $t('shared.link.results') }}
     </h1>
 
   </div>
@@ -17,6 +21,9 @@ import { computed } from "vue";
 import { useMode } from "@/stores/state";
 
 const selectedMode = computed(() => useMode.mode);
+
+
+console.log("MODE TITLE:", selectedMode);
 </script>
 
 <style scoped>
@@ -28,6 +35,7 @@ const selectedMode = computed(() => useMode.mode);
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  z-index: 4;
 }
 
 h1 {
