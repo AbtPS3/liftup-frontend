@@ -63,11 +63,12 @@ const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(
 const expectedResultsHeaders = import.meta.env.VITE_CSV_RESULTS_HEADERS.split(",");
 const clientsIndexCtcNumberColumnIndex = import.meta.env.VITE_CSV_CLIENTS_INDEX_CTC_COLUMN - 1;
 const contactsIndexCtcNumberColumnIndex = import.meta.env.VITE_CSV_CONTACTS_INDEX_CTC_COLUMN - 1;
-const clientsDateColumnIndex = import.meta.env.VITE_CSV_CLIENTS_DATE_COLUMN - 1;
-const contactsDateColumnIndex = import.meta.env.VITE_CSV_CONTACTS_DATE_COLUMN - 1;
+const clientsDobColumnIndex = import.meta.env.VITE_CSV_CLIENTS_DOB_COLUMN - 1;
+const contactsDobColumnIndex = import.meta.env.VITE_CSV_CONTACTS_DOB_COLUMN - 1;
 const resultsIndexCtcNumberColumnIndex = import.meta.env.VITE_CSV_RESULTS_INDEX_CTC_COLUMN - 1;
+const resultsDobColumnIndex = import.meta.env.VITE_CSV_RESULTS_DOB_COLUMN - 1;
 const resultsContactCtcNumberColumnIndex = import.meta.env.VITE_CSV_RESULTS_CONTACT_CTC_COLUMN - 1;
-const resultsDateColumnIndex = import.meta.env.VITE_CSV_RESULTS_DATE_COLUMN - 1;
+const resultsTestDateColumnIndex = import.meta.env.VITE_CSV_RESULTS_TEST_DATE_COLUMN - 1;
 
 
 const handleDragOver = (event) => {
@@ -137,11 +138,11 @@ const readCsvFile = (file) => {
         const expectedContactsHeaders = import.meta.env.VITE_CSV_CONTACTS_HEADERS.split(",");
         const expectedResultsHeaders = import.meta.env.VITE_CSV_RESULTS_HEADERS.split(",");
         if (mode.value === 'clients') {
-          processData(rawCsvData, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsIndexCtcNumberColumnIndex, file.name);
+          processData(rawCsvData, expectedClientsHeaders, 'clients', clientsDobColumnIndex, clientsIndexCtcNumberColumnIndex, file.name);
         } else if (mode.value === 'contacts') {
-          processData(rawCsvData, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsIndexCtcNumberColumnIndex, file.name);
+          processData(rawCsvData, expectedContactsHeaders, 'contacts', contactsDobColumnIndex, contactsIndexCtcNumberColumnIndex, file.name);
         } else {
-          processData(rawCsvData, expectedResultsHeaders, 'results', resultsDateColumnIndex, resultsIndexCtcNumberColumnIndex, file.name);
+          processData(rawCsvData, expectedResultsHeaders, 'results', resultsDobColumnIndex, resultsIndexCtcNumberColumnIndex, file.name);
         }
       },
     });
@@ -162,11 +163,11 @@ const readExcelFile = (file) => {
     const nonEmptyExcelRows = rawExcelData.filter(row => row.some(cell => cell !== null && cell !== ''));
 
     if (mode.value === 'clients') {
-      processData(nonEmptyExcelRows, expectedClientsHeaders, 'clients', clientsDateColumnIndex, clientsIndexCtcNumberColumnIndex, file.name);
+      processData(nonEmptyExcelRows, expectedClientsHeaders, 'clients', clientsDobColumnIndex, clientsIndexCtcNumberColumnIndex, file.name);
     } else if (mode.value === 'contacts') {
-      processData(nonEmptyExcelRows, expectedContactsHeaders, 'contacts', contactsDateColumnIndex, contactsIndexCtcNumberColumnIndex, file.name);
+      processData(nonEmptyExcelRows, expectedContactsHeaders, 'contacts', contactsDobColumnIndex, contactsIndexCtcNumberColumnIndex, file.name);
     } else {
-      processData(nonEmptyExcelRows, expectedResultsHeaders, 'results', resultsDateColumnIndex, resultsIndexCtcNumberColumnIndex, file.name);
+      processData(nonEmptyExcelRows, expectedResultsHeaders, 'results', resultsDobColumnIndex, resultsIndexCtcNumberColumnIndex, file.name);
     }
   };
   reader.readAsArrayBuffer(file);
@@ -237,27 +238,46 @@ const isCtcNumberFormatValid = (ctcNumberString) => {
   }
 }
 
-const processData = (rawData, expectedHeaders, mode, dateColumnIndex, indexCtcNumberColumnIndex, fileName) => {
+const processData = (rawData, expectedHeaders, mode, dobColumnIndex, indexCtcNumberColumnIndex, fileName) => {
   if (!arraysEqual(rawData[0], expectedHeaders)) {
     useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
     fileInput.value = null;
     showAlert(`alert-error`, t(`upload.alerts.headers.${mode}.title`), t(`upload.alerts.headers.${mode}.text`));
   } else {
+
     // Map the rawData to replace the date column with formatted date values
     const formattedData = rawData.map(row => {
-      const dateColumnValue = row[dateColumnIndex];
-      const formattedDateColumnValue = formatDate(dateColumnValue);
-      return [...row.slice(0, dateColumnIndex), formattedDateColumnValue, ...row.slice(dateColumnIndex + 1)];
+      const dobColumnValue = row[dobColumnIndex];
+      const formattedDobColumnValue = formatDate(dobColumnValue);
+
+      if (mode === 'results') {
+        const testDateColumnValue = row[resultsTestDateColumnIndex];
+        const formattedTestDateColumnValue = formatDate(testDateColumnValue);
+        return [
+          ...row.slice(0, dobColumnIndex),
+          formattedDobColumnValue,
+          ...row.slice(dobColumnIndex + 1, resultsTestDateColumnIndex),
+          formattedTestDateColumnValue,
+          ...row.slice(resultsTestDateColumnIndex + 1)
+        ];
+      } else {
+        return [
+          ...row.slice(0, dobColumnIndex),
+          formattedDobColumnValue,
+          ...row.slice(dobColumnIndex + 1)
+        ];
+      }
     });
+
 
     // Filter out empty rows
     const nonEmptyRows = formattedData.filter(row => {
       return !row.every(value => value === null || value === undefined || value.trim() === "");
     });
 
-    // Check the format for every date column starting from the second row (index 1)
+    // Check the format for every date row starting from the second row (index 1)
     const dateIsValidFormat = nonEmptyRows.slice(1).every(row => {
-      const formattedDateColumnValue = row[dateColumnIndex];
+      const formattedDateColumnValue = row[dobColumnIndex];
       return isDateFormatValid(formattedDateColumnValue);
     });
 
