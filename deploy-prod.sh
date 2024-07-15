@@ -20,10 +20,10 @@ else
 fi
 
 # Make sure you are on main branch
-git branch -M main
+git branch -M main && git stash
 
 #Pull the latest version
-git pull
+git fetch && git merge origin/main -m "Auto-deploy"
 
 # Update NPM packages
 npm install --silent
