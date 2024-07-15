@@ -35,7 +35,7 @@ console.log("MODE TITLE:", selectedMode);
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  z-index: 4;
+  z-index: 2;
 }
 
 h1 {
