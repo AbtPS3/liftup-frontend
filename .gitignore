@@ -29,3 +29,6 @@ coverage
 *.sw?
 update-prod.sh 
 update-test.sh
+
+git-actions-prod.txt
+git-actions-test.txt
