@@ -37,7 +37,7 @@
         <td>{{ t('indexTable.headings.heading15') }}</td>
         <td>{{ t('indexTable.headings.heading16') }}</td>
       </tr>
-      <tr v-else class="table-header">
+      <tr v-if="mode == 'results'" class="table-header">
         <th class="left-cell">{{ t('indexTable.headings.heading1') }}</th>
         <td>{{ t('indexTable.headings.heading3') }}</td>
         <td>{{ t('indexTable.headings.heading4') }}</td>
