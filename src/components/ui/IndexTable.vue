@@ -127,7 +127,7 @@ const uploadFile = async (headers, _rows) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const backendPort = import.meta.env.VITE_BACKEND_PORT;
     const backendPath = import.meta.env.VITE_BACKEND_PATH;
-    const backendAddress = `${backendUrl}:${backendPort + backendPath}/api/v1/upload`;
+    // const backendAddress = `${backendUrl}:${backendPort + backendPath}/api/v1/upload`;
     const backendAddress = import.meta.env.NODE_ENV === "production" ?
       "https://ucs.moh.go.tz/liftup-backend/api/v1/upload" :
       "http://170.187.199.69:3010/api/v1/upload";
