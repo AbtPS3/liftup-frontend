@@ -165,7 +165,6 @@ const uploadFile = async (headers, _rows) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
 }
 
 table {
