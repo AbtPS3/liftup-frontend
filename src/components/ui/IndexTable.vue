@@ -129,7 +129,7 @@ const uploadFile = async (headers, _rows) => {
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
         const backendPort = import.meta.env.VITE_BACKEND_PORT;
         const backendPath = import.meta.env.VITE_BACKEND_PATH;
-        const backendAddress = `${backendUrl}:${backendPort}${backendPath}/api/v1/upload`;
+        const backendAddress = `${backendUrl}:${backendPort + backendPath}/api/v1/upload`;
 
         const response = await axios.post(backendAddress, formData, {
             headers: { Authorization: `Bearer ${token.value}` },
@@ -137,31 +137,16 @@ const uploadFile = async (headers, _rows) => {
 
         useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
         useLoading.toggleVisibility(false);
-
         if (!response.data.payload.rejected) {
             showAlert("alert-success", t('indexTable.alerts.success.title'), response.data.payload.message);
         } else {
-            // Update headers to include rejection reason
-            const updatedHeaders = [...headers, 'rejection_reason'];
-
-            // Map rejectedRows to include rejection_reason
-            const rejectedRows = response.data.payload.rejectedRows.map(row => {
-                return {
-                    ...row,
-                    rejection_reason: row.rejection_reason || 'No reason provided'
-                };
-            });
-
-            // Convert object array to array of arrays
-            const rejectedRowsArray = rejectedRows.map(row =>
-                updatedHeaders.map(header => row[header] || '')
+            const rejectedRows = response.data.payload.rejectedRows.map(row =>
+                Object.values(row)
             );
-
-            const rejectedCsvString = Papa.unparse([updatedHeaders, ...rejectedRowsArray]);
+            const rejectedCsvString = Papa.unparse([headers, ...rejectedRows]);
             const blob = new Blob([rejectedCsvString], { type: 'text/csv' });
-            showModal(blob, t('indexTable.modals.rejected.title'), t('indexTable.modals.rejected.text'));
+            showModal(blob, t('indexTable.modals.rejected.title'), t('indexTable.modals.rejected.text'))
         }
-
         const originalFileName = usePreview.fileName;
         usePreview.addUploadedFile(originalFileName);
         return true;
@@ -182,7 +167,6 @@ const uploadFile = async (headers, _rows) => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
 }
 
 table {
