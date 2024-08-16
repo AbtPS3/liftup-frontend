@@ -94,6 +94,7 @@ const nonEmptyRows = rows.filter(row =>
     row.some(value => value !== undefined && value !== '')
 );
 const headers = csvData.headers;
+const headers2 = [...csvData.headers, "rejectionReasons"];
 const token = computed(() => useToken.token);
 const decodedJwt = jwtDecode(token.value);
 const facilityName = ref(decodedJwt.data.facility);
@@ -143,7 +144,7 @@ const uploadFile = async (headers, _rows) => {
             const rejectedRows = response.data.payload.rejectedRows.map(row =>
                 Object.values(row)
             );
-            const rejectedCsvString = Papa.unparse([headers, ...rejectedRows]);
+            const rejectedCsvString = Papa.unparse([headers2, ...rejectedRows]);
             const blob = new Blob([rejectedCsvString], { type: 'text/csv' });
             showModal(blob, t('indexTable.modals.rejected.title'), t('indexTable.modals.rejected.text'))
         }
