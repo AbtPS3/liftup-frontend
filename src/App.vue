@@ -20,7 +20,10 @@
           </RouterLink>
           <RouterLink v-if="usePath.name !== 'upload' && usePath.name !== 'home'" to="/upload" class="routerlink"
             @click="usePath.changeName('upload')">{{ $t('shared.link.upload') }}</RouterLink>
-          | <a href="/liftup/" class="routerlink" @click="useToken.removeToken()">{{ $t('shared.link.logout') }}</a>
+          | <a href="/liftup/" class="routerlink"
+            @click="useToken.removeToken(), useUserUploadStats.removeUserUploadStats()">{{
+              $t('shared.link.logout')
+            }}</a>
         </nav>
       </div>
       <UserStats v-if="token !== null"></UserStats>
@@ -51,6 +54,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 import PageTitle from '@/components/PageTitle.vue'
 import { useToken, useAlert, useModal, useLoading, useLocale, usePreview, usePath, useMode } from '@/stores/state';
+import { useUserUploadStats } from '@/stores/stats';
 import AlertCover from '@/components/ui/AlertCover.vue';
 import ModalCover from '@/components/ui/ModalCover.vue';
 import ModeTitle from '@/components/ui/ModeTitle.vue';

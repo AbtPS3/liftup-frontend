@@ -17,4 +17,8 @@ export const useUserUploadStats = reactive({
     this.userUploadStats = uploadStats;
     localStorage.setItem("userUploadStats", JSON.stringify(uploadStats));
   },
+
+  removeUserUploadStats() {
+    localStorage.removeItem("userUploadStats");
+  },
 });
