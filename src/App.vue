@@ -10,20 +10,20 @@
   </div>
   <div class="container">
     <div class="container-left">
-      <img class="logo" src="@/assets/tanzania-coat.png" :alt="$t('shared.logo.alt')">
-      <PageTitle v-if="token == null" :title="$t('login.left.heading')" :prompt="$t('login.left.prompt')" />
-      <PageTitle v-else :title="$t('upload.left.heading')" :prompt="$t('upload.left.prompt')" />
-      <nav class="main-links" v-if="token !== null">
-        <RouterLink v-if="usePath.name !== 'instructions'" to="/instructions" class="routerlink"
-          @click="usePath.changeName('instructions')">{{ $t('shared.link.howto') }}
-        </RouterLink>
-        <RouterLink v-if="usePath.name !== 'upload' && usePath.name !== 'home'" to="/upload" class="routerlink"
-          @click="usePath.changeName('upload')">{{ $t('shared.link.upload') }}</RouterLink>
-        | <a href="/liftup/" class="routerlink" @click="useToken.removeToken()">{{ $t('shared.link.logout') }}</a>
-      </nav>
-      <UserStats v-if="token !== null">
-
-      </UserStats>
+      <div class="left-top">
+        <img class="logo" src="@/assets/tanzania-coat.png" :alt="$t('shared.logo.alt')">
+        <PageTitle v-if="token == null" :title="$t('login.left.heading')" :prompt="$t('login.left.prompt')" />
+        <PageTitle v-else :title="$t('upload.left.heading')" :prompt="$t('upload.left.prompt')" />
+        <nav class="main-links" v-if="token !== null">
+          <RouterLink v-if="usePath.name !== 'instructions'" to="/instructions" class="routerlink"
+            @click="usePath.changeName('instructions')">{{ $t('shared.link.howto') }}
+          </RouterLink>
+          <RouterLink v-if="usePath.name !== 'upload' && usePath.name !== 'home'" to="/upload" class="routerlink"
+            @click="usePath.changeName('upload')">{{ $t('shared.link.upload') }}</RouterLink>
+          | <a href="/liftup/" class="routerlink" @click="useToken.removeToken()">{{ $t('shared.link.logout') }}</a>
+        </nav>
+      </div>
+      <UserStats v-if="token !== null"></UserStats>
       <br>
     </div>
     <div class="container-right-clients" v-if="useMode.mode == 'clients'">
@@ -74,6 +74,10 @@ const token = computed(() => useToken.token);
   background-color: var(--color-panel-left);
   text-align: center;
   border-radius: 20px 0 0 20px;
+}
+
+.left-top {
+  padding-top: 80px;
 }
 
 .container-right-clients {
