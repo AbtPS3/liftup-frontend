@@ -40,7 +40,6 @@ import FormButton from '@/components/ui/FormButton.vue';
 import { useI18n } from "vue-i18n";
 import * as XLSX from "xlsx";
 import moment from "moment";
-import { parse } from "papaparse";
 
 const { t } = useI18n();
 const token = computed(() => useToken.token);
@@ -50,7 +49,6 @@ const userName = ref(decodedJwt.data.providerId);
 const isDragging = ref(false);
 const fileInput = ref(null);
 const fileStatus = computed(() => useFileStatus.status);
-const fileTitle = computed(() => useFileStatus.title);
 const fileMessage = computed(() => useFileStatus.message);
 const csvData = ref(null);
 const mode = computed(() => useMode.mode);
@@ -236,6 +234,7 @@ const isCtcNumberFormatValid = (ctcNumberString) => {
 
 const processData = (rawData, expectedHeaders, mode, dobColumnIndex, indexCtcNumberColumnIndex, fileName) => {
   if (!arraysEqual(rawData[0], expectedHeaders)) {
+    usePreview.removeCsvData();
     useFileStatus.toggleStatus(false, t('upload.validation.headers.heading'), t('upload.validation.headers.prompt'));
     fileInput.value = null;
     showAlert(`alert-error`, t(`upload.alerts.headers.${mode}.title`), t(`upload.alerts.headers.${mode}.text`));

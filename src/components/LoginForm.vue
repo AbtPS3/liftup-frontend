@@ -15,6 +15,7 @@ import axios from 'axios';
 
 import { useRouter } from 'vue-router';
 import { useToken, useLoading, usePath } from '@/stores/state';
+import { useUserUploadStats } from '@/stores/stats';
 import showAlert from '@/scripts/showAlert';
 import FormInput from '@/components/ui/FormInput.vue';
 import FormButton from '@/components/ui/FormButton.vue';
@@ -24,7 +25,6 @@ const { t } = useI18n();
 const username = ref('');
 const password = ref('');
 const router = useRouter();
-const userUploadStats = ref({});
 
 if (useToken.token) {
   router.push('/upload');
@@ -54,9 +54,12 @@ const login = async () => {
       username: username.value,
       password: password.value,
     });
-    userUploadStats.value = response.data.payload.userUploadStats;
 
-    // Store the token in Vue store
+    // Set stats for use in useStats store
+    const uploadStats = response.data.payload.userUploadStats;
+    useUserUploadStats.setUserUploadStats(uploadStats);
+
+    // Store the token in store
     const token = response.data.payload.token;
     useToken.setToken(token);
     usePath.changeName('upload');
