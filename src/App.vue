@@ -21,6 +21,9 @@
           @click="usePath.changeName('upload')">{{ $t('shared.link.upload') }}</RouterLink>
         | <a href="/liftup/" class="routerlink" @click="useToken.removeToken()">{{ $t('shared.link.logout') }}</a>
       </nav>
+      <UserStats v-if="token !== null">
+
+      </UserStats>
       <br>
     </div>
     <div class="container-right-clients" v-if="useMode.mode == 'clients'">
@@ -53,6 +56,7 @@ import ModalCover from '@/components/ui/ModalCover.vue';
 import ModeTitle from '@/components/ui/ModeTitle.vue';
 import Preview from '@/components/ui/Preview.vue';
 import Selector from '@/components/ui/SelectorTab.vue';
+import UserStats from './components/UserStats.vue';
 
 const token = computed(() => useToken.token);
 

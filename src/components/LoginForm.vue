@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import axios from 'axios';
 
 import { useRouter } from 'vue-router';
@@ -24,6 +24,7 @@ const { t } = useI18n();
 const username = ref('');
 const password = ref('');
 const router = useRouter();
+const userUploadStats = ref({});
 
 if (useToken.token) {
   router.push('/upload');
@@ -53,6 +54,7 @@ const login = async () => {
       username: username.value,
       password: password.value,
     });
+    userUploadStats.value = response.data.payload.userUploadStats;
 
     // Store the token in Vue store
     const token = response.data.payload.token;
