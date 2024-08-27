@@ -72,7 +72,6 @@ const { t } = useI18n();
 <style scoped>
 .user-stats {
   position: relative;
-  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -81,7 +80,7 @@ const { t } = useI18n();
 }
 
 .top-spacer {
-  height: 150px;
+  height: 100px;
 }
 
 .bottom-content {
