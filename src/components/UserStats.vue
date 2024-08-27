@@ -103,6 +103,7 @@ const { t } = useI18n();
   border: solid 2px white;
   margin: 20px 0;
   box-shadow: 2px 1px 1px grey;
+  opacity: 0.5;
 }
 
 .stat-data {
