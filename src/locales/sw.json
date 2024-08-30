@@ -10,6 +10,14 @@
       "clients": "Wateja",
       "contacts": "Waliotajwa",
       "results": "Majibu"
+    },
+    "stats": {
+      "clients": "Mafaili ya Wateja",
+      "contacts": "Mafaili ya Waliotajwa",
+      "results": "Mafaili ya Majibu",
+      "accepted": "Rekodi Zilizokubaliwa",
+      "rejected": "Rekodi Zilizokataliwa",
+      "lastDate": "Tarehe ya Mwisho Kutuma"
     }
   },
   "login": {

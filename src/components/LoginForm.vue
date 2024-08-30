@@ -10,11 +10,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import axios from 'axios';
 
 import { useRouter } from 'vue-router';
 import { useToken, useLoading, usePath } from '@/stores/state';
+import { useUserUploadStats } from '@/stores/stats';
 import showAlert from '@/scripts/showAlert';
 import FormInput from '@/components/ui/FormInput.vue';
 import FormButton from '@/components/ui/FormButton.vue';
@@ -54,7 +55,11 @@ const login = async () => {
       password: password.value,
     });
 
-    // Store the token in Vue store
+    // Set stats for use in useStats store
+    const uploadStats = response.data.payload.userUploadStats;
+    useUserUploadStats.setUserUploadStats(uploadStats);
+
+    // Store the token in store
     const token = response.data.payload.token;
     useToken.setToken(token);
     usePath.changeName('upload');

@@ -10,6 +10,14 @@
       "clients": "Clients",
       "contacts": "Contacts",
       "results": "Results"
+    },
+    "stats": {
+      "clients": "Client Files Uploaded",
+      "contacts": "Contact Files Uploaded",
+      "results": "Result Files Uploaded",
+      "accepted": "Total Accepted Records",
+      "rejected": "Total Rejected Records",
+      "lastDate": "Last Upload Date"
     }
   },
   "login": {
