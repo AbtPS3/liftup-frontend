@@ -90,8 +90,12 @@
           "text": "Soma maelekezo kuhusu HEADING ZA WATEJA!"
         },
         "contacts": {
-          "title": "KOSA LA 'HEADING' zA WALIOTAJWA",
+          "title": "KOSA LA 'HEADING' ZA WALIOTAJWA",
           "text": "Soma maelekezo kuhusu 'HEADING' ZA WALIOTAJWA!"
+        },
+        "results": {
+          "title": "KOSA LA 'HEADING' ZA MAJIBU",
+          "text": "Soma maelekezo kuhusu 'HEADING' ZA MAJIBU!"
         },
         "dob": {
           "title": "KOSA LA TAREHE",

@@ -94,34 +94,41 @@ const handleFileChange = async (event) => {
 };
 
 function processFile(files) {
-  for (const file of files) {
-    if (files.length > 0) {
-      const fileType = file.type;
-      const uploadedFiles = usePreview.uploadedFilesList;
-      uploadedFiles.forEach(uploadedFile => {
-        if (file.name == uploadedFile) {
-          showAlert("alert-error", t('upload.alerts.repeat.title'), t('upload.alerts.repeat.text'));
-        }
-      });
+  const filesToProcess = Array.from(files);
 
-      if (fileType === 'text/csv' || fileType === 'application/vnd.ms-excel' || fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-        // CSV or Excel file
-        useFileStatus.toggleStatus(true, file.name, t('upload.history.default.prompt'));
-        if (fileType !== 'text/csv') {
-          // Handle Excel file
-          readExcelFile(file);
-        } else {
-          // Handle CSV file
-          readCsvFile(file);
-        }
-      } else {
-        useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
-        fileInput.value = null;
-        showAlert("alert-error", t('upload.alerts.type.title'), t('upload.alerts.type.text'));
-      }
+  filesToProcess.forEach(file => {
+    const fileType = file.type;
+    const uploadedFiles = usePreview.uploadedFilesList;
+
+    // Check for duplicate files
+    if (uploadedFiles.includes(file.name)) {
+      useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
+      fileInput.value = null; // Reset the file input
+      showAlert("alert-error", t('upload.alerts.repeat.title'), t('upload.alerts.repeat.text'));
+      return; // Skip further processing for this file
     }
-  }
+
+    // Process valid files
+    if (fileType === 'text/csv' || fileType === 'application/vnd.ms-excel' || fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+      useFileStatus.toggleStatus(true, file.name, t('upload.history.default.prompt'));
+
+      if (fileType !== 'text/csv') {
+        readExcelFile(file); // Handle Excel file
+      } else {
+        readCsvFile(file); // Handle CSV file
+      }
+    } else {
+      // Handle invalid file types
+      useFileStatus.toggleStatus(false, t('upload.history.default.heading'), t('upload.history.default.prompt'));
+      fileInput.value = null; // Reset the file input
+      showAlert("alert-error", t('upload.alerts.type.title'), t('upload.alerts.type.text'));
+    }
+  });
+
+  // Clear the file input to allow re-uploading of the same file if needed
+  fileInput.value = null;
 }
+
 
 // Handling CSV files
 const readCsvFile = (file) => {

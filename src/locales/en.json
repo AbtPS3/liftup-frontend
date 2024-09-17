@@ -93,6 +93,10 @@
           "title": "CONTACT HEADERS ERROR",
           "text": "Read instructions on CONTACT UPLOAD headers!"
         },
+        "results": {
+          "title": "RESULT HEADERS ERROR",
+          "text": "Read instructions on RESULT UPLOAD headers!"
+        },
         "dob": {
           "title": "DOB ERROR",
           "text": "Dates must be in yyyy-MM-dd e.g. 2023-11-21"
