@@ -233,9 +233,11 @@ const formatDate = (dateString) => {
 const isCtcNumberFormatValid = (ctcNumberString) => {
   const ctcNumberFormatRegex = /^\d{2}-\d{2}-\d{4}-\d{6}$/;
   if (ctcNumberString == undefined || ctcNumberString == '') {
-    return false;
+    // @TODO: change true to false to return frontend check
+    return true;
   } else {
-    return ctcNumberFormatRegex.test(ctcNumberString);
+    // @TODO: change true below to ctcNumberFormatRegex.test(ctcNumberString) to test on frontend
+    return true;
   }
 }
 
