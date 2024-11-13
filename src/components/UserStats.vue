@@ -1,8 +1,10 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n } from "vue-i18n";
+import { jwtDecode } from 'jwt-decode';
 
 import { useUserUploadStats } from '@/stores/stats';
+import { useToken } from '@/stores/state';
 import IconClientFile from './icons/IconClientFile.vue';
 import IconContactFile from './icons/IconContactFile.vue';
 import IconResultFile from './icons/IconResultFile.vue';
@@ -13,10 +15,14 @@ import IconLastUploadDate from './icons/IconLastUploadDate.vue';
 const userUploadStats = computed(() => useUserUploadStats.userUploadStats);
 const { t } = useI18n();
 
+const token = computed(() => useToken.token);
+const userName = ref(token.value != null ? (jwtDecode(token.value)).data.providerId : "");
+
+
 </script>
 
 <template>
-  <div class="user-stats">
+  <div class="user-stats" v-if="userName != 'tepifac'">
     <div class="top-spacer"></div>
     <div class="bottom-content">
       <div class="user-stat stat1">
