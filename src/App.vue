@@ -1,5 +1,5 @@
 <template>
-  <Selector v-if="token !== null" />
+  <Selector v-if="token !== null && userName !== 'tepifac'" />
   <Preview v-if="usePreview.visible" />
   <AlertCover :title="useAlert.title" :message="useAlert.message" :type="useAlert.type" v-if="useAlert.visible" />
   <ModalCover :title="useModal.title" :message="useModal.message" v-if="useModal.visible" />
@@ -26,7 +26,7 @@
             }}</a>
         </nav>
       </div>
-      <UserStats v-if="token !== null"></UserStats>
+      <UserStats v-if="token !== null && userName !== 'tepifac'"></UserStats>
       <br>
     </div>
     <div class="container-right-clients" v-if="useMode.mode == 'clients'">
@@ -51,7 +51,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
-
+import { jwtDecode } from 'jwt-decode';
 import PageTitle from '@/components/PageTitle.vue'
 import { useToken, useAlert, useModal, useLoading, useLocale, usePreview, usePath, useMode } from '@/stores/state';
 import { useUserUploadStats } from '@/stores/stats';
@@ -63,6 +63,7 @@ import Selector from '@/components/ui/SelectorTab.vue';
 import UserStats from './components/UserStats.vue';
 
 const token = computed(() => useToken.token);
+const userName = ref(token.value != null ? (jwtDecode(token.value)).data.providerId : "");
 
 </script>
 
@@ -121,7 +122,7 @@ main {
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10%;
+  padding: 5% 10%;
 }
 
 .logo {
