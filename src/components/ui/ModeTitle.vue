@@ -21,9 +21,6 @@ import { computed } from "vue";
 import { useMode } from "@/stores/state";
 
 const selectedMode = computed(() => useMode.mode);
-
-
-console.log("MODE TITLE:", selectedMode);
 </script>
 
 <style scoped>
