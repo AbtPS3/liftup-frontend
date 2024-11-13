@@ -30,7 +30,7 @@ const chartOptions = ref({
     },
     title: {
       display: true,
-      text: 'Chart.js Bar Chart'
+      text: 'FIle Uploads by Type by Region'
     }
   }
 })
